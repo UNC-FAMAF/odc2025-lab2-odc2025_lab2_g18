@@ -1,0 +1,91 @@
+
+There are no discarded input sections
+
+Configuración de la Memoria
+
+Nombre           Origen             Longitud           Atributos
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Guión del enlazador y mapa de memoria
+
+LOAD app.o
+LOAD formas.o
+LOAD start.o
+                0x0000000000080000                . = 0x80000
+
+.text           0x0000000000080000    0x90340
+ *(.text.boot)
+ .text.boot     0x0000000000080000    0x100c8 start.o
+                0x0000000000080000                _start
+ *(.text*)
+ .text          0x00000000000900c8       0xf8 app.o
+                0x00000000000900c8                main
+ .text          0x00000000000901c0      0x180 formas.o
+                0x00000000000901c4                pantalla
+                0x00000000000901e8                rectangulo
+                0x0000000000090230                mallado
+                0x0000000000090278                circulo
+                0x00000000000902ec                pixel
+ .text          0x0000000000090340    0x80000 start.o
+
+.iplt           0x0000000000110340        0x0
+ .iplt          0x0000000000110340        0x0 app.o
+
+.rela.dyn       0x0000000000110340        0x0
+ .rela.iplt     0x0000000000110340        0x0 app.o
+ .rela.text.boot
+                0x0000000000110340        0x0 app.o
+
+.data           0x0000000000110340        0x0
+ .data          0x0000000000110340        0x0 app.o
+ .data          0x0000000000110340        0x0 formas.o
+ .data          0x0000000000110340        0x0 start.o
+
+.igot.plt       0x0000000000110340        0x0
+ .igot.plt      0x0000000000110340        0x0 app.o
+
+.bss            0x0000000000110340        0x0
+ *(.bss*)
+ .bss           0x0000000000110340        0x0 app.o
+ .bss           0x0000000000110340        0x0 formas.o
+ .bss           0x0000000000110340        0x0 start.o
+
+.bss            0x0000000000110340        0x0
+                0x0000000000110340                . = ALIGN (0x10)
+                0x0000000000110340                __bss_start = .
+ *(.bss .bss.*)
+ *(COMMON)
+                0x0000000000110340                __bss_end = .
+                0x0000000000110340                _end = .
+                0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
+OUTPUT(kernel8.elf elf64-littleaarch64)
+LOAD linker stubs
+
+.debug_line     0x0000000000000000      0x15d
+ .debug_line    0x0000000000000000       0x75 app.o
+ .debug_line    0x0000000000000075       0x98 formas.o
+ .debug_line    0x000000000000010d       0x50 start.o
+
+.debug_info     0x0000000000000000       0x8a
+ .debug_info    0x0000000000000000       0x2e app.o
+ .debug_info    0x000000000000002e       0x2e formas.o
+ .debug_info    0x000000000000005c       0x2e start.o
+
+.debug_abbrev   0x0000000000000000       0x3c
+ .debug_abbrev  0x0000000000000000       0x14 app.o
+ .debug_abbrev  0x0000000000000014       0x14 formas.o
+ .debug_abbrev  0x0000000000000028       0x14 start.o
+
+.debug_aranges  0x0000000000000000       0x90
+ .debug_aranges
+                0x0000000000000000       0x30 app.o
+ .debug_aranges
+                0x0000000000000030       0x30 formas.o
+ .debug_aranges
+                0x0000000000000060       0x30 start.o
+
+.debug_str      0x0000000000000000       0x58
+ .debug_str     0x0000000000000000       0x58 app.o
+                                         0x47 (tamaño antes de la relajación)
+ .debug_str     0x0000000000000058       0x4a formas.o
+ .debug_str     0x0000000000000058       0x49 start.o
