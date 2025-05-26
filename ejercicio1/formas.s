@@ -70,7 +70,7 @@ rectangulo:
 fin_cuadro:
 ret
 
-//mallado
+//MALLADO
 //ANTES DE LLAMAR A CUADRADO NECESARIO ASIGNAR VALORES A X3,X4,X5,X6 Y X11!!
 
 mallado:
@@ -100,6 +100,58 @@ mallado:
 
 fin_mallado:
 ret
+
+//CIRCULO
+//ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A yc=X4, xc=X3, radio=X15 y x11 color.
+circulo:
+
+        sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
+        mov x5, x21
+    circulo_y:
+        add x23, x4, x15 //y=yc+radio (seria indicar el final del circulo verticalmente)
+        cmp x5, x23 //mientras x5<=x23 (filas) 
+        b.ge fin_circulo
+
+        sub x22, x3, x15 //x=xc-radio (seria indicar el comienzo del circulo horizontalmente)
+        mov x6, x22
+    circulo_x:
+        add x24, x3, x15 //x=xc+radio (seria indicar el final del circulo horizontalmente)
+        cmp x6, x24 // mientras x6<=x24 (columnas)
+        b.ge siguiente_fila_circulo
+
+        // Calcular (x - xc)^2 + (y - yc)^2 -- describe el interior y borde del circulo
+        sub x16, x6, x3
+        mul x16, x16, x16      // (x - xc)^2
+
+        sub x17, x5, x4
+        mul x17, x17, x17      // (y - yc)^2
+
+        add x18, x16, x17      // suma
+
+        mul x19, x15, x15      // radio^2
+
+        cmp x18, x19 //mientras el punto este dentro del circulo (x^2 + y^2 <= r^2)
+        b.gt no_pintar_pixel
+
+        // dirección de pixel
+        mov x7, SCREEN_WIDTH //cant de columnas
+        mul x8, x5, x7// x7=x3 (y)
+        add x8, x8, x6// x7= y * SCREEN_WIDTH
+        lsl x8, x8, 2// x7= (y * SCREEN_WIDTH)+x
+        add x8, x20, x8// x7=((y * SCREEN_WIDTH)+x)*2 ^2
+
+        stur w11, [x8] 
+
+    no_pintar_pixel:
+        add x6, x6, 1 //paso a la siguiente columna
+        b circulo_x
+
+    siguiente_fila_circulo:
+        add x5, x5, 1
+        b circulo_y
+
+fin_circulo:
+ret 
 
 InfLoop:
 	b InfLoop
