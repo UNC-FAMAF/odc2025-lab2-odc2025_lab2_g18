@@ -70,6 +70,36 @@ rectangulo:
 fin_cuadro:
 ret
 
+//mallado
+//ANTES DE LLAMAR A CUADRADO NECESARIO ASIGNAR VALORES A X3,X4,X5,X6 Y X11!!
+
+mallado:
+	    mov x9, x5
+    malla_y:
+	    cmp x3, x4
+	    b.ge fin_mallado   
+
+        mov x5, x9  
+    malla_x:
+	    cmp x5, x6
+	    b.ge sig_fila 
+  
+        mov x8, SCREEN_WIDTH
+        mov x7, x3
+        mul x7, x7, x8
+        add x7, x7, x5
+        lsl x7, x7, 2
+        add x7, x20, x7
+
+	    stur w11, [x7]
+	    add x5, x5, 2
+	    b malla_x
+    sig_fila:
+	    add x3, x3, 2
+	    b malla_y
+
+fin_mallado:
+ret
 
 InfLoop:
 	b InfLoop
