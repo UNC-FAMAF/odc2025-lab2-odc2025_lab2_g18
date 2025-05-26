@@ -17,7 +17,8 @@ main:
 	// x0 contiene la direccion base del framebuffer
  	mov x20, x0	// Guarda la dirección base del framebuffer en x20
 	//---------------- CODE HERE ------------------------------------
-
+movz x11, 0x00FF, lsl 16
+movk x11, 0xFFFF, lsl 0
 
 bl pantalla
 
