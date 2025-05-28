@@ -13,6 +13,7 @@
     .global cuadrado_b_relleno
     .global bresenham
     .global bresenham_con_punto_fijo
+    .global pixel
 
 	//.global main
 
@@ -562,6 +563,44 @@ bresenham_con_punto_fijo:
     bresenham_end_bspj:
     ret
 
+//PIXEL
+//ANTES DE LLAMAR A PIXEL, DAR VALORES DE X5 , X3 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
+
+pixel:
+        add x4, x3, 10
+        add x6, x5, 10
+
+        mov x9, x5            // Guarda el valor inicial de x5
+    pixel_y:
+        cmp x3, x4           // mientras y  <= x4
+        b.ge fin_pixel 
+        
+        mov x5, x9
+    pixel_x:
+        cmp x5, x6        // mientras x <= x6
+        b.ge siguiente_filapix
+
+       
+    // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
+
+	mov x8, SCREEN_WIDTH
+        mov x7, x3
+        mul x7, x7, x8
+        add x7, x7, x5
+        lsl x7, x7, 2
+        add x7, x20, x7
+
+     stur w11, [x7]       // Escribe el color del cuadrado
+
+        add x5, x5, 1
+        b pixel_x
+
+    siguiente_filapix:
+        add x3, x3, 1
+        b pixel_y
+
+fin_pixel:
+    ret
 
 
 InfLoop:
