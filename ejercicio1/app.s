@@ -169,8 +169,8 @@ paint:
 	//negro
 	mov x3, 50
 	mov x4, 420
-	mov x5, 204
-	mov x6, 434
+	mov x5, 150 //204
+	mov x6, 488 //434
 	movz x11, 0x00, lsl 00 
 	bl rectangulo 
 	
@@ -178,8 +178,8 @@ paint:
 	//casi blanco
 	mov x3, 52
 	mov x4, 418
-	mov x5, 206
-	mov x6, 432
+	mov x5, 152
+	mov x6, 486
 	movz x11, 0xF5F1, lsl 00 
 	movk x11, 0xFA, lsl 16
 	bl rectangulo 
@@ -187,8 +187,8 @@ paint:
 
 	mov x3, 56
 	mov x4, 410
-	mov x5, 208
-	mov x6, 430
+	mov x5, 154
+	mov x6, 484
 	movz x11, 0xCFC6, lsl 00 
 	movk x11, 0xD5, lsl 16
 	bl rectangulo 
@@ -198,8 +198,8 @@ paint:
 
 	mov x3, 52
 	mov x4, 70
-	mov x5, 206
-	mov x6, 432
+	mov x5, 152 //206
+	mov x6, 486 //432
 	movz x11, 0xB9BE, lsl 00 
 	movk x11, 0x8E, lsl 16
 	bl rectangulo 
@@ -209,8 +209,8 @@ paint:
 
 	mov x3, 54
 	mov x4, 70
-	mov x5, 208
-	mov x6, 430
+	mov x5, 154
+	mov x6, 484
 	movz x11, 0x909E, lsl 00 
 	movk x11, 0x7D, lsl 16
 	bl rectangulo 
@@ -218,11 +218,48 @@ paint:
 	//gris oscuro
 	mov x3, 412
 	mov x4, 418
-	mov x5, 206
-	mov x6, 432
+	mov x5, 152
+	mov x6, 486
 	movz x11, 0x4040, lsl 00 
 	movk x11, 0x40, lsl 16
-	bl rectangulo 
+	bl rectangulo
+
+	//negro (borde externo)
+	mov x3, 74
+	mov x4, 406
+	mov x5, 156
+	mov x6, 482
+	movz x11, 0x4040, lsl 00 
+	movk x11, 0x40, lsl 16
+	bl rectangulo
+	
+	//blanco (borde)
+	mov x3, 76
+	mov x4, 404
+	mov x5, 158
+	mov x6, 480
+	movz x11, 0xFFFF, lsl 00 
+	movk x11, 0xFF, lsl 16
+	bl rectangulo
+
+	//negro (borde)
+	mov x3, 78
+	mov x4, 402
+	mov x5, 160
+	mov x6, 478
+	movz x11, 0x4040, lsl 00 
+	movk x11, 0x40, lsl 16
+	bl rectangulo
+
+	//blanco 
+	mov x3, 80
+	mov x4, 400
+	mov x5, 162
+	mov x6, 476
+	movz x11, 0xFFFF, lsl 00 
+	movk x11, 0xFF, lsl 16
+	bl rectangulo
+
 /* 
 odc_2025:
 primera_fila_de_pixeles:
