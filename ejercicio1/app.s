@@ -10,7 +10,7 @@
     .global rectangulo
     .global pantalla
     .global mallado
-    .global ciruclo
+    .global circulo
     .global pixel
 main:
 

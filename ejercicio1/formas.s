@@ -9,6 +9,10 @@
 
     .global rectangulo
     .global pantalla
+    .global circulo
+    .global cuadrado_b_relleno
+    .global bresenham
+    .global bresenham_con_punto_fijo
 
 	//.global main
 
@@ -153,129 +157,411 @@ circulo:
 fin_circulo:
 ret 
 
-recta_bresenham:
-    /* Backup en la pila, para evitar posibles perdidas */
-    sub sp, sp, 176 //Añade espacio para guardar en heap/pila
-    stur x3, [sp,0]
-    stur x4, [sp,16]
-    stur x9, [sp,32]
-    stur x10, [sp,48]
-    stur x11, [sp,64]
-    stur x12, [sp,80]
-    stur x13, [sp,96]
-    stur x14, [sp,112]
-    stur x16, [sp,128]
-    stur x17, [sp,144]
-    stur x18, [sp,160]
-    stur x19, [sp,176]
+//CUADRILATERO
+//ANTES DE LLAMAR ASIGNAR LO QUE DICE EN CADA CONJUNTO DE INSTRUCCIONES
+cuadrado_b_relleno: 
+    /*Sean:
+    x9 = x1 //Mide que tan a la derecha debe ir
+    x10 = y1 //Mide que tanto debe bajar
 
-    /*Pequeño resumen: 
-        https://saturncloud.io/blog/bresenham-line-algorithm-a-powerful-tool-for-efficient-line-drawing/?_gl=1*1e34fig*_gcl_au*MjEyMzM4MzgwOC4xNzQ3ODY3NjI0*_ga*MTE0MTAzMjE4NS4xNzQ3ODY3NjI1*_ga_9QKGCS5Q41*czE3NDc5NjE0MTgkbzIkZzAkdDE3NDc5NjE0MTgkajYwJGwwJGgwJGRzb1B4QktXb0RDc0NWQWlxRHpkbGhlTDlhWHFZUXhJcGVB#how-does-the-bresenham-line-algorithm-work
-        x9, x10 := coordenada inicial (x0, y0)
-        x11, x12 := coordenada final (x1, y1) 
-        x13 := dx = abs(x1-x0) 
-        x14 := dy = abs(y1-y0) 
-        x15 := direc. horizontal de la recta desde el punto inicial
-        x17 := direc. vertical de la recta desde el punto inicial
-        x19 := valor de error (CRITERIO DE SELECCION)
+    x11 = x2
+    x12 = y2
+
+    x13 = x3
+    x14 = y3
+
+    x15 = x4
+    x16 = y4
+
+    x22 = punto_fijo_x
+    x23 = punto_fijo_y
+    */
+    sub sp, sp, #88
+    stur x9, [sp, #0]
+    stur x10,[sp, #8]
+    stur x11,[sp, #16]
+    stur x12,[sp, #24]
+    stur x13,[sp, #32]
+    stur x14,[sp, #40]
+    stur x15,[sp, #48]
+    stur x16,[sp, #56]
+    stur x22,[sp, #64]
+    stur x23,[sp, #72]
+    stur x30,[sp, #80] //RE IMPORTANTE, ES EL LR (es PC+4)
+
+    //Primer lado
+    //Los puntos coinciden con los registros para el llamdo
+    mov x22, x13
+    mov x23, x14
+    bl bresenham_con_punto_fijo
+    //segundo lado
+    mov x9,x11
+    mov x10,x12
+    mov x11,x13
+    mov x12,x14
+    mov x22, x15
+    mov x23, x16
+    bl bresenham_con_punto_fijo
+    //tercer lado
+    mov x9,x13
+    mov x10,x14
+    mov x11,x15
+    mov x12,x16
+    ldur x22,[sp,#0]
+    ldur x23,[sp,#8]
+    bl bresenham_con_punto_fijo
+    //cuarto lado
+    mov x9,x15
+    mov x10,x16
+    ldur x11, [sp, #0]
+    ldur x12, [sp, #8]
+    ldur x22,[sp,#16]
+    ldur x23,[sp,#24]
+    bl bresenham_con_punto_fijo
+    
+    
+    ldur x9, [sp, #0]
+    ldur x10,[sp, #8]
+    ldur x11,[sp, #16]
+    ldur x12,[sp, #24]
+    ldur x13,[sp, #32]
+    ldur x14,[sp, #40]
+    ldur x15,[sp, #48]
+    ldur x16,[sp, #56]
+    ldur x22,[sp, #64]
+    ldur x23,[sp, #72]
+    ldur x30,[sp, #80]
+    add sp, sp, #88
+    ret
+
+
+bresenham:
+    /* algoritmo de Bresenham 
+
+        ¿Que hace?
+            Traza rectas sin calcular la pendiente exacta.
+
+        ¿Como lo hace?
+            Es un algoritmo voraz, por lo que su criterio de seleccion
+            para avanzar en x o y es la cantidad de error acumulado (dx-dy)
+            (almacenado en x19).
+
+            El acumulador de error mide que tan desviado esta el paso actual
+            de la linea ideal. El algoritmo evalua las siguientes 
+            condiciones para decidir en cada iteracion:
+
+                -> Si 2*x19 > -dy, lo cual significa que el error está más cerca 
+                de la siguiente columna, entonces se mueve en X.
+
+                -> Si 2*x19 < dx, lo cual significa que el error está más cerca 
+                de la siguiente fila, entonces se mueve en Y.
+            
+            Para mejor descripcion: https://saturncloud.io/blog/bresenham-line-algorithm-a-powerful-tool-for-efficient-line-drawing/?_gl=1*1e34fig*_gcl_au*MjEyMzM4MzgwOC4xNzQ3ODY3NjI0*_ga*MTE0MTAzMjE4NS4xNzQ3ODY3NjI1*_ga_9QKGCS5Q41*czE3NDc5NjE0MTgkbzIkZzAkdDE3NDc5NjE0MTgkajYwJGwwJGgwJGRzb1B4QktXb0RDc0NWQWlxRHpkbGhlTDlhWHFZUXhJcGVB#how-does-the-bresenham-line-algorithm-work
     */
 
-    // x13 := dx = abs(x1-x0) 
-    subs x13,x11,x9
-	bge abs_x_listo
-	sub x13,xzr,x13
-	abs_x_listo:
+    /* Registros utilizados:
 
-    // x14 := dy = abs(y1-y0) 
-    subs x14,x12,x10
-	bge abs_y_lsito
-	sub x14,xzr,x14
-    abs_y_lsito:
+        x3   → Direccion relativa del píxel a pintar (offset)
+        x4   → Direccion absoluta del píxel en memoria (base + offset)
+        x5   → 2*err (doble del error actual, usado para criterio de selec)
+        x6   → -dy (negativo del delta en Y, para comparaciones)
+        
+        x9   → x0 (posicion actual en X)
+        x10  → y0 (posicion actual en Y)
+        x11  → x1 (posicion final en X)
+        x12  → y1 (posicion final en Y)
 
-    // x15 := sx = (x9 < x11) ? 1 : -1 
-	/*Chequea si x0 < x1: 
-		si es asi entonces avanza (1)
-		si no es asi entonces retrocede (-1)
-	*/
-    cmp x9, x11
-    mov x15, 1
-    mov x16, -1
-    blt sx_set
-    mov x15, x16
-	sx_set:
+        x13  → dx (|x1 - x0|, distancia en X)
+        x14  → dy (|y1 - y0|, distancia en Y)
 
-    // x17 := sy = (x10 < x12) ? 1 : -1
-	/* Chequea si y0 < y1: 
-		si es asi entonces se sube (1)
-		si no es asi entonces se baja (-1)
-	*/
-    cmp x10, x12
-    mov x17, 1
-    mov x16, -1
-    blt sy_set
-    mov x17, x16
-sy_set:
+        x15  → sx (direccion en X: +1 si avanza, -1 si retrocede)
+        x16  → auxiliar 
+        x17  → sy (direccion en Y: +1 si sube, -1 si baja)
 
-    // err = dx - dy <--- ESTO DECIDE DESPUES A DONDE MOVER (Criterio de algoritmo voraz)
-    sub x19, x13, x14
-    /*err representa la diferencia acumulada entre la línea ideal (la que no podemos calcular aca) 
-    y la línea que se está pintando pixel por pixel en nuestra cuadrícula. */
+        x18  → auxiliar
+        x19  → err (error acumulado, CRITERIO!)
 
-recta_bresenham_loop:
-    /*Esta parte genera la direccion que se debe pintar, y la pinta */
-    mov x16, x9 //x16 = x9 (x0)
-    mov x18, x10 //x18 = x10 (y0)
-    mov x2, SCREEN_WIDTH //x2 = 640
-    mul x3, x18, x2 //x3 = x18 * x2 = Y0 * SCREEN_WIDTH
-    add x3, x3, x16 // x3 = Y0 * SCREEN_WIDTH + x0
-    lsl x3, x3, 2 // x3 = (Y0 * SCREEN_WIDTH + x0)*4 (No me deja usar mul con un entero¿?)
-    add x4, x20, x3 //x4 = dirección base + (Y0 * SCREEN_WIDTH + x0)*4
-    stur w21, [x4] //Guarda color en x4, ¿y si hacemos este troncho una funcion llamable?
+        x21  → Color del pixel
+    */
 
-    // ¿Llegamos al al punto final (x1,y1)? Compara punto actual con final
-    cmp x9, x11
-    bne not_end_x
-    cmp x10, x12
-    beq recta_bresenham_end
-not_end_x:
+    // Backup de registros alterados
+    sub sp, sp, #136 //Se guardan cada 8, pero siempre debe quedar un multiplo de 16!
+    stur x2,   [sp, #0]
+    stur x3,   [sp, #8]
+    stur x4,   [sp, #16]
+    stur x5,   [sp, #24]
+    stur x6,   [sp, #32]
+    stur x9,   [sp, #40]
+    stur x10,  [sp, #48]
+    stur x11,  [sp, #56]
+    stur x12,  [sp, #64]
+    stur x13,  [sp, #72]
+    stur x14,  [sp, #80]
+    stur x15,  [sp, #88]
+    stur x16,  [sp, #96]
+    stur x17,  [sp, #104]
+    stur x18,  [sp, #112]
+    stur x19,  [sp, #120]
+    stur x30,  [sp, #128]
 
-    /*¡ACA ENTRA EL CRITERIO DE SELECCION! Para esta parte vean el link porfa*/
-    // e2 = 2*err
-    lsl x5, x19, 1
+        // dx = abs(x1 - x0)
+        subs x13, x11, x9
+        bge abs_dx_done
+        neg x13, x13
+    abs_dx_done:
 
-    // if e2 > -dy  ¡Recordar: dy = abs(y1-y0)!
-    sub x6, xzr, x14
-    cmp x5, x6
-    ble skip_x
-    add x9, x9, x15
-    sub x19, x19, x14
-skip_x:
+        // dy = abs(y1 - y0)
+        subs x14, x12, x10
+        bge abs_dy_done
+        neg x14, x14
+    abs_dy_done:
 
-    // if e2 < dx ¡Recordar dx = abs(x1-x0)!
-    cmp x5, x13 //Compara (2*err) con abs(x1-x0)
-    bge skip_y  //Salta si (2*err) >= abs(x1-x0)
-    add x10, x10, x17 //x10 (y0) = y0+1 OR y0-1
-    add x19, x19, x13 //x19 (err) = err+abs(x1-x0)
-skip_y:
+        // sx = (x0 < x1) ? 1 : -1
+        cmp x9, x11
+        mov x15, 1
+        mov x16, -1
+        blt set_sx
+        mov x15, x16
+    set_sx:
 
-    b recta_bresenham_loop
+        // sy = (y0 < y1) ? 1 : -1
+        cmp x10, x12
+        mov x17, 1
+        mov x16, -1
+        blt set_sy
+        mov x17, x16
+    set_sy:
+
+        // err = dx - dy
+        sub x19, x13, x14
+
+    bresenham_loop:
+        // Direccion: (y0 * width + x0) * 4 + base
+        mov x16, x9
+        mov x18, x10
+        mov x2, #640
+        mul x3, x18, x2
+        add x3, x3, x16
+        lsl x3, x3, #2
+        add x4, x20, x3
+        stur w21, [x4]
+
+        // ¿Fin?
+        cmp x9, x11
+        bne check_y
+        cmp x10, x12
+        beq bresenham_restore
+    check_y:
+
+        lsl x5, x19, #1       //2*err
+        neg x6, x14
+        cmp x5, x6
+        ble skip_x
+        add x9, x9, x15
+        sub x19, x19, x14
+    skip_x:
+
+        cmp x5, x13
+        bge skip_y
+        add x10, x10, x17
+        add x19, x19, x13
+    skip_y:
+
+        b bresenham_loop
+
+    bresenham_restore:
+        // Restaurar registros
+        ldur x2,   [sp, #0]
+        ldur x3,   [sp, #8]
+        ldur x4,   [sp, #16]
+        ldur x5,   [sp, #24]
+        ldur x6,   [sp, #32]
+        ldur x9,   [sp, #40]
+        ldur x10,  [sp, #48]
+        ldur x11,  [sp, #56]
+        ldur x12,  [sp, #64]
+        ldur x13,  [sp, #72]
+        ldur x14,  [sp, #80]
+        ldur x15,  [sp, #88]
+        ldur x16,  [sp, #96]
+        ldur x17,  [sp, #104]
+        ldur x18,  [sp, #112]
+        ldur x19,  [sp, #120]
+        ldur x30,  [sp, #128]
+        add sp, sp, #136
+
+    bresenham_end:
+        ret
 
 
-ldur x3, [sp,0] //Devuelvo los valores originales,
-ldur x4, [sp,16]
-ldur x9, [sp,32]
-ldur x10, [sp,48]
-ldur x11, [sp,64]
-ldur x12, [sp,80]
-ldur x13, [sp,96]
-ldur x14, [sp,112]
-ldur x16, [sp,128]
-ldur x17, [sp,144]
-ldur x18, [sp,160]
-ldur x19, [sp,176]
-add sp, sp, 176        //Libera el espacio reservado
-recta_bresenham_end:
-    ret	
+
+bresenham_con_punto_fijo:
+    
+    /* Registros utilizados:
+
+        x3   → Direccion relativa del píxel a pintar (offset)
+        x4   → Direccion absoluta del píxel en memoria (base + offset)
+        x5   → 2*err (doble del error actual, usado para criterio de selec)
+        x6   → -dy (negativo del delta en Y, para comparaciones)
+        
+        x9   → x0 (posicion actual en X)
+        x10  → y0 (posicion actual en Y)
+        x11  → x1 (posicion final en X)
+        x12  → y1 (posicion final en Y)
+
+        x13  → dx (|x1 - x0|, distancia en X)
+        x14  → dy (|y1 - y0|, distancia en Y)
+
+        x15  → sx (direccion en X: +1 si avanza, -1 si retrocede)
+        x16  → auxiliar 
+        x17  → sy (direccion en Y: +1 si sube, -1 si baja)
+
+        x18  → auxiliar
+        x19  → err (error acumulado, CRITERIO!)
+
+        x21  → Color del pixel
+        
+        x22 -> Cordenada x a la que se ira todo el tiempo
+        x23 -> Cordenada y a la que se ira todo el tiempo
+    */
+
+    // Backup de registros alterados
+    sub sp, sp, #152 //Se guardan cada 8 y se agrega 8 de mas!
+    stur x2,   [sp, #0]
+    stur x3,   [sp, #8]
+    stur x4,   [sp, #16]
+    stur x5,   [sp, #24]
+    stur x6,   [sp, #32]
+    stur x9,   [sp, #40]
+    stur x10,  [sp, #48]
+    stur x11,  [sp, #56]
+    stur x12,  [sp, #64]
+    stur x13,  [sp, #72]
+    stur x14,  [sp, #80]
+    stur x15,  [sp, #88]
+    stur x16,  [sp, #96]
+    stur x17,  [sp, #104]
+    stur x18,  [sp, #112]
+    stur x19,  [sp, #120]
+    stur x22,  [sp, #128]
+    stur x23,  [sp, #136]
+    stur x30,  [sp, #144]
+
+        // dx = abs(x1 - x0)
+        subs x13, x11, x9
+        bge abs_dx_done_bspj
+        neg x13, x13
+    abs_dx_done_bspj:
+
+        // dy = abs(y1 - y0)
+        subs x14, x12, x10
+        bge abs_dy_done_bspj
+        neg x14, x14
+    abs_dy_done_bspj:
+
+        // sx = (x0 < x1) ? 1 : -1
+        cmp x9, x11
+        mov x15, 1
+        mov x16, -1
+        blt set_sx_bspj
+        mov x15, x16
+    set_sx_bspj:
+
+        // sy = (y0 < y1) ? 1 : -1
+        cmp x10, x12
+        mov x17, 1
+        mov x16, -1
+        blt set_sy_bspj
+        mov x17, x16
+    set_sy_bspj:
+
+        // err = dx - dy
+        sub x19, x13, x14
+
+    bresenham_loop_bspj:
+        // Direccion: (y0 * width + x0) * 4 + base
+        mov x16, x9
+        mov x18, x10
+        mov x2, #640
+        mul x3, x18, x2
+        add x3, x3, x16
+        lsl x3, x3, #2
+        add x4, x20, x3
+        stur w21, [x4]
+
+        // -----------TRAZADO----------------------------
+        //Guardar registros actuales
+        // Guardar coordenadas actuales
+        //x16 y x18 eran auxiliares
+        mov x16, x9
+        mov x18, x10
+
+        // Preparar coordenadas para llamada a bresenham
+        mov x9, x16
+        mov x10, x18
+        mov x11, x22
+        mov x12, x23
+
+        bl bresenham
+
+        // Restaurar coordenadas originales para el loop
+        mov x9, x16
+        mov x10, x18
+        //mov x11,x22
+        ldur x11,[sp,#56]
+        ldur x12,[sp,#64]
+        //----------------------------------------------
+
+        // ¿Fin?
+        cmp x9, x11
+        bne check_y_bspj
+        cmp x10, x12
+        beq bresenham_restore_bspj
+    check_y_bspj:
+
+        lsl x5, x19, #1       //2*err
+        neg x6, x14
+        cmp x5, x6
+        ble skip_x_bspj
+        add x9, x9, x15
+        sub x19, x19, x14
+    skip_x_bspj:
+
+        cmp x5, x13
+        bge skip_y_bspj
+        add x10, x10, x17
+        add x19, x19, x13
+    skip_y_bspj:
+
+        b bresenham_loop_bspj
+
+    bresenham_restore_bspj:
+        // Restaurar registros
+        ldur x2,   [sp, #0]
+        ldur x3,   [sp, #8]
+        ldur x4,   [sp, #16]
+        ldur x5,   [sp, #24]
+        ldur x6,   [sp, #32]
+        ldur x9,   [sp, #40]
+        ldur x10,  [sp, #48]
+        ldur x11,  [sp, #56]
+        ldur x12,  [sp, #64]
+        ldur x13,  [sp, #72]
+        ldur x14,  [sp, #80]
+        ldur x15,  [sp, #88]
+        ldur x16,  [sp, #96]
+        ldur x17,  [sp, #104]
+        ldur x18,  [sp, #112]
+        ldur x19,  [sp, #120]
+        ldur x22,  [sp, #128]
+        ldur x23,  [sp, #136]
+        ldur x30,  [sp, #144]
+        
+        add sp, sp, #152
+
+    bresenham_end_bspj:
+    ret
+
 
 
 InfLoop:
