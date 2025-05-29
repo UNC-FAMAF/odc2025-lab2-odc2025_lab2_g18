@@ -42,7 +42,10 @@ ret
 //ANTES DE LLAMAR A CUADRADO NECESARIO ASIGNAR VALORES A X3,X4,X5,X6 Y X11!!
 
 rectangulo:
-        mov x9, x5            // Guarda el valor inicial de x5
+        mov x10, x3
+        mov x12, x4
+        mov x13, x6
+        mov x9, x5      // Guarda el valor inicial de x5
     cuadro_y:
         cmp x3, x4           // mientras y  <= x4
         b.ge fin_cuadro 
@@ -72,6 +75,10 @@ rectangulo:
         b cuadro_y
 
 fin_cuadro:
+    mov x3, x10
+    mov x4, x12
+    mov x5, x9
+    mov x6, x13
 ret
 
 //MALLADO
