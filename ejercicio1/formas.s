@@ -13,6 +13,7 @@
     .global bresenham
     .global cuadradoR
     .global pixel
+    .global boton
 
 	//.global main
 
@@ -514,6 +515,30 @@ pixel:
 
 fin_pixel:
     ret
+
+boton: 
+    // negro
+		movz x11, 0x4040, lsl 00 
+		movk x11, 0x40, lsl 16
+		bl rectangulo
+		//blanco
+		add x3, x3, 1 //57
+		sub x4, x4, 1//68
+		add x5, x5, 1//470
+		sub x6, x6, 1//481
+		movz x11, 0xFFFF, lsl 00 
+		movk x11, 0xFF, lsl 16
+		bl rectangulo
+		//gris
+		add x3, x3, 1
+		sub x4, x4, 1
+		add x5, x5, 1
+		sub x6, x6, 1
+		movz x11, 0x909E, lsl 00 
+		movk x11, 0x7D, lsl 16
+		bl rectangulo 
+fin_boton:
+ret
 
 
 InfLoop:

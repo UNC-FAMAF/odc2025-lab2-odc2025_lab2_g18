@@ -12,6 +12,7 @@
     .global mallado
     .global circulo
     .global pixel
+	.global boton
 main:
 
 	// x0 contiene la direccion base del framebuffer
@@ -259,6 +260,67 @@ paint:
 	movz x11, 0xFFFF, lsl 00 
 	movk x11, 0xFF, lsl 16
 	bl rectangulo
+
+	//-------BOTON CRUZ---------//
+
+	//dar las 4 esquinas , x3,x4,x5,x6
+	mov x3, 56
+	mov x4, 69
+	mov x5, 469
+	mov x6, 482
+	bl boton
+
+	//linea cruz izq a der
+	//media
+	mov x9,471
+	mov x10,58
+	mov x11,479
+	mov x12,66
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl bresenham
+	//arriba
+	mov x9,472
+	mov x10,58
+	mov x11,479
+	mov x12,65
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl bresenham
+	//abajo
+	mov x9,471
+	mov x10,59
+	mov x11,478
+	mov x12,66
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl bresenham
+
+	//linea cruz der a izq
+	//media
+	mov x9,479
+	mov x10,58
+	mov x11,471
+	mov x12,66
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl bresenham
+	//arriba
+	mov x9,478
+	mov x10,58
+	mov x11,471
+	mov x12,65
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl bresenham
+	//abajo
+	mov x9,479
+	mov x10,59
+	mov x11,472
+	mov x12,66
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl bresenham
 
 /* 
 odc_2025:
