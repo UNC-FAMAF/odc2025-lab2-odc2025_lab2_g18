@@ -13,61 +13,61 @@ LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x90bcc
+.text           0x0000000000080000    0x90c5c
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x588 app.o
+ .text          0x00000000000900c8      0x618 app.o
                 0x00000000000900c8                main
- .text          0x0000000000090650      0x57c formas.o
-                0x0000000000090654                pantalla
-                0x0000000000090678                rectangulo
-                0x0000000000090758                circulo
-                0x00000000000907cc                cuadradoR
-                0x000000000009087c                bresenham
-                0x0000000000090af8                pixel
-                0x0000000000090b48                boton
- .text          0x0000000000090bcc    0x80000 start.o
+ .text          0x00000000000906e0      0x57c formas.o
+                0x00000000000906e4                pantalla
+                0x0000000000090708                rectangulo
+                0x00000000000907e8                circulo
+                0x000000000009085c                cuadradoR
+                0x000000000009090c                bresenham
+                0x0000000000090b88                pixel
+                0x0000000000090bd8                boton
+ .text          0x0000000000090c5c    0x80000 start.o
 
-.iplt           0x0000000000110bcc        0x0
- .iplt          0x0000000000110bcc        0x0 app.o
+.iplt           0x0000000000110c5c        0x0
+ .iplt          0x0000000000110c5c        0x0 app.o
 
-.rela.dyn       0x0000000000110bd0        0x0
- .rela.iplt     0x0000000000110bd0        0x0 app.o
+.rela.dyn       0x0000000000110c60        0x0
+ .rela.iplt     0x0000000000110c60        0x0 app.o
  .rela.text.boot
-                0x0000000000110bd0        0x0 app.o
+                0x0000000000110c60        0x0 app.o
 
-.data           0x0000000000110bcc        0x0
- .data          0x0000000000110bcc        0x0 app.o
- .data          0x0000000000110bcc        0x0 formas.o
- .data          0x0000000000110bcc        0x0 start.o
+.data           0x0000000000110c5c        0x0
+ .data          0x0000000000110c5c        0x0 app.o
+ .data          0x0000000000110c5c        0x0 formas.o
+ .data          0x0000000000110c5c        0x0 start.o
 
-.igot.plt       0x0000000000110bd0        0x0
- .igot.plt      0x0000000000110bd0        0x0 app.o
+.igot.plt       0x0000000000110c60        0x0
+ .igot.plt      0x0000000000110c60        0x0 app.o
 
-.bss            0x0000000000110bcc        0x0
+.bss            0x0000000000110c5c        0x0
  *(.bss*)
- .bss           0x0000000000110bcc        0x0 app.o
- .bss           0x0000000000110bcc        0x0 formas.o
- .bss           0x0000000000110bcc        0x0 start.o
+ .bss           0x0000000000110c5c        0x0 app.o
+ .bss           0x0000000000110c5c        0x0 formas.o
+ .bss           0x0000000000110c5c        0x0 start.o
 
-.bss            0x0000000000110bcc        0x4
-                0x0000000000110bd0                . = ALIGN (0x10)
- *fill*         0x0000000000110bcc        0x4 
-                0x0000000000110bd0                __bss_start = .
+.bss            0x0000000000110c5c        0x4
+                0x0000000000110c60                . = ALIGN (0x10)
+ *fill*         0x0000000000110c5c        0x4 
+                0x0000000000110c60                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
-                0x0000000000110bd0                __bss_end = .
-                0x0000000000110bd0                _end = .
+                0x0000000000110c60                __bss_end = .
+                0x0000000000110c60                _end = .
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x387
- .debug_line    0x0000000000000000      0x19a app.o
- .debug_line    0x000000000000019a      0x19d formas.o
- .debug_line    0x0000000000000337       0x50 start.o
+.debug_line     0x0000000000000000      0x3ab
+ .debug_line    0x0000000000000000      0x1be app.o
+ .debug_line    0x00000000000001be      0x19d formas.o
+ .debug_line    0x000000000000035b       0x50 start.o
 
 .debug_info     0x0000000000000000       0x8a
  .debug_info    0x0000000000000000       0x2e app.o

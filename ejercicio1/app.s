@@ -416,29 +416,29 @@ gato:
 
 
    //ojos
-   mov x11, #0xffffff
+   movz x11, 0x06D2, lsl 00
+   movk x11, 0x8A, lsl 16
    mov x15, 11
    mov x3, 310 //xc
    mov x4, 214 //yc
    bl circulo
    
-   mov x11, #0xffffff
+   movz x11, 0x06D2, lsl 00
+   movk x11, 0x8A, lsl 16
    mov x15, 11
    mov x3, 277 //xc
    mov x4, 192 //yc
    bl circulo 
 
 
-   movz x11, 0x00FF, lsl 00
-   movk x11, 0xBB, lsl 16
+   mov x11, #0x00
    mov x15, 7
    mov x3, 308 //xc
    mov x4, 212 //yc
    bl circulo
 
 
-   movz x11, 0x00FF, lsl 00
-   movk x11, 0xBB, lsl 16
+   mov x11, #0x00
    mov x15, 7
    mov x3, 276 //xc
    mov x4, 191 //yc
@@ -506,6 +506,55 @@ gato:
    mov x22, #330
    mov x23, #200
    bl cuadradoR
+
+
+   //bigotes
+   mov x9,305
+   mov x10,228
+   mov x11,340
+   mov x12,250
+   mov x21, 0xbe
+   bl bresenham
+   
+   mov x9,303
+   mov x10,232
+   mov x11,327
+   mov x12,260
+   mov x21, 0xbe
+   bl bresenham
+
+   mov x9,299
+   mov x10,234
+   mov x11,312
+   mov x12,268
+   mov x21, 0xbe
+   bl bresenham
+   
+   
+   
+   
+   mov x9,275
+   mov x10,210
+   mov x11,240
+   mov x12,190
+   mov x21, 0xbe
+   bl bresenham
+
+   mov x9,275
+   mov x10,215
+   mov x11,245
+   mov x12,208
+   mov x21, 0xbe
+   bl bresenham
+
+   mov x9,275
+   mov x10,220
+   mov x11,240
+   mov x12,225
+   mov x21, 0xbe
+   bl bresenham
+   
+
 
 /* 
 odc_2025:
