@@ -14,6 +14,8 @@
     .global cuadradoR
     .global pixel
     .global boton
+    .global lineas_boton_expandir_h
+    .global lineas_boton_expandir_v
 
 	//.global main
 
@@ -569,6 +571,72 @@ fin_boton:
         ldur x11,[sp,#32]
         ldur x30,[sp,#40]
         add sp,sp,#48
+ret
+
+lineas_boton_expandir_h:
+
+    sub sp,sp,#48
+    stur x10,[sp,#0] 
+    stur x12,[sp,#8]
+    stur x21,[sp,#16] 
+    stur x30,[sp,#24]
+
+    movz x21, 0x909E, lsl 00 
+	movk x21, 0x7D, lsl 16
+    bl bresenham
+
+    add x10, x10, 1
+    add x12, x12, 1 
+    movz x21, 0x909E, lsl 00 
+	movk x21, 0x7D, lsl 16
+    bl bresenham
+
+    add x10, x10, 1
+    add x12, x12, 1 
+    movz x21, 0x909E, lsl 00 
+	movk x21, 0x7D, lsl 16
+    bl bresenham
+
+fin_lineas_boton_expandir_h:
+    ldur x10,[sp,#0] //- 
+    ldur x12,[sp,#16] //-
+    ldur x21,[sp,#8]//-
+    ldur x30,[sp,#24]//-
+    add sp,sp,#48
+
+ret
+
+lineas_boton_expandir_v:
+
+    sub sp,sp,#48
+    stur x9,[sp,#0] 
+    stur x11,[sp,#8]
+    stur x21,[sp,#16] 
+    stur x30,[sp,#24]
+
+    movz x21, 0x909E, lsl 00 
+	movk x21, 0x7D, lsl 16
+    bl bresenham
+
+    add x9, x9, 1
+    add x11, x11, 1 
+    movz x21, 0x909E, lsl 00 
+	movk x21, 0x7D, lsl 16
+    bl bresenham
+
+    add x9, x9, 1
+    add x11, x11, 1 
+    movz x21, 0x909E, lsl 00 
+	movk x21, 0x7D, lsl 16
+    bl bresenham
+
+fin_lineas_boton_expandir_v:
+    ldur x9,[sp,#0] //- 
+    ldur x11,[sp,#16] //-
+    ldur x21,[sp,#8]//-
+    ldur x30,[sp,#24]//-
+    add sp,sp,#48
+
 ret
 
 

@@ -13,6 +13,8 @@
     .global circulo
     .global pixel
 	.global boton
+	.global lineas_boton_expandir_h
+	.global lineas_boton_expandir_v
 main:
 
 	// x0 contiene la direccion base del framebuffer
@@ -324,6 +326,66 @@ botones:
 	movz x21, 0x4040, lsl 00 
 	movk x21, 0x40, lsl 16
 	bl bresenham
+
+	//------BOTON PLAY-------//
+	mov x3, 56
+	mov x4, 69
+	mov x5, 453
+	mov x6, 466
+	bl boton
+
+	//lineas para hacer triangulo//
+
+	mov x9, 456
+	mov x10, 59
+	mov x11, 456
+	mov x12, 66
+	mov x13, 463
+	mov x14, 63
+	mov x15, 463
+	mov x16, 62
+	mov x22, 460
+	mov x23, 63
+	movz x21, 0x4040, lsl 00 
+	movk x21, 0x40, lsl 16
+	bl cuadradoR
+
+	//--------BOTON AGRANDAR PANTALLA-------//
+	mov x3, 56
+	mov x4, 69
+	mov x5, 437
+	mov x6, 450
+	bl boton
+
+	//bordes
+	mov x3, 59
+	mov x4, 66
+	mov x5, 440
+	mov x6, 447
+	movz x11, 0x4040, lsl 00 
+	movk x11, 0x40, lsl 16
+	bl rectangulo
+	//cuadrado del medio
+	mov x3, 60
+	mov x4, 65
+	mov x5, 441
+	mov x6, 446
+	movz x11, 0x909E, lsl 00 
+	movk x11, 0x7D, lsl 16
+	bl rectangulo
+
+
+	mov x9,440
+	mov x10,61
+	mov x11,447
+	mov x12,61
+	bl lineas_boton_expandir_h
+
+	mov x9,442
+	mov x10,59 
+	mov x11,442
+	mov x12,65
+	bl lineas_boton_expandir_v
 
 
 gato:
