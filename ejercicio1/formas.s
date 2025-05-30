@@ -44,7 +44,7 @@ ret
 
 rectangulo:
 
-        sub sp,sp,#96
+        sub sp,sp,#72
         stur x3,[sp,#0]  
         stur x4,[sp,#8]
         stur x5,[sp,#16] 
@@ -52,15 +52,10 @@ rectangulo:
         stur x7,[sp,#32]
         stur x8,[sp,#40]
         stur x9,[sp,#48]
-        stur x10,[sp,#56]
-        stur x11,[sp,#64]
-        stur x12,[sp,#72]
-        stur x13,[sp,#80]
-        stur x30,[sp,#88]
+        stur x11,[sp,#56] //x10
+        stur x30,[sp,#64] 
+    
          
-        mov x10, x3
-        mov x12, x4
-        mov x13, x6
         mov x9, x5      // Guarda el valor inicial de x5
     cuadro_y:
         cmp x3, x4           // mientras y  <= x4
@@ -91,10 +86,6 @@ rectangulo:
         b cuadro_y
 
 fin_cuadro:
-    mov x3, x10
-    mov x4, x12
-    mov x5, x9
-    mov x6, x13
 
     ldur x3,[sp,#0]  
     ldur x4,[sp,#8]
@@ -103,12 +94,9 @@ fin_cuadro:
     ldur x7,[sp,#32]
     ldur x8,[sp,#40]
     ldur x9,[sp,#48]
-    ldur x10,[sp,#56]
-    ldur x11,[sp,#64]
-    ldur x12,[sp,#72]
-    ldur x13,[sp,#80]
-    ldur x30,[sp,#88]
-    add sp,sp,#96
+    ldur x11,[sp,#56]
+    ldur x30,[sp,#64]
+    add sp,sp,#72
 ret
 
 //MALLADO
