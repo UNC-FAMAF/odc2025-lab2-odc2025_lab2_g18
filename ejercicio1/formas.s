@@ -52,7 +52,7 @@ rectangulo:
         stur x7,[sp,#32]
         stur x8,[sp,#40]
         stur x9,[sp,#48]
-        stur x11,[sp,#56] //x10
+        stur x11,[sp,#56]
         stur x30,[sp,#64] 
     
          
@@ -534,6 +534,13 @@ fin_pixel:
     ret
 
 boton: 
+        sub sp,sp,#48
+        stur x3,[sp,#0] 
+        stur x4,[sp,#8]
+        stur x5,[sp,#16] 
+        stur x6,[sp,#24]
+        stur x11,[sp,#32]
+        stur x30,[sp,#40]
     // negro
 		movz x11, 0x4040, lsl 00 
 		movk x11, 0x40, lsl 16
@@ -555,6 +562,13 @@ boton:
 		movk x11, 0x7D, lsl 16
 		bl rectangulo 
 fin_boton:
+        ldur x3,[sp,#0] //- 
+        ldur x4,[sp,#8]//-
+        ldur x5,[sp,#16] //-
+        ldur x6,[sp,#24]//-
+        ldur x11,[sp,#32]
+        ldur x30,[sp,#40]
+        add sp,sp,#48
 ret
 
 

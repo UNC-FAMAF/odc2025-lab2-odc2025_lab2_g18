@@ -261,6 +261,7 @@ paint:
 	movk x11, 0xFF, lsl 16
 	bl rectangulo
 
+botones:
 	//-------BOTON CRUZ---------//
 
 	//dar las 4 esquinas , x3,x4,x5,x6

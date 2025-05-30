@@ -16451,7 +16451,7 @@ Desensamblado de la sección .text:
 	...
    900a0:	00080000 	.inst	0x00080000 ; undefined
    900a4:	00000000 	udf	#0
-   900a8:	00110960 	.inst	0x00110960 ; undefined
+   900a8:	00110990 	.inst	0x00110990 ; undefined
    900ac:	00000000 	udf	#0
    900b0:	00090008 	.inst	0x00090008 ; undefined
    900b4:	00000000 	udf	#0
@@ -17080,29 +17080,43 @@ Desensamblado de la sección .text:
    90908:	d65f03c0 	ret
 
 000000000009090c <boton>:
-   9090c:	d288080b 	mov	x11, #0x4040                	// #16448
-   90910:	f2a0080b 	movk	x11, #0x40, lsl #16
-   90914:	97fffeca 	bl	9043c <rectangulo>
-   90918:	91000463 	add	x3, x3, #0x1
-   9091c:	d1000484 	sub	x4, x4, #0x1
-   90920:	910004a5 	add	x5, x5, #0x1
-   90924:	d10004c6 	sub	x6, x6, #0x1
-   90928:	d29fffeb 	mov	x11, #0xffff                	// #65535
-   9092c:	f2a01feb 	movk	x11, #0xff, lsl #16
+   9090c:	d100c3ff 	sub	sp, sp, #0x30
+   90910:	f80003e3 	stur	x3, [sp]
+   90914:	f80083e4 	stur	x4, [sp, #8]
+   90918:	f80103e5 	stur	x5, [sp, #16]
+   9091c:	f80183e6 	stur	x6, [sp, #24]
+   90920:	f80203eb 	stur	x11, [sp, #32]
+   90924:	f80283fe 	stur	x30, [sp, #40]
+   90928:	d288080b 	mov	x11, #0x4040                	// #16448
+   9092c:	f2a0080b 	movk	x11, #0x40, lsl #16
    90930:	97fffec3 	bl	9043c <rectangulo>
    90934:	91000463 	add	x3, x3, #0x1
    90938:	d1000484 	sub	x4, x4, #0x1
    9093c:	910004a5 	add	x5, x5, #0x1
    90940:	d10004c6 	sub	x6, x6, #0x1
-   90944:	d29213cb 	mov	x11, #0x909e                	// #37022
-   90948:	f2a00fab 	movk	x11, #0x7d, lsl #16
+   90944:	d29fffeb 	mov	x11, #0xffff                	// #65535
+   90948:	f2a01feb 	movk	x11, #0xff, lsl #16
    9094c:	97fffebc 	bl	9043c <rectangulo>
+   90950:	91000463 	add	x3, x3, #0x1
+   90954:	d1000484 	sub	x4, x4, #0x1
+   90958:	910004a5 	add	x5, x5, #0x1
+   9095c:	d10004c6 	sub	x6, x6, #0x1
+   90960:	d29213cb 	mov	x11, #0x909e                	// #37022
+   90964:	f2a00fab 	movk	x11, #0x7d, lsl #16
+   90968:	97fffeb5 	bl	9043c <rectangulo>
 
-0000000000090950 <fin_boton>:
-   90950:	d65f03c0 	ret
+000000000009096c <fin_boton>:
+   9096c:	f84003e3 	ldur	x3, [sp]
+   90970:	f84083e4 	ldur	x4, [sp, #8]
+   90974:	f84103e5 	ldur	x5, [sp, #16]
+   90978:	f84183e6 	ldur	x6, [sp, #24]
+   9097c:	f84203eb 	ldur	x11, [sp, #32]
+   90980:	f84283fe 	ldur	x30, [sp, #40]
+   90984:	9100c3ff 	add	sp, sp, #0x30
+   90988:	d65f03c0 	ret
 
-0000000000090954 <InfLoop>:
-   90954:	14000000 	b	90954 <InfLoop>
+000000000009098c <InfLoop>:
+   9098c:	14000000 	b	9098c <InfLoop>
 	...
 
 Desensamblado de la sección .debug_line:
@@ -17114,7 +17128,7 @@ Desensamblado de la sección .debug_line:
    c:	000a0efb 	.inst	0x000a0efb ; undefined
   10:	01010101 	.inst	0x01010101 ; undefined
   14:	01000000 	.inst	0x01000000 ; undefined
-  18:	70706100 	adr	x0, e0c3b <InfLoop+0x502e7>
+  18:	70706100 	adr	x0, e0c3b <InfLoop+0x502af>
   1c:	0000732e 	udf	#29486
   20:	00000000 	udf	#0
   24:	00c80209 	.inst	0x00c80209 ; undefined
@@ -17174,7 +17188,7 @@ Desensamblado de la sección .debug_line:
   fc:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
  100:	d1031e1e 	sub	x30, x16, #0xc7
  104:	01021d00 	.inst	0x01021d00 ; undefined
- 108:	8b010100 	add	x0, x8, x1
+ 108:	99010100 	stlur	w0, [x8, #16]
  10c:	02000001 	.inst	0x02000001 ; undefined
  110:	00001c00 	udf	#7168
  114:	fb010400 	.inst	0xfb010400 ; undefined
@@ -17268,34 +17282,36 @@ Desensamblado de la sección .debug_line:
  274:	1e221e1f 	fcsel	s31, s16, s2, ne	// ne = any
  278:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
  27c:	201e1f1f 	.inst	0x201e1f1f ; undefined
- 280:	1e21201e 	.inst	0x1e21201e ; undefined
- 284:	1e1e1f1e 	.inst	0x1e1e1f1e ; undefined
- 288:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+ 280:	1e20201e 	.inst	0x1e20201e ; undefined
+ 284:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+ 288:	1e1e1f1e 	.inst	0x1e1e1f1e ; undefined
  28c:	1e1e1e1f 	.inst	0x1e1e1e1f ; undefined
  290:	1f1e1e1e 	fmadd	s30, s16, s30, s7
- 294:	00010221 	.inst	0x00010221 ; undefined
- 298:	004c0101 	.inst	0x004c0101 ; undefined
- 29c:	00020000 	.inst	0x00020000 ; undefined
- 2a0:	0000001b 	udf	#27
- 2a4:	0efb0104 	.inst	0x0efb0104 ; undefined
- 2a8:	0101000a 	.inst	0x0101000a ; undefined
- 2ac:	00000101 	udf	#257
- 2b0:	73000100 	.inst	0x73000100 ; undefined
- 2b4:	74726174 	.inst	0x74726174 ; undefined
- 2b8:	0000732e 	udf	#29486
- 2bc:	00000000 	udf	#0
- 2c0:	00000209 	udf	#521
- 2c4:	00000008 	udf	#8
- 2c8:	30030000 	adr	x0, 62c9 <MMIO_BASE_ALTA+0x23a9>
- 2cc:	201e1e01 	.inst	0x201e1e01 ; undefined
- 2d0:	1e201e21 	fcsel	s1, s17, s0, ne	// ne = any
- 2d4:	1e1e1e1f 	.inst	0x1e1e1e1f ; undefined
- 2d8:	1e1e1e21 	.inst	0x1e1e1e21 ; undefined
- 2dc:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
- 2e0:	021e1e1e 	.inst	0x021e1e1e ; undefined
- 2e4:	0001809c 	.inst	0x0001809c ; undefined
- 2e8:	Address 0x2e8 is out of bounds.
-
+ 294:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+ 298:	1e1f1e1e 	.inst	0x1e1f1e1e ; undefined
+ 29c:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+ 2a0:	02211e1e 	.inst	0x02211e1e ; undefined
+ 2a4:	01010001 	.inst	0x01010001 ; undefined
+ 2a8:	0000004c 	udf	#76
+ 2ac:	001b0002 	.inst	0x001b0002 ; undefined
+ 2b0:	01040000 	.inst	0x01040000 ; undefined
+ 2b4:	000a0efb 	.inst	0x000a0efb ; undefined
+ 2b8:	01010101 	.inst	0x01010101 ; undefined
+ 2bc:	01000000 	.inst	0x01000000 ; undefined
+ 2c0:	61747300 	.inst	0x61747300 ; undefined
+ 2c4:	732e7472 	.inst	0x732e7472 ; undefined
+ 2c8:	00000000 	udf	#0
+ 2cc:	02090000 	.inst	0x02090000 ; undefined
+ 2d0:	00080000 	.inst	0x00080000 ; undefined
+ 2d4:	00000000 	udf	#0
+ 2d8:	1e013003 	.inst	0x1e013003 ; undefined
+ 2dc:	1e21201e 	.inst	0x1e21201e ; undefined
+ 2e0:	1e1f1e20 	.inst	0x1e1f1e20 ; undefined
+ 2e4:	1e211e1e 	fcsel	s30, s16, s1, ne	// ne = any
+ 2e8:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+ 2ec:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+ 2f0:	809c021e 	.inst	0x809c021e ; undefined
+ 2f4:	01010001 	.inst	0x01010001 ; undefined
 
 Desensamblado de la sección .debug_info:
 
@@ -17316,7 +17332,7 @@ Desensamblado de la sección .debug_info:
   38:	010b0108 	.inst	0x010b0108 ; undefined
   3c:	04140000 	.inst	0x04140000 ; undefined
   40:	00000009 	udf	#9
-  44:	09580000 	.inst	0x09580000 ; undefined
+  44:	09900000 	.inst	0x09900000 ; undefined
   48:	00000009 	udf	#9
   4c:	005b0000 	.inst	0x005b0000 ; undefined
   50:	00060000 	.inst	0x00060000 ; undefined
@@ -17325,7 +17341,7 @@ Desensamblado de la sección .debug_info:
   5c:	0000002a 	udf	#42
   60:	00280002 	.inst	0x00280002 ; NYI
   64:	01080000 	.inst	0x01080000 ; undefined
-  68:	0000029a 	udf	#666
+  68:	000002a8 	udf	#680
   6c:	00080000 	.inst	0x00080000 ; undefined
   70:	00000000 	udf	#0
   74:	000900c8 	.inst	0x000900c8 ; undefined
@@ -17372,7 +17388,7 @@ Desensamblado de la sección .debug_aranges:
   3c:	00000000 	udf	#0
   40:	00090414 	.inst	0x00090414 ; undefined
   44:	00000000 	udf	#0
-  48:	00000544 	udf	#1348
+  48:	0000057c 	udf	#1404
 	...
   60:	0000002c 	udf	#44
   64:	005c0002 	.inst	0x005c0002 ; undefined
@@ -17389,7 +17405,7 @@ Desensamblado de la sección .debug_str:
    0:	2e707061 	uabdl	v1.4s, v3.4h, v16.4h
    4:	682f0073 	.inst	0x682f0073 ; undefined
    8:	2f656d6f 	.inst	0x2f656d6f ; undefined
-   c:	3075756c 	adr	x12, eaeb9 <InfLoop+0x5a565>
+   c:	3075756c 	adr	x12, eaeb9 <InfLoop+0x5a52d>
   10:	65442f35 	fmaxnmv	h21, p3, z25.h
   14:	72616373 	.inst	0x72616373 ; undefined
   18:	2f736167 	umlsl	v7.4s, v11.4h, v3.h[3]
