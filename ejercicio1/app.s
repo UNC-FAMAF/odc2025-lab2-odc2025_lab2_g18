@@ -261,6 +261,8 @@ paint:
 	movk x11, 0xFF, lsl 16
 	bl rectangulo
 
+
+
 botones:
 	//-------BOTON CRUZ---------//
 
@@ -322,6 +324,188 @@ botones:
 	movz x21, 0x4040, lsl 00 
 	movk x21, 0x40, lsl 16
 	bl bresenham
+
+
+gato:
+   //cuerpo 1
+   mov x3, 260
+   mov x4, 400
+   mov x5, 163
+   mov x6, 245
+   movz x11, 0x00, lsl 00
+   bl rectangulo
+
+
+   //pata
+   mov x9, #245     // x1
+   mov x10, #388     // y1
+   mov x11, #245     // x2
+   mov x12, #400     // y2
+   mov x13, #267     // x3
+   mov x14, #400     // y3
+   mov x15, #263     // x4
+   mov x16, #399     // y4
+   mov x21, #0x00      
+   mov x22, #250
+   mov x23, #395
+   bl cuadradoR
+
+	//pierna
+   mov x9, #245     // x1
+   mov x10, #350     // y1
+   mov x11, #245     // x2
+   mov x12, #388     // y2
+   mov x13, #254     // x3
+   mov x14, #392     // y3
+   mov x15, #250     // x4
+   mov x16, #346     // y4
+   mov x21, #0x00     
+   mov x22, #247
+   mov x23, #360
+   bl cuadradoR
+
+   //pecho
+   mov x9, #245     // x1
+   mov x10, #266     // y1
+   mov x11, #245     // x2
+   mov x12, #308     // y2
+   mov x13, #262     // x3
+   mov x14, #288     // y3
+   mov x15, #253     // x4
+   mov x16, #254     // y4
+   mov x21, #0x00  
+   mov x22, #250
+   mov x23, #300  
+   bl cuadradoR
+
+   //cuerpo2
+   mov x9, #163     // x1
+   mov x10, #260    // y1
+   mov x11, #235    // x2
+   mov x12, #282     // y2
+   mov x13, #270     // x3
+   mov x14, #232     // y3
+   mov x15, #204     // x4
+   mov x16, #205     // y4
+   mov x21, #0x00    
+   mov x22, #200
+   mov x23, #250  
+   bl cuadradoR
+   
+   //cuello
+   mov x11, #0x00
+   mov x15, 34
+   mov x3, 238 //xc
+   mov x4, 223 //yc
+   bl circulo
+
+
+   //cabeza
+   mov x11, #0x00
+   mov x15, 36
+   mov x3, 294 //xc
+   mov x4, 202 //yc
+   bl circulo
+
+
+   mov x11, #0x00
+   mov x15, 36
+   mov x3, 278 //xc
+   mov x4, 192 //yc
+   bl circulo 
+
+
+   //ojos
+   mov x11, #0xffffff
+   mov x15, 11
+   mov x3, 310 //xc
+   mov x4, 214 //yc
+   bl circulo
+   
+   mov x11, #0xffffff
+   mov x15, 11
+   mov x3, 277 //xc
+   mov x4, 192 //yc
+   bl circulo 
+
+
+   movz x11, 0x00FF, lsl 00
+   movk x11, 0xBB, lsl 16
+   mov x15, 7
+   mov x3, 308 //xc
+   mov x4, 212 //yc
+   bl circulo
+
+
+   movz x11, 0x00FF, lsl 00
+   movk x11, 0xBB, lsl 16
+   mov x15, 7
+   mov x3, 276 //xc
+   mov x4, 191 //yc
+   bl circulo 
+
+
+   //nariz
+   movz x11, 0x6285, lsl 00
+   movk x11, 0xF3, lsl 16
+   mov x15, 4
+   mov x3, 290 //xc
+   mov x4, 212 //yc
+   bl circulo
+
+
+   movz x11, 0x6285, lsl 00
+   movk x11, 0xF3, lsl 16
+   mov x15, 4
+   mov x3, 297 //xc
+   mov x4, 216 //yc
+   bl circulo 
+
+   movz x11, 0x6285, lsl 00
+   movk x11, 0xF3, lsl 16
+   mov x15, 4
+   mov x3, 294 //xc
+   mov x4, 216 //yc
+   bl circulo 
+
+
+   mov x11, 0x00
+   mov x15, 2
+   mov x3, 290 //xc
+   mov x4, 215 //yc
+   bl circulo 
+   mov x11, 0x00
+   mov x15, 2
+   mov x3, 296 //xc
+   mov x4, 218 //yc
+   bl circulo 
+
+   //orejas
+   mov x9, #241     // x1
+   mov x10, #180    // y1
+   mov x11, #255    // x2
+   mov x12, #140    // y2
+   mov x13, #302    // x3
+   mov x14, #124  // y3
+   mov x15, #290  // x4
+   mov x16, #161     // y4
+   mov x21, #0x00 
+   mov x22, #255
+   mov x23, #145
+   bl cuadradoR
+
+   mov x9, #321     // x1
+   mov x10, #210    // y1
+   mov x11, #350    // x2
+   mov x12, #188    // y2
+   mov x13, #345     // x3
+   mov x14, #145    // y3
+   mov x15, #320    // x4
+   mov x16, #175     // y4
+   mov x21, #0x00  
+   mov x22, #330
+   mov x23, #200
+   bl cuadradoR
 
 /* 
 odc_2025:
