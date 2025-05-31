@@ -1343,7 +1343,6 @@ gato:
    mov x4, 180 //yc
    bl circulo 
 
-
    //nariz
 
    movz x11, 0x6285, lsl 00
@@ -1378,41 +1377,6 @@ gato:
    mov x3, 298 //xc
    mov x4, 202 //yc
    bl circulo 
-
-   /*movz x11, 0x6285, lsl 00
-   movk x11, 0xF3, lsl 16
-   mov x15, 4
-   mov x3, 290 //xc
-   mov x4, 212 //yc
-   bl circulo
-
-
-   movz x11, 0x6285, lsl 00
-   movk x11, 0xF3, lsl 16
-   mov x15, 4
-   mov x3, 297 //xc
-   mov x4, 216 //yc
-   bl circulo 
-
-   movz x11, 0x6285, lsl 00
-   movk x11, 0xF3, lsl 16
-   mov x15, 4
-   mov x3, 294 //xc
-   mov x4, 216 //yc
-   bl circulo 
-
-   mov x11, 0x00
-   mov x15, 2
-   mov x3, 290 //xc
-   mov x4, 215 //yc
-   bl circulo 
-   mov x11, 0x00
-   mov x15, 2
-   mov x3, 296 //xc
-   mov x4, 218 //yc
-   bl circulo 
-   */
-
 
    //bigotes 
    mov x9,315

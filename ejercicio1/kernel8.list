@@ -18859,7 +18859,7 @@ Desensamblado de la sección .debug_info:
   18:	0009126c 	.inst	0x0009126c ; undefined
 	...
   24:	00000006 	udf	#6
-  28:	0000004f 	udf	#79
+  28:	0000004a 	udf	#74
   2c:	002a8001 	.inst	0x002a8001 ; NYI
   30:	00020000 	.inst	0x00020000 ; undefined
   34:	00000014 	udf	#20
@@ -18868,9 +18868,9 @@ Desensamblado de la sección .debug_info:
   40:	00000009 	udf	#9
   44:	1c4c0000 	ldr	s0, 98044 <InfLoop+0x63fc>
   48:	00000009 	udf	#9
-  4c:	005b0000 	.inst	0x005b0000 ; undefined
-  50:	00060000 	.inst	0x00060000 ; undefined
-  54:	004f0000 	.inst	0x004f0000 ; undefined
+  4c:	00560000 	.inst	0x00560000 ; undefined
+  50:	005f0000 	.inst	0x005f0000 ; undefined
+  54:	004a0000 	.inst	0x004a0000 ; undefined
   58:	80010000 	.inst	0x80010000 ; undefined
   5c:	0000002a 	udf	#42
   60:	00280002 	.inst	0x00280002 ; NYI
@@ -18880,9 +18880,9 @@ Desensamblado de la sección .debug_info:
   70:	00000000 	udf	#0
   74:	000900c8 	.inst	0x000900c8 ; undefined
   78:	00000000 	udf	#0
-  7c:	00000064 	udf	#100
-  80:	00000006 	udf	#6
-  84:	0000004f 	udf	#79
+  7c:	000000a8 	udf	#168
+  80:	0000005f 	udf	#95
+  84:	0000004a 	udf	#74
   88:	Address 0x88 is out of bounds.
 
 
@@ -18939,27 +18939,44 @@ Desensamblado de la sección .debug_str:
    0:	2e707061 	uabdl	v1.4s, v3.4h, v16.4h
    4:	682f0073 	.inst	0x682f0073 ; undefined
    8:	2f656d6f 	.inst	0x2f656d6f ; undefined
-   c:	3075756c 	adr	x12, eaeb9 <InfLoop+0x59271>
-  10:	65442f35 	fmaxnmv	h21, p3, z25.h
-  14:	72616373 	.inst	0x72616373 ; undefined
-  18:	2f736167 	umlsl	v7.4s, v11.4h, v3.h[3]
-  1c:	2042414c 	.inst	0x2042414c ; undefined
-  20:	7665756e 	.inst	0x7665756e ; undefined
-  24:	646f2f6f 	.inst	0x646f2f6f ; undefined
-  28:	32303263 	orr	w3, w19, #0x1fff0000
-  2c:	616c2d35 	.inst	0x616c2d35 ; undefined
-  30:	6f2d3262 	.inst	0x6f2d3262 ; undefined
-  34:	30326364 	adr	x4, 64ca1 <Set_Palette+0x1cc96>
-  38:	6c5f3532 	ldnp	d18, d13, [x9, #496]
-  3c:	5f326261 	.inst	0x5f326261 ; undefined
-  40:	2f383167 	.inst	0x2f383167 ; undefined
-  44:	72656a65 	.inst	0x72656a65 ; undefined
-  48:	69636963 	ldpsw	x3, x26, [x11, #-232]
-  4c:	4700316f 	.inst	0x4700316f ; undefined
-  50:	4120554e 	.inst	0x4120554e ; undefined
-  54:	2e322053 	usubl	v19.8h, v2.8b, v18.8b
-  58:	66003234 	.inst	0x66003234 ; undefined
-  5c:	616d726f 	.inst	0x616d726f ; undefined
-  60:	00732e73 	.inst	0x00732e73 ; undefined
-  64:	72617473 	.inst	0x72617473 ; undefined
-  68:	00732e74 	.inst	0x00732e74 ; undefined
+   c:	6c756170 	ldnp	d16, d24, [x11, #-176]
+  10:	6f442f61 	.inst	0x6f442f61 ; undefined
+  14:	656d7563 	fnmls	z3.h, p5/m, z11.h, z13.h
+  18:	736f746e 	.inst	0x736f746e ; undefined
+  1c:	63646f2f 	.inst	0x63646f2f ; undefined
+  20:	63646f2f 	.inst	0x63646f2f ; undefined
+  24:	35323032 	cbnz	w18, 64628 <Set_Palette+0x1c61d>
+  28:	62616c2d 	.inst	0x62616c2d ; undefined
+  2c:	646f2d32 	.inst	0x646f2d32 ; undefined
+  30:	32303263 	orr	w3, w19, #0x1fff0000
+  34:	616c5f35 	.inst	0x616c5f35 ; undefined
+  38:	675f3262 	.inst	0x675f3262 ; undefined
+  3c:	652f3831 	bfmls	z17.h, p6/m, z1.h, z15.h
+  40:	6372656a 	.inst	0x6372656a ; undefined
+  44:	6f696369 	umlsl2	v9.4s, v27.8h, v9.h[2]
+  48:	4e470031 	.inst	0x4e470031 ; undefined
+  4c:	53412055 	.inst	0x53412055 ; undefined
+  50:	342e3220 	cbz	w0, 5c694 <Set_Palette+0x14689>
+  54:	6f660032 	mla	v18.8h, v1.8h, v6.h[2]
+  58:	73616d72 	.inst	0x73616d72 ; undefined
+  5c:	2f00732e 	.inst	0x2f00732e ; undefined
+  60:	656d6f68 	fnmls	z8.h, p3/m, z27.h, z13.h
+  64:	75756c2f 	.inst	0x75756c2f ; undefined
+  68:	442f3530 	.inst	0x442f3530 ; undefined
+  6c:	61637365 	.inst	0x61637365 ; undefined
+  70:	73616772 	.inst	0x73616772 ; undefined
+  74:	42414c2f 	.inst	0x42414c2f ; undefined
+  78:	65756e20 	fnmls	z0.h, p3/m, z17.h, z21.h
+  7c:	6f2f6f76 	.inst	0x6f2f6f76 ; undefined
+  80:	30326364 	adr	x4, 64ced <Set_Palette+0x1cce2>
+  84:	6c2d3532 	stnp	d18, d13, [x9, #-304]
+  88:	2d326261 	stp	s1, s24, [x19, #-112]
+  8c:	3263646f 	.inst	0x3263646f ; undefined
+  90:	5f353230 	.inst	0x5f353230 ; undefined
+  94:	3262616c 	.inst	0x3262616c ; undefined
+  98:	3831675f 	.inst	0x3831675f ; undefined
+  9c:	656a652f 	fnmls	z15.h, p1/m, z9.h, z10.h
+  a0:	63696372 	.inst	0x63696372 ; undefined
+  a4:	00316f69 	.inst	0x00316f69 ; NYI
+  a8:	72617473 	.inst	0x72617473 ; undefined
+  ac:	00732e74 	.inst	0x00732e74 ; undefined
