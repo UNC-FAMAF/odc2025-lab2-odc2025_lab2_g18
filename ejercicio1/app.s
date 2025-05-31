@@ -390,125 +390,327 @@ botones:
 
 gato:
    //cuerpo 1
-   mov x3, 260
+   mov x3, 386
    mov x4, 400
-   mov x5, 163
-   mov x6, 245
+   mov x5, 162
+   mov x6, 262
    movz x11, 0x00, lsl 00
    bl rectangulo
 
 
    //pata
-   mov x9, #245     // x1
-   mov x10, #388     // y1
-   mov x11, #245     // x2
-   mov x12, #400     // y2
-   mov x13, #267     // x3
+   mov x9, #262     // x1
+   mov x10, #366     // y1
+   mov x11, #272     // x2
+   mov x12, #391     // y2
+   mov x13, #282     // x3
    mov x14, #400     // y3
-   mov x15, #263     // x4
-   mov x16, #399     // y4
-   mov x21, #0x00      
-   mov x22, #250
-   mov x23, #395
-   bl cuadradoR
-
-	//pierna
-   mov x9, #245     // x1
-   mov x10, #350     // y1
-   mov x11, #245     // x2
-   mov x12, #388     // y2
-   mov x13, #254     // x3
-   mov x14, #392     // y3
-   mov x15, #250     // x4
-   mov x16, #346     // y4
+   mov x15, #262     // x4
+   mov x16, #400     // y4
    mov x21, #0x00     
-   mov x22, #247
-   mov x23, #360
-   bl cuadradoR
-
-   //pecho
-   mov x9, #245     // x1
-   mov x10, #266     // y1
-   mov x11, #245     // x2
-   mov x12, #308     // y2
-   mov x13, #262     // x3
-   mov x14, #288     // y3
-   mov x15, #253     // x4
-   mov x16, #254     // y4
-   mov x21, #0x00  
-   mov x22, #250
-   mov x23, #300  
-   bl cuadradoR
-
-   //cuerpo2
-   mov x9, #163     // x1
-   mov x10, #260    // y1
-   mov x11, #235    // x2
-   mov x12, #282     // y2
-   mov x13, #270     // x3
-   mov x14, #232     // y3
-   mov x15, #204     // x4
-   mov x16, #205     // y4
-   mov x21, #0x00    
-   mov x22, #200
-   mov x23, #250  
+   mov x22, #268
+   mov x23, #394
    bl cuadradoR
    
-   //cuello
-   mov x11, #0x00
-   mov x15, 34
-   mov x3, 238 //xc
-   mov x4, 223 //yc
-   bl circulo
+   //cuerpo 2
+   mov x9, #162     // x1
+   mov x10, #375     // y1
+   mov x11, #265     // x2
+   mov x12, #375     // y2
+   mov x13, #262     // x3
+   mov x14, #386     // y3
+   mov x15, #162     // x4
+   mov x16, #386     // y4   
+   mov x22, #213
+   mov x23, #381
+   bl cuadradoR
 
+   //cuerpo 3
+   mov x3, 338
+   mov x4, 375
+   mov x5, 162
+   mov x6, 265
+   movz x11, 0x00, lsl 00
+   bl rectangulo
+
+   //cuerpo 4
+   mov x9, #162     // x1
+   mov x10, #316     // y1
+   mov x11, #256     // x2
+   mov x12, #316     // y2
+   mov x13, #265     // x3
+   mov x14, #388     // y3
+   mov x15, #162     // x4
+   mov x16, #338     // y4
+   mov x22, #205
+   mov x23, #326  
+   bl cuadradoR
+
+   //cuerpo 5
+   mov x3, 307
+   mov x4, 316
+   mov x5, 162
+   mov x6, 256
+   movz x11, 0x00, lsl 00
+   bl rectangulo
+
+   //cuerpo 6
+   mov x9, #162     // x1
+   mov x10, #307    // y1
+   mov x11, #256    // x2
+   mov x12, #307     // y2
+   mov x13, #274     // x3
+   mov x14, #277     // y3
+   mov x15, #266     // x4
+   mov x16, #240     // y4
+   mov x22, #226
+   mov x23, #277  
+   bl cuadradoR
+   
+   //cuerpo 7
+   mov x9, #162     // x1
+   mov x10, #307    // y1
+   mov x11, #266    // x2
+   mov x12, #240     // y2
+   mov x13, #180     // x3
+   mov x14, #218     // y3
+   mov x15, #162     // x4
+   mov x16, #248     // y4 
+   mov x22, #196
+   mov x23, #238  
+   bl cuadradoR
+   
+   //cuerpo 8
+   mov x9, #180     // x1
+   mov x10, #218    // y1
+   mov x11, #206    // x2
+   mov x12, #194     // y2
+   mov x13, #278     // x3
+   mov x14, #231     // y3
+   mov x15, #266     // x4
+   mov x16, #240     // y4
+   mov x22, #229
+   mov x23, #218  
+   bl cuadradoR
+   
+   //cuerpo 9
+   mov x9, #206     // x1
+   mov x10, #194    // y1
+   mov x11, #247    // x2
+   mov x12, #173     // y2
+   mov x13, #290     // x3
+   mov x14, #221     // y3
+   mov x15, #277     // x4
+   mov x16, #231     // y4  
+   mov x22, #251
+   mov x23, #202
+   bl cuadradoR
+   
+   //cuerpo 10
+   mov x9, #247     // x1
+   mov x10, #173    // y1
+   mov x11, #325    // x2
+   mov x12, #174     // y2
+   mov x13, #290     // x3
+   mov x14, #221     // y3
+   mov x15, #290     // x4
+   mov x16, #221     // y4 
+   mov x22, #278
+   mov x23, #192
+   bl cuadradoR
+
+   //cuerpo 11
+   mov x9, #247     // x1
+   mov x10, #173    // y1
+   mov x11, #253    // x2
+   mov x12, #149     // y2
+   mov x13, #306     // x3
+   mov x14, #143     // y3
+   mov x15, #325     // x4
+   mov x16, #174     // y4
+   mov x22, #280
+   mov x23, #158
+   bl cuadradoR
+   
+   //oreja 1
+   mov x9, #253     // x1
+   mov x10, #149    // y1
+   mov x11, #258    // x2
+   mov x12, #133     // y2
+   mov x13, #282     // x3
+   mov x14, #112     // y3
+   mov x15, #306     // x4
+   mov x16, #143     // y4 
+   mov x22, #277
+   mov x23, #134
+   bl cuadradoR
+   
+   //oreja 2
+   mov x9, #282     // x1
+   mov x10, #112    // y1
+   mov x11, #318    // x2
+   mov x12, #103     // y2
+   mov x13, #322     // x3
+   mov x14, #106     // y3
+   mov x15, #306     // x4
+   mov x16, #143     // y4
+   mov x22, #306
+   mov x23, #117
+   bl cuadradoR
+   
+   //oreja 3
+   mov x9, #306     // x1
+   mov x10, #143    // y1
+   mov x11, #342    // x2
+   mov x12, #205     // y2
+   mov x13, #364     // x3
+   mov x14, #181     // y3
+   mov x15, #364     // x4
+   mov x16, #181     // y4
+   mov x22, #344
+   mov x23, #178
+   bl cuadradoR
+   
+   //oreja 4
+   mov x9, #330     // x1
+   mov x10, #158    // y1
+   mov x11, #363    // x2
+   mov x12, #132     // y2
+   mov x13, #369     // x3
+   mov x14, #136     // y3
+   mov x15, #364     // x4
+   mov x16, #181     // y4 
+   mov x22, #351
+   mov x23, #154
+   bl cuadradoR
+   
+   //oreja interior 1
+   mov x9, #261     // x1
+   mov x10, #144    // y1
+   mov x11, #264    // x2
+   mov x12, #134     // y2
+   mov x13, #285     // x3
+   mov x14, #118     // y3
+   mov x15, #295     // x4
+   mov x16, #140     // y4  
+   movz x21, 0x007B, lsl 00
+   movk x21, 0x5CBA, lsl 16
+   mov x22, #277
+   mov x23, #134
+   bl cuadradoR
+   
+  
+   //oreja interior 2
+   mov x9, #285     // x1
+   mov x10, #118    // y1
+   mov x11, #316    // x2
+   mov x12, #108     // y2
+   mov x13, #316     // x3
+   mov x14, #115     // y3
+   mov x15, #295     // x4
+   mov x16, #140     // y4  
+   movz x21, 0x007B, lsl 00
+   movk x21, 0x5CBA, lsl 16
+   mov x22, #300
+   mov x23, #120
+   bl cuadradoR
+   
+   //oreja interior 3
+   mov x9, #344     // x1
+   mov x10, #194    // y1
+   mov x11, #349    // x2
+   mov x12, #194     // y2
+   mov x13, #359     // x3
+   mov x14, #179     // y3
+   mov x15, #340     // x4
+   mov x16, #176     // y4  
+   movz x21, 0x007B, lsl 00
+   movk x21, 0x5CBA, lsl 16
+   mov x22, #348
+   mov x23, #185
+   bl cuadradoR
+   
+   //oreja interior 4
+   mov x9, #340     // x1
+   mov x10, #176    // y1
+   mov x11, #364    // x2
+   mov x12, #137     // y2
+   mov x13, #366     // x3
+   mov x14, #139     // y3
+   mov x15, #360     // x4
+   mov x16, #178     // y4  
+   movz x21, 0x007B, lsl 00
+   movk x21, 0x5CBA, lsl 16
+   mov x22, #356
+   mov x23, #161
+   bl cuadradoR
 
    //cabeza
    mov x11, #0x00
-   mov x15, 36
-   mov x3, 294 //xc
-   mov x4, 202 //yc
+   mov x15, 30
+   mov x3, 313 //xc
+   mov x4, 200 //yc
    bl circulo
 
-
-   mov x11, #0x00
-   mov x15, 36
-   mov x3, 278 //xc
-   mov x4, 192 //yc
-   bl circulo 
-
-
-   //ojos
+   //ojos 1
    movz x11, 0x06D2, lsl 00
    movk x11, 0x8A, lsl 16
    mov x15, 11
-   mov x3, 310 //xc
-   mov x4, 214 //yc
+   mov x3, 326 //xc
+   mov x4, 199 //yc
    bl circulo
+
+   //PUPILA 1
+   mov x11, #0x00
+   mov x15, 10
+   mov x3, 317 //xc
+   mov x4, 198 //yc
+   bl circulo
+
+   //ojos 2
+   movz x11, 0x06D2, lsl 00
+   movk x11, 0x8A, lsl 16
+   mov x15, 12
+   mov x3, 289 //xc
+   mov x4, 178 //yc
+   bl circulo 
    
-   movz x11, 0x06D2, lsl 00
-   movk x11, 0x8A, lsl 16
+   //PUPILA 2
+   mov x11, #0x00
    mov x15, 11
-   mov x3, 277 //xc
-   mov x4, 192 //yc
-   bl circulo 
-
-
-   mov x11, #0x00
-   mov x15, 7
-   mov x3, 308 //xc
-   mov x4, 212 //yc
-   bl circulo
-
-
-   mov x11, #0x00
-   mov x15, 7
-   mov x3, 276 //xc
-   mov x4, 191 //yc
+   mov x3, 283 //xc
+   mov x4, 180 //yc
    bl circulo 
 
 
    //nariz
+
    movz x11, 0x6285, lsl 00
+   movk x11, 0xF3, lsl 16
+   mov x15, 6
+   mov x3, 309 //xc
+   mov x4, 207 //yc
+   bl circulo
+
+   movz x11, 0x6285, lsl 00
+   movk x11, 0xF3, lsl 16
+   mov x15, 6
+   mov x3, 301 //xc
+   mov x4, 202 //yc
+   bl circulo
+   
+   mov x11, 0x00
+   mov x15, 5
+   mov x3, 309 //xc
+   mov x4, 209 //yc
+   bl circulo 
+
+   mov x11, 0x00
+   mov x15, 5
+   mov x3, 298 //xc
+   mov x4, 202 //yc
+   bl circulo 
+   /*movz x11, 0x6285, lsl 00
    movk x11, 0xF3, lsl 16
    mov x15, 4
    mov x3, 290 //xc
@@ -530,7 +732,6 @@ gato:
    mov x4, 216 //yc
    bl circulo 
 
-
    mov x11, 0x00
    mov x15, 2
    mov x3, 290 //xc
@@ -541,82 +742,110 @@ gato:
    mov x3, 296 //xc
    mov x4, 218 //yc
    bl circulo 
+*/
 
-   //orejas
-   mov x9, #241     // x1
-   mov x10, #180    // y1
-   mov x11, #255    // x2
-   mov x12, #140    // y2
-   mov x13, #302    // x3
-   mov x14, #124  // y3
-   mov x15, #290  // x4
-   mov x16, #161     // y4
-   mov x21, #0x00 
-   mov x22, #255
-   mov x23, #145
+
+   //bigotes 
+   mov x9,315
+   mov x10,213
+   mov x11,353
+   mov x12,237
+   mov x21, 0xbe
+   bl bresenham
+   
+   mov x9,313
+   mov x10,218
+   mov x11,336
+   mov x12,243
+   mov x21, 0xbe
+   bl bresenham
+
+   mov x9, 311
+   mov x10,219
+   mov x11,321
+   mov x12,244
+   mov x21, 0xbe
+   bl bresenham
+   
+   
+   mov x9,290
+   mov x10,197
+   mov x11,261
+   mov x12,177
+   mov x21, 0xffffff
+   bl bresenham
+
+   mov x9,287
+   mov x10,200
+   mov x11,255
+   mov x12,191
+   mov x21, 0xffffff
+   bl bresenham
+
+   mov x9,285
+   mov x10,203
+   mov x11,264
+   mov x12,206
+   mov x21, 0xffffff
+   bl bresenham
+   
+   //pestañas
+   mov x9,332
+   mov x10,176
+   mov x11,359
+   mov x12,166
+   mov x21, 0xbe
+   bl bresenham
+   
+   mov x9,332
+   mov x10,176
+   mov x11,372
+   mov x12,144
+   mov x21, 0xbe
+   bl bresenham
+   
+   mov x9,310
+   mov x10,171
+   mov x11,328
+   mov x12,131
+   mov x21, 0xbe
+   bl bresenham
+   
+   mov x9,308
+   mov x10,159
+   mov x11,314
+   mov x12,111
+   mov x21, 0xbe
+   bl bresenham
+   
+   //cejas
+   mov x9, #324     // x1
+   mov x10, #184    // y1
+   mov x11, #329    // x2
+   mov x12, #181     // y2
+   mov x13, #329     // x3
+   mov x14, #176     // y3
+   mov x15, #324     // x4
+   mov x16, #180     // y4  
+   movz x21, 0x007B, lsl 00
+   movk x21, 0x5CBA, lsl 16
+   mov x22, #327
+   mov x23, #180
    bl cuadradoR
-
-   mov x9, #321     // x1
-   mov x10, #210    // y1
-   mov x11, #350    // x2
-   mov x12, #188    // y2
-   mov x13, #345     // x3
-   mov x14, #145    // y3
-   mov x15, #320    // x4
-   mov x16, #175     // y4
-   mov x21, #0x00  
-   mov x22, #330
-   mov x23, #200
+   
+   mov x9, #306     // x1
+   mov x10, #176    // y1
+   mov x11, #312    // x2
+   mov x12, #172     // y2
+   mov x13, #312     // x3
+   mov x14, #163     // y3
+   mov x15, #306     // x4
+   mov x16, #167     // y4  
+   movz x21, 0x007B, lsl 00
+   movk x21, 0x5CBA, lsl 16
+   mov x22, #309
+   mov x23, #169
    bl cuadradoR
-
-
-   //bigotes
-   mov x9,305
-   mov x10,228
-   mov x11,340
-   mov x12,250
-   mov x21, 0xbe
-   bl bresenham
-   
-   mov x9,303
-   mov x10,232
-   mov x11,327
-   mov x12,260
-   mov x21, 0xbe
-   bl bresenham
-
-   mov x9,299
-   mov x10,234
-   mov x11,312
-   mov x12,268
-   mov x21, 0xbe
-   bl bresenham
-   
-   
-   
-   
-   mov x9,275
-   mov x10,210
-   mov x11,240
-   mov x12,190
-   mov x21, 0xbe
-   bl bresenham
-
-   mov x9,275
-   mov x10,215
-   mov x11,245
-   mov x12,208
-   mov x21, 0xbe
-   bl bresenham
-
-   mov x9,275
-   mov x10,220
-   mov x11,240
-   mov x12,225
-   mov x21, 0xbe
-   bl bresenham
-   
-
 
 /* 
 odc_2025:
