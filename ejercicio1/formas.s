@@ -17,6 +17,8 @@
     .global lineas_boton_expandir_h
     .global lineas_boton_expandir_v
     .global odc_2025
+    .global rectangulos_fondo
+    .global pixel_ventana
 
 	//.global main
 
@@ -27,7 +29,6 @@
 
 // FONDO LISO, color en x11
 //ANTES DE LLAMAR A PANTALLA ES NECESARIO ASIGNAR VALOR A X11!!
-
 pantalla:
 	    mov x2, SCREEN_HEIGH         // Y Size
     loop1:
@@ -42,9 +43,8 @@ pantalla:
 fin_pantalla:
 ret
 
-//CUADRADO DEFINIDO x11 color, valores de eje x = x5 hasta x6, valores de y = x3 hasta x4
-//ANTES DE LLAMAR A CUADRADO NECESARIO ASIGNAR VALORES A X3,X4,X5,X6 Y X11!!
-
+/*ANTES DE LLAMAR A RECTANGULO ES NECESARIO ASIGNAR VALORES A
+ X3 (X INICIAL),X4(X FINAL),X5(Y INICIAL),X6(Y FINAL) Y X11(COLOR!!*/
 rectangulo:
 
         sub sp,sp,#72
@@ -102,9 +102,32 @@ fin_cuadro:
     add sp,sp,#72
 ret
 
+/*ANTES DE LLAMAR A RECTANGULO_FONDO  ES NECESARIO ASIGNAR VALORES A 
+X3 (X INICIAL),X4(X FINAL),X5(Y INICIAL),X6(Y FINAL) Y X11(COLOR)!!*/
+rectangulos_fondo:
+    sub sp,sp,#32
+    stur x5,[sp,#0] 
+    stur x6,[sp,#8]
+    stur x11,[sp,#16]
+    stur x30,[sp,#24] 
+
+    add x3, x3, 4
+    add x4, x4, 4
+    mov x5, 162
+	mov x6, 476
+    bl rectangulo
+fin_cuadrado_fondo:
+
+    ldur x5,[sp,#0] 
+    ldur x6,[sp,#8]
+    ldur x11,[sp,#16]
+    ldur x30,[sp,#24]
+    add sp,sp,#32
+
+ret
+
 //MALLADO
 //ANTES DE LLAMAR A CUADRADO NECESARIO ASIGNAR VALORES A X3,X4,X5,X6 Y X11!!
-
 mallado:
 	    mov x9, x5
     malla_y:
@@ -134,7 +157,7 @@ fin_mallado:
 ret
 
 //CIRCULO
-//ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A yc=X4, xc=X3, radio=X15 y x11 color.
+//ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A xc=X3, yc=X4, radio=X15 y x11 color.
 circulo:
 
         sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
@@ -447,6 +470,7 @@ flood_fill:
     ret
 
 flood_fill_der:
+
     sub sp, sp, #48
     stur x3, [sp, #0]
     stur x4,[sp, #8]
@@ -495,11 +519,10 @@ flood_fill_der:
     ldur x23,[sp, #32]
     ldur x30,[sp, #40]
     add sp, sp, #48
-    ret
+ret
 
 //PIXEL
-//ANTES DE LLAMAR A PIXEL, DAR VALORES DE X5 , X3 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
-
+//ANTES DE LLAMAR A PIXEL o PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 pixel:
         sub sp,sp,#64
         stur x3,[sp,#0]  
@@ -553,8 +576,67 @@ fin_pixel:
         ldur x9,[sp,#48]
         ldur x30,[sp,#56] 
         add  sp,sp,#64
-    ret
+ret
 
+//ANTES DE LLAMAR A PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
+pixel_ventana:
+        sub sp,sp,#64
+        stur x3,[sp,#0]  
+        stur x4,[sp,#8]
+        stur x5,[sp,#16] 
+        stur x6,[sp,#24]
+        stur x7,[sp,#32]
+        stur x8,[sp,#40]
+        stur x9,[sp,#48]
+        stur x30,[sp,#56] 
+        
+        add x4, x3, 5
+        add x6, x5, 5
+
+        mov x9, x5            // Guarda el valor inicial de x5
+    pixel_ventana_y:
+        cmp x3, x4           // mientras y  <= x4
+        b.ge fin_pixel_ventana
+        
+        mov x5, x9
+    pixel_ventana_x:
+        cmp x5, x6        // mientras x <= x6
+        b.ge siguiente_filapix_ventana
+
+       
+    // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
+
+	    mov x8, SCREEN_WIDTH
+        mov x7, x3
+        mul x7, x7, x8
+        add x7, x7, x5
+        lsl x7, x7, 2
+        add x7, x20, x7
+
+        stur w11, [x7]       // Escribe el color del cuadrado
+
+        add x5, x5, 1
+        b pixel_ventana_x
+
+    siguiente_filapix_ventana:
+        add x3, x3, 1
+        b pixel_y
+
+fin_pixel_ventana:
+        ldur x3,[sp,#0]  
+        ldur x4,[sp,#8]
+        ldur x5,[sp,#16] 
+        ldur x6,[sp,#24]
+        ldur x7,[sp,#32]
+        ldur x8,[sp,#40]
+        ldur x9,[sp,#48]
+        ldur x30,[sp,#56] 
+        add  sp,sp,#64
+
+ret
+
+//ANTES DE LLAMAR A BOTON ASIGNAR X3(Y INICIAL), X4(Y FINAL), X5(X INICIAL), X6(X FINAL) Y X11 (COLOR)
+//CREA LOS CUADRADOS PARA LOS BOTONES
 boton: 
         sub sp,sp,#48
         stur x3,[sp,#0] 
@@ -563,15 +645,15 @@ boton:
         stur x6,[sp,#24]
         stur x11,[sp,#32]
         stur x30,[sp,#40]
-    // negro
+        // negro
 		movz x11, 0x4040, lsl 00 
 		movk x11, 0x40, lsl 16
 		bl rectangulo
 		//blanco
-		add x3, x3, 1 //57
-		sub x4, x4, 1//68
-		add x5, x5, 1//470
-		sub x6, x6, 1//481
+		add x3, x3, 1
+		sub x4, x4, 1
+		add x5, x5, 1
+		sub x6, x6, 1
 		movz x11, 0xFFFF, lsl 00 
 		movk x11, 0xFF, lsl 16
 		bl rectangulo
@@ -593,6 +675,8 @@ fin_boton:
         add sp,sp,#48
 ret
 
+//ASIGANR LOS VALORES X10(Y0), X12(Y1) Y X21(COLOR)
+//CREA TRES LINEAS HORIZONTALES PARA DIBUJAR EL BOTON EXPANDIR
 lineas_boton_expandir_h:
 
     sub sp,sp,#48
@@ -626,6 +710,8 @@ fin_lineas_boton_expandir_h:
 
 ret
 
+//ASIGANR LOS VALORES X9(X0), X11(X1) Y X21(COLOR)
+//CREA TRES LINEAS VERTICALES PARA DIBUJAR EL BOTON EXPANDIR
 lineas_boton_expandir_v:
 
     sub sp,sp,#48
@@ -658,6 +744,7 @@ fin_lineas_boton_expandir_v:
     add sp,sp,#48
 
 ret
+
 odc_2025:
 
     mov x7, x5 //guardo el primer valor de x

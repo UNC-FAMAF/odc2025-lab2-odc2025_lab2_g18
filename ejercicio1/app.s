@@ -15,7 +15,11 @@
 	.global boton
 	.global lineas_boton_expandir_h
 	.global lineas_boton_expandir_v
-   .global odc_2025
+    .global odc_2025
+	.global rectangulos_fondo
+	.global pixel_ventana
+
+
 main:
 
 	// x0 contiene la direccion base del framebuffer
@@ -387,6 +391,662 @@ botones:
 	mov x11,442
 	mov x12,65
 	bl lineas_boton_expandir_v
+fin_botones:
+
+fondo2:
+
+	//-------DEGRADE------//
+ 	mov x3, 80
+	mov x4, 84
+	mov x5, 162
+	mov x6, 476
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulo
+
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x0F33, lsl 00 
+	movk x11, 0x0A, lsl 16
+	bl rectangulos_fondo
+	
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1655, lsl 00 
+	movk x11, 0x0E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1244, lsl 00 
+	movk x11, 0x0C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1966, lsl 00 
+	movk x11, 0x10, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1655, lsl 00 
+	movk x11, 0x0E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1655, lsl 00 
+	movk x11, 0x0E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1966, lsl 00 
+	movk x11, 0x10, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1655, lsl 00 
+	movk x11, 0x0E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1D77, lsl 00 
+	movk x11, 0x12, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1655, lsl 00 
+	movk x11, 0x0E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2088, lsl 00 
+	movk x11, 0x15, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1D77, lsl 00 
+	movk x11, 0x12, lsl 16
+	bl rectangulos_fondo
+
+ 	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x1C84, lsl 00 
+	movk x11, 0x21, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2088, lsl 00 
+	movk x11, 0x15, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2499, lsl 00 
+	movk x11, 0x17, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2499, lsl 00 
+	movk x11, 0x17, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x307A, lsl 00 
+	movk x11, 0x49, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2C6B, lsl 00 
+	movk x11, 0x82, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2C6B, lsl 00 
+	movk x11, 0x82, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2D73, lsl 00 
+	movk x11, 0x6B, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2C6B, lsl 00 
+	movk x11, 0x82, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x2C6B, lsl 00 
+	movk x11, 0x82, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x3061, lsl 00 
+	movk x11, 0x8C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x3061, lsl 00 
+	movk x11, 0x8C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4D69, lsl 00 
+	movk x11, 0x9E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x3061, lsl 00 
+	movk x11, 0x8C, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4D69, lsl 00 
+	movk x11, 0x9E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4D69, lsl 00 
+	movk x11, 0x9E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4C65, lsl 00 
+	movk x11, 0xC0, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4D69, lsl 00 
+	movk x11, 0x9E, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4C65, lsl 00 
+	movk x11, 0xC0, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x3C51, lsl 00 
+	movk x11, 0xC6, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x3C51, lsl 00 
+	movk x11, 0xC6, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4C59, lsl 00 
+	movk x11, 0xD7, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x3C51, lsl 00 
+	movk x11, 0xC6, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4C59, lsl 00 
+	movk x11, 0xD7, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4C59, lsl 00 
+	movk x11, 0xD7, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x5F59, lsl 00 
+	movk x11, 0xD9, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x4C59, lsl 00 
+	movk x11, 0xD7, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x5F59, lsl 00 
+	movk x11, 0xD9, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x5F59, lsl 00 
+	movk x11, 0xD9, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x7159, lsl 00 
+	movk x11, 0xE2, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x5F59, lsl 00 
+	movk x11, 0xD9, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x7159, lsl 00 
+	movk x11, 0xE2, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x5F59, lsl 00 
+	movk x11, 0xD9, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x7159, lsl 00 
+	movk x11, 0xE2, lsl 16
+	bl rectangulos_fondo
+
+	movz x11, 0x7159, lsl 00 
+	movk x11, 0xE2, lsl 16
+	bl rectangulos_fondo
+	//------FIN DEGRADE------//
+
+	//-----EDIFICIOS----//
+	mov x3, 360
+	mov x4, 400
+	mov x5, 200
+	mov x6, 290
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 330
+	mov x4, 400
+	mov x5, 290
+	mov x6, 310
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 320
+	mov x4, 400
+	mov x5, 310
+	mov x6, 320
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 335
+	mov x4, 400
+	mov x5, 320
+	mov x6, 345
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 355
+	mov x4, 400
+	mov x5, 345
+	mov x6, 375
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 325
+	mov x4, 400
+	mov x5, 375
+	mov x6, 390
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 310
+	mov x4, 400
+	mov x5, 390
+	mov x6, 415
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 350
+	mov x4, 400
+	mov x5, 415
+	mov x6, 450
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 360
+	mov x4, 400
+	mov x5, 450
+	mov x6, 460
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	mov x3, 340
+	mov x4, 400
+	mov x5, 460
+	mov x6, 476
+	movz x11, 0x3333, lsl 00 
+	movk x11, 0x33, lsl 16
+	bl rectangulo
+
+	//------VENTANAS DE LOS EDIFICIOS------//
+	//edificio 1//
+	mov x3, 363
+	mov x5, 266
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 387
+	mov x5, 266
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 363
+	mov x5, 274
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 379
+	mov x5, 274
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	//edificio 2//
+	mov x3, 335
+	mov x5, 294
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+	
+	mov x3, 343
+	mov x5, 294
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 351
+	mov x5, 294
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 367
+	mov x5, 294
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 375
+	mov x5, 294
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 391
+	mov x5, 294
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 335
+	mov x5, 305
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 351
+	mov x5, 305
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 359
+	mov x5, 305
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	//edificio 4//
+	mov x3, 340
+	mov x5, 323
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 348
+	mov x5, 323
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 372
+	mov x5, 323
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 356
+	mov x5, 332
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 380
+	mov x5, 332
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 388
+	mov x5, 332
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	//edificio 6//
+	mov x3, 335
+	mov x5, 377
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 343
+	mov x5, 377
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 367
+	mov x5, 377
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 367
+	mov x5, 383
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 383
+	mov x5, 383
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	//edificio 7//
+	mov x3, 312
+	mov x5, 405
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 320
+	mov x5, 405
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 344
+	mov x5, 405
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 360
+	mov x5, 405
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 368
+	mov x5, 405
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 384
+	mov x5, 405
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	//edificio 8//
+	mov x3, 355
+	mov x5, 441
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 364
+	mov x5, 441
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 382
+	mov x5, 441
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 374
+	mov x5, 423
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+	mov x3, 382
+	mov x5, 423
+	movz x11, 0x9B24, lsl 00 
+	movk x11, 0xC7, lsl 16
+	bl pixel_ventana
+
+
+	//------LUNA-----//
+	mov x3, 423
+	mov x4,130
+	mov x15,31
+	movz x11, 0xD1D1, lsl 00 
+	movk x11, 0xD1, lsl 16
+	bl circulo
+
+	mov x3, 423
+	mov x4,130
+	mov x15,30
+	movz x11, 0xB5B5, lsl 00 
+	movk x11, 0xB5, lsl 16
+	bl circulo
+
+	mov x3, 420
+	mov x4,130
+	mov x15,27
+	movz x11, 0xD1D1, lsl 00 
+	movk x11, 0xD1, lsl 16
+	bl circulo
+
+	mov x3, 417
+	mov x4,130
+	mov x15,24
+	movz x11, 0xB5B5, lsl 00 
+	movk x11, 0xB5, lsl 16
+	bl circulo
+
+	mov x3,415
+	mov x4,130
+	mov x15,22
+	movz x11, 0x9C9C, lsl 00 
+	movk x11, 0x9C, lsl 16
+	bl circulo
+
+	mov x3,413
+	mov x4,130
+	mov x15,20
+	movz x11, 0xB5B5, lsl 00 
+	movk x11, 0xB5, lsl 16
+	bl circulo
+fin_fondo2:
 
 
 gato:
