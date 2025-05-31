@@ -664,8 +664,8 @@ gato:
    //PUPILA 1
    mov x11, #0x00
    mov x15, 10
-   mov x3, 317 //xc
-   mov x4, 198 //yc
+   mov x3, 320 //xc
+   mov x4, 200 //yc
    bl circulo
 
    //ojos 2
@@ -699,10 +699,17 @@ gato:
    mov x3, 301 //xc
    mov x4, 202 //yc
    bl circulo
+
+   movz x11, 0x6285, lsl 00
+   movk x11, 0xF3, lsl 16
+   mov x15, 6
+   mov x3, 304 //xc
+   mov x4, 207 //yc
+   bl circulo
    
    mov x11, 0x00
    mov x15, 5
-   mov x3, 309 //xc
+   mov x3, 310 //xc
    mov x4, 209 //yc
    bl circulo 
 
@@ -752,21 +759,21 @@ gato:
    mov x10,213
    mov x11,353
    mov x12,237
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
    
    mov x9,313
    mov x10,218
    mov x11,336
    mov x12,243
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
 
    mov x9, 311
    mov x10,219
    mov x11,321
    mov x12,244
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
    
    
@@ -796,28 +803,28 @@ gato:
    mov x10,176
    mov x11,359
    mov x12,166
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
    
    mov x9,332
    mov x10,176
    mov x11,372
    mov x12,144
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
    
    mov x9,310
    mov x10,171
    mov x11,328
    mov x12,131
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
    
    mov x9,308
    mov x10,159
    mov x11,314
    mov x12,111
-   mov x21, 0xbe
+   mov x21, 0xffffff
    bl bresenham
    
    //cejas
@@ -829,8 +836,8 @@ gato:
    mov x14, #176     // y3
    mov x15, #324     // x4
    mov x16, #180     // y4  
-   movz x21, 0x007B, lsl 00
-   movk x21, 0x5CBA, lsl 16
+   movz x21, 0x6060, lsl 00
+   movk x21, 0x60, lsl 16
    mov x22, #327
    mov x23, #180
    bl cuadradoR
@@ -843,8 +850,8 @@ gato:
    mov x14, #163     // y3
    mov x15, #306     // x4
    mov x16, #167     // y4  
-   movz x21, 0x007B, lsl 00
-   movk x21, 0x5CBA, lsl 16
+   movz x21, 0x6060, lsl 00
+   movk x21, 0x60, lsl 16
    mov x22, #309
    mov x23, #169
    bl cuadradoR
