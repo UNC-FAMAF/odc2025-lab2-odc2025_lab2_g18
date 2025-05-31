@@ -15,6 +15,7 @@
 	.global boton
 	.global lineas_boton_expandir_h
 	.global lineas_boton_expandir_v
+   .global odc_2025
 main:
 
 	// x0 contiene la direccion base del framebuffer
@@ -710,6 +711,7 @@ gato:
    mov x3, 298 //xc
    mov x4, 202 //yc
    bl circulo 
+
    /*movz x11, 0x6285, lsl 00
    movk x11, 0xF3, lsl 16
    mov x15, 4
@@ -742,7 +744,7 @@ gato:
    mov x3, 296 //xc
    mov x4, 218 //yc
    bl circulo 
-*/
+   */
 
 
    //bigotes 
@@ -847,82 +849,12 @@ gato:
    mov x23, #169
    bl cuadradoR
 
-/* 
-odc_2025:
-primera_fila_de_pixeles:
-	(hay q  reubicarlos!)
-	movz x11, 0xFFFF, lsl 00
-	movk x11, 0xFF, lsl 16
+fin_gato:
+   // leyenda odc_2025
+mov x3, 58
+mov x5,158
 
-	mov x3, 104
-	mov x5, 102
-	bl pixel
-
-	mov x3, 104
-	mov x5, 104
-	bl pixel
-
-	mov x3, 104
-	mov x5, 110
-	bl pixel
-	
-	mov x3, 104
-	mov x5, 112
-	bl pixel
-
-	mov x3, 104
-	mov x5, 114
-	bl pixel
-
-	mov x3, 104
-	mov x5, 122
-	bl pixel
-
-	mov x3, 104
-	mov x5, 124
-	bl pixel
-
-	mov x3, 104
-	mov x5, 140
-	bl pixel
-
-	mov x3, 104
-	mov x5, 142
-	bl pixel
-
-	mov x3, 104
-	mov x5, 102
-	bl pixel
-
-	mov x3, 104
-	mov x5, 150
-	bl pixel
-
-	mov x3, 104
-	mov x5, 152
-	bl pixel
-
-	mov x3, 104
-	mov x5, 158
-	bl pixel
-
-	mov x3, 104
-	mov x5, 160
-	bl pixel
-
-	mov x3, 104
-	mov x5, 166
-	bl pixel
-	
-	mov x3, 104
-	mov x5, 168
-	bl pixel
-
-	mov x3, 104
-	mov x5, 170
-	bl pixel
-segunda_linea_de_pixeles:	
-*/
+bl odc_2025
 
 
 InfLoop:

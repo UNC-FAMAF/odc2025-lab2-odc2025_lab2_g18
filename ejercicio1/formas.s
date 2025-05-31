@@ -16,6 +16,7 @@
     .global boton
     .global lineas_boton_expandir_h
     .global lineas_boton_expandir_v
+    .global odc_2025
 
 	//.global main
 
@@ -500,8 +501,18 @@ flood_fill_der:
 //ANTES DE LLAMAR A PIXEL, DAR VALORES DE X5 , X3 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 
 pixel:
-        add x4, x3, 10
-        add x6, x5, 10
+        sub sp,sp,#64
+        stur x3,[sp,#0]  
+        stur x4,[sp,#8]
+        stur x5,[sp,#16] 
+        stur x6,[sp,#24]
+        stur x7,[sp,#32]
+        stur x8,[sp,#40]
+        stur x9,[sp,#48]
+        stur x30,[sp,#56] 
+
+        add x4, x3, 2
+        add x6, x5, 2
 
         mov x9, x5            // Guarda el valor inicial de x5
     pixel_y:
@@ -533,6 +544,15 @@ pixel:
         b pixel_y
 
 fin_pixel:
+        ldur x3,[sp,#0]  
+        ldur x4,[sp,#8]
+        ldur x5,[sp,#16] 
+        ldur x6,[sp,#24]
+        ldur x7,[sp,#32]
+        ldur x8,[sp,#40]
+        ldur x9,[sp,#48]
+        ldur x30,[sp,#56] 
+        add  sp,sp,#64
     ret
 
 boton: 
@@ -638,7 +658,257 @@ fin_lineas_boton_expandir_v:
     add sp,sp,#48
 
 ret
+odc_2025:
 
+    mov x7, x5 //guardo el primer valor de x
+    //1ra linea de pixeles
+	add x5, x5, 2 // el primer pixel lo salteo pq es vacio! //102
+	bl pixel
+
+	add x5, x5, 2 //104
+	bl pixel
+
+	add x5, x5, 6 //110
+	bl pixel	 
+	
+	add x5, x5, 2 //112
+	bl pixel
+	
+	add x5, x5, 2 //114
+	bl pixel
+
+	add x5, x5, 8	//122
+	bl pixel
+	
+	add x5, x5, 2	//124
+	bl pixel
+	
+	add x5, x5, 18	//140
+	bl pixel
+	
+	add x5, x5, 2	//142
+	bl pixel
+	
+	add x5, x5, 8	//150
+	bl pixel
+	
+	add x5, x5, 2	//152
+	bl pixel
+	
+	add x5, x5, 8	//158
+	bl pixel
+	
+	add x5, x5, 2	//160
+	bl pixel
+	
+	add x5, x5, 6	//166
+	bl pixel
+	
+	add x5, x5, 2	//168
+	bl pixel
+	
+	add x5, x5, 2	//170
+	bl pixel
+
+    add x5, x5, 2
+    bl pixel
+	
+    //segunda_linea_de_pixeles:	
+    mov x5, x7
+	add x3, x3, 2
+
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 14
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    //3ra linea de pixeles :D
+    mov x5, x7
+    add x3, x3, 2
+
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+    
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 24
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 8
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 2
+    bl pixel
+
+    add x5, x5, 2
+    bl pixel
+
+    //4ta linea de pixeles :D
+    mov x5, x7
+    add x3, x3, 2
+    
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+    
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 4
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 16
+    bl pixel
+
+    add x5, x5, 8
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 6
+    bl pixel
+
+    add x5, x5, 14
+    bl pixel
+
+    //5ta linea de pixeles :D
+    mov x5, x7
+    add x3, x3, 2
+
+    add x5, x5, 2 
+	bl pixel
+
+	add x5, x5, 2 
+	bl pixel
+
+	add x5, x5, 6 
+	bl pixel	 
+	
+	add x5, x5, 2 
+	bl pixel
+	
+	add x5, x5, 2 
+	bl pixel
+
+	add x5, x5, 8
+	bl pixel
+	
+	add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 6
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+    
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 4
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+    
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 6
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 6
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 4
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+    add x5, x5, 2
+	bl pixel
+
+
+fin_odc_2025:
+ret
 
 InfLoop:
 	b InfLoop
