@@ -20,6 +20,7 @@
     .global rectangulos_fondo
     .global pixel_ventana
     .global mallado
+    .global elipse
 
 	//.global main
 
@@ -206,7 +207,71 @@ circulo:
         b circulo_y
 
 fin_circulo:
-ret 
+ret
+
+//LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
+elipse:
+
+    sub x9, x3, x6 //y=yc-b (seria indicar el comienzo del elipse verticalmente)
+	mov x10, x9
+elipse_y:
+	add x11, x3, x6 //y=yc+b (seria indicar el final del elipse verticalmente)
+    cmp x10, x11 //mientras x5<=x23 (filas)
+    b.ge fin_elipse
+
+	sub x12, x4, x5 //x=xc-a (seria indicar el comienzo del elipse horizontalmente)
+    mov x13, x12
+elipse_x:
+	add x14, x4, x5 //x=xc+a (seria indicar el final del elipse horizontalmente)
+    cmp x13, x14 // mientras x6<=x24 (columnas)
+    b.ge siguiente_fila_elipse
+
+	cmp x10, #0
+    b.lt no_pintar_pixel_elipse
+    cmp x13, #0
+    b.lt no_pintar_pixel_elipse
+
+	// Calcular (x - xc)^2/a^2 + (y - yc)^2/b^2 -- describe el interior y borde del elipse
+	sub x15, x13, x4
+    mul x15, x15, x15      // (x - xc)^2
+
+    sub x16, x10, x3
+    mul x16, x16, x16      // (y - yc)^2
+
+	mul x19, x6, x6      // b^2
+	mul x18, x15, x19      // (x - xc)^2/b^2
+
+	mul x17, x5, x5      // a^2
+	mul x21, x16, x17      // (y - yc)^2/a^2
+
+	add x22, x18, x21      // suma (x - xc)^2/b^2 + (y - yc)^2/a^2
+
+	mul x23,x17,x19      // a^2*b^2
+
+	cmp x22, x23 //mientras el punto este dentro del elipse (x^2/a^2 + y^2/b^2 <= 1)
+    b.gt no_pintar_pixel_elipse
+
+ // dirección de pixel
+    mov x7, SCREEN_WIDTH
+	mov x8, x7
+    mul x8, x8, x10
+    add x8, x8, x13
+    lsl x8, x8, 2
+    add x8, x20, x8
+
+    stur w11, [x8] 
+
+no_pintar_pixel_elipse:
+    add x13, x13, 1 //paso a la siguiente columna
+    b elipse_x
+
+siguiente_fila_elipse:
+    add x10, x10, 1
+    b elipse_y
+
+fin_elipse:
+
+ret
 
 //CUADRILATERO
 //ANTES DE LLAMAR ASIGNAR LO QUE DICE EN CADA CONJUNTO DE INSTRUCCIONES

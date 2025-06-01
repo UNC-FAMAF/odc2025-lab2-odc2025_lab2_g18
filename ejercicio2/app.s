@@ -19,13 +19,25 @@
     .global odc_2025
     .global rectangulos_fondo
     .global pixel_ventana
+	.global elipse
 
 main:
 	// x0 contiene la direccion base del framebuffer
  	mov x20, x0	// Guarda la dirección base del framebuffer en x20
 	//---------------- CODE HERE ------------------------------------
-movz x11, 0x6666, lsl 16
-movk x11, 0xFF, lsl 0
+prueba:
+	movz x11, 0xFF, lsl 16
+	movk x11, 0xFFFF, lsl 0
+	bl pantalla
+
+	mov x3,100//y
+	mov x4,320//x
+	mov x5,70//h
+	mov x6,25//v
+	movz x11, 0x00, lsl 16
+	movk x11, 0x0000, lsl 00
+	bl elipse
+end_prueba:
 /*  
 tanteando algo!
 bl pantalla
@@ -43,13 +55,12 @@ mov x6, 300
 
 
 
-*/
-InfLoop:
-	b InfLoop
-
 delay: 
 	mov x13, x12       // Copia el valor de x12 a x13 (contador)
 	delay_loop:
     subs x13, x13, #1   // Resta 1 a x13 y actualiza los flags
     bne delay_loop      // Si x13 != 0, sigue en el bucle
     ret 
+*/
+InfLoop:
+	b InfLoop
