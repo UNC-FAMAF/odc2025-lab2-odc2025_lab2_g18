@@ -175,6 +175,22 @@ ret
 //CIRCULO
 //ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A xc=X3, yc=X4, radio=X15 y x11 color.
 circulo:
+        sub sp,sp,#120
+        stur x3,[sp,#0]  
+        stur x4,[sp,#8]
+        stur x5,[sp,#16] 
+        stur x6,[sp,#24]
+        stur x7,[sp,#32]
+        stur x8,[sp,#40]
+        stur x18,[sp,#48]
+        stur x19,[sp,#56]
+        stur x20,[sp,#64]
+        stur x21,[sp,#72]
+        stur x22,[sp,#80]
+        stur x23,[sp,#88]
+        stur x15,[sp,#96]
+        stur x16,[sp,#104]
+        stur x17,[sp,#112]
 
         sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
         mov x5, x21
@@ -222,6 +238,22 @@ circulo:
         b circulo_y
 
 fin_circulo:
+        ldur x3,[sp,#0]  
+        ldur x4,[sp,#8]
+        ldur x5,[sp,#16] 
+        ldur x6,[sp,#24]
+        ldur x7,[sp,#32]
+        ldur x8,[sp,#40]
+        ldur x18,[sp,#48]
+        ldur x19,[sp,#56]
+        ldur x20,[sp,#64]
+        ldur x21,[sp,#72]
+        ldur x22,[sp,#80]
+        ldur x23,[sp,#88]
+        ldur x15,[sp,#96]
+        ldur x16,[sp,#104]
+        ldur x17,[sp,#112]
+        add sp,sp,#120    
 ret
 
 //LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
