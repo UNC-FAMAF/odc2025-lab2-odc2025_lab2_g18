@@ -25,42 +25,84 @@ main:
 	// x0 contiene la direccion base del framebuffer
  	mov x20, x0	// Guarda la dirección base del framebuffer en x20
 	//---------------- CODE HERE ------------------------------------
-prueba:
-	movz x11, 0xFF, lsl 16
-	movk x11, 0xFFFF, lsl 0
-	bl pantalla
 
-	mov x3,100//y
-	mov x4,320//x
-	mov x5,70//h
-	mov x6,25//v
+
+	prueba:
+		bl pantalla
+
+	mov x3,100 //y
+	mov x4,320 //x
+	mov x5,70  //h
+	mov x6,25  //v
 	movz x11, 0x00, lsl 16
 	movk x11, 0x0000, lsl 00
+
 	bl elipse
-end_prueba:
-/*  
-tanteando algo!
+
+// aaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+bl delay
+
+
+movz x11, 0x66, lsl 16
+movk x11, 0x66FF, lsl 0
 bl pantalla
-mov x3, 0
-mov x4, 200
+
+
+movz x11, 0xFF, lsl 16
+movk x11, 0xFFFF, lsl 0
+mov x3, 100
 mov x5, 100
-mov x6, 300 
-	loop:
-	mov x12, 100000
-	mov x10, 23
-	movk x11, 0xFF, lsl 16
+bl pixel
 
-	bl mallado
-	b loop
+bl delay
+
+mov x3, 110
+mov x5, 100
+bl pixel
+
+bl delay
+
+mov x3, 120
+mov x5, 100
+
+bl pixel
+
+bl delay
+
+mov x3, 130
+mov x5, 100
+
+bl pixel
+
+bl delay
+
+movz x11, 0x66, lsl 16
+movk x11, 0x66FF, lsl 0
+
+bl pantalla
+
+loopp:
+
+movz x11, 0xFF, lsl 16
+movk x11, 0xFFFF, lsl 0
+
+add x5, x5, 1
+
+bl delay
+
+bl pixel
+
+bl delay
+
+movz x11, 0x66, lsl 16
+movk x11, 0x66FF, lsl 0
+
+bl pantalla
+
+b loopp
 
 
-
-delay: 
-	mov x13, x12       // Copia el valor de x12 a x13 (contador)
-	delay_loop:
-    subs x13, x13, #1   // Resta 1 a x13 y actualiza los flags
-    bne delay_loop      // Si x13 != 0, sigue en el bucle
-    ret 
-*/
 InfLoop:
 	b InfLoop

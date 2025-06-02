@@ -5,6 +5,7 @@
 	.equ GPIO_BASE,      0x3f200000
 	.equ GPIO_GPFSEL0,   0x00
 	.equ GPIO_GPLEV0,    0x34
+    .equ tiempo, 0xAFFFFFF
 
 
     .global rectangulo
@@ -21,7 +22,7 @@
     .global pixel_ventana
     .global mallado
     .global elipse
-
+    .global delay
 	//.global main
 
     //main:
@@ -30,6 +31,13 @@
 
     //ANTES DE LLAMAR A PANTALLA ES NECESARIO ASIGNAR VALOR A X11!!
 pantalla:
+        sub sp,sp,#40
+        stur x0,[sp,#0] 
+        stur x1,[sp,#8] 
+        stur x2,[sp,#16]
+        stur x11,[sp,#24]
+        stur x30,[sp,#32]
+
 	    mov x2, SCREEN_HEIGH         // Y Size
     loop1:
 	    mov x1, SCREEN_WIDTH         // X Size
@@ -41,6 +49,13 @@ pantalla:
 	    sub x2,x2,1	   // Decrementar contador Y
 	    cbnz x2,loop1  // Si no es la última fila, salto
 fin_pantalla:
+        
+        ldur x0,[sp,#0] 
+        ldur x1,[sp,#8] 
+        ldur x2,[sp,#16]
+        ldur x11,[sp,#24]
+        ldur x30,[sp,#32]
+        add sp,sp,#40
 ret
 
 /*ANTES DE LLAMAR A RECTANGULO ES NECESARIO ASIGNAR VALORES A
@@ -211,17 +226,40 @@ ret
 
 //LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
 elipse:
+        sub sp,sp,#176
+        stur x3,[sp,#0]  
+        stur x4,[sp,#8]
+        stur x5,[sp,#16] 
+        stur x6,[sp,#24]
+        stur x7,[sp,#32]
+        stur x8,[sp,#40]
+        stur x9,[sp,#48]
+        stur x10,[sp,#56]
+        stur x11,[sp,#64]
+        stur x12,[sp,#72]
+        stur x13,[sp,#80]
+        stur x14,[sp,#88]
+        stur x15,[sp,#96]
+        stur x16,[sp,#104]
+        stur x17,[sp,#112]
+        stur x18,[sp,#120]
+        stur x19,[sp,#128]
+        stur x20,[sp,#136]
+        stur x21,[sp,#144]
+        stur x22,[sp,#152]
+        stur x23,[sp,#160]
+        stur x30,[sp,#168] 
 
     sub x9, x3, x6 //y=yc-b (seria indicar el comienzo del elipse verticalmente)
 	mov x10, x9
-elipse_y:
+    elipse_y:
 	add x11, x3, x6 //y=yc+b (seria indicar el final del elipse verticalmente)
     cmp x10, x11 //mientras x5<=x23 (filas)
     b.ge fin_elipse
 
 	sub x12, x4, x5 //x=xc-a (seria indicar el comienzo del elipse horizontalmente)
     mov x13, x12
-elipse_x:
+    elipse_x:
 	add x14, x4, x5 //x=xc+a (seria indicar el final del elipse horizontalmente)
     cmp x13, x14 // mientras x6<=x24 (columnas)
     b.ge siguiente_fila_elipse
@@ -261,16 +299,39 @@ elipse_x:
 
     stur w11, [x8] 
 
-no_pintar_pixel_elipse:
+    no_pintar_pixel_elipse:
     add x13, x13, 1 //paso a la siguiente columna
     b elipse_x
 
-siguiente_fila_elipse:
+    siguiente_fila_elipse:
     add x10, x10, 1
     b elipse_y
 
 fin_elipse:
-
+        
+        ldur x3,[sp,#0]  
+        ldur x4,[sp,#8]
+        ldur x5,[sp,#16] 
+        ldur x6,[sp,#24]
+        ldur x7,[sp,#32]
+        ldur x8,[sp,#40]
+        ldur x9,[sp,#48]
+        ldur x10,[sp,#56]
+        ldur x11,[sp,#64]
+        ldur x12,[sp,#72]
+        ldur x13,[sp,#80]
+        ldur x14,[sp,#88]
+        ldur x15,[sp,#96]
+        ldur x16,[sp,#104]
+        ldur x17,[sp,#112]
+        ldur x18,[sp,#120]
+        ldur x19,[sp,#128]
+        ldur x20,[sp,#136]
+        ldur x21,[sp,#144]
+        ldur x22,[sp,#152]
+        ldur x23,[sp,#160]
+        ldur x30,[sp,#168] 
+        add sp,sp,#176
 ret
 
 //CUADRILATERO
@@ -332,7 +393,8 @@ cuadradoR:
     ldur x23,[sp, #72]
     ldur x30,[sp, #80]
     add sp, sp, #96
-    ret
+
+ret
 
 bresenham:
     /* algoritmo de Bresenham 
@@ -631,7 +693,7 @@ pixel:
         add x3, x3, 1
         b pixel_y
 
-fin_pixel:
+    fin_pixel:
         ldur x3,[sp,#0]  
         ldur x4,[sp,#8]
         ldur x5,[sp,#16] 
@@ -687,7 +749,7 @@ pixel_ventana:
         add x3, x3, 1
         b pixel_y
 
-fin_pixel_ventana:
+    fin_pixel_ventana:
         ldur x3,[sp,#0]  
         ldur x4,[sp,#8]
         ldur x5,[sp,#16] 
@@ -730,7 +792,7 @@ boton:
 		movz x11, 0x909E, lsl 00 
 		movk x11, 0x7D, lsl 16
 		bl rectangulo 
-fin_boton:
+    fin_boton:
         ldur x3,[sp,#0] //- 
         ldur x4,[sp,#8]//-
         ldur x5,[sp,#16] //-
@@ -766,7 +828,7 @@ lineas_boton_expandir_h:
 	movk x21, 0x7D, lsl 16
     bl bresenham
 
-
+FIN:
 odc_2025:
 
     mov x7, x5 //guardo el primer valor de x
@@ -1016,8 +1078,24 @@ odc_2025:
 	bl pixel
 
 
-fin_odc_2025:
+    fin_odc_2025:
 ret
 
 InfLoop:
 	b InfLoop
+
+delay: 
+        sub sp,sp,#24
+        stur x13,[sp,#0] 
+        stur x11,[sp,#8]
+        stur x30,[sp,#16]
+    mov x13, tiempo       // Copia el valor de x12 a x13 (contador)
+    delay_loop:
+    subs x13, x13, #1   // Resta 1 a x13 y actualiza los flags
+    bne delay_loop      // Si x13 != 0, sigue en el bucle
+      
+        ldur x13,[sp,#0] 
+        ldur x11,[sp,#8] 
+        ldur x30,[sp,#16]
+        add sp,sp,#24
+    ret
