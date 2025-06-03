@@ -1,81 +1,80 @@
 
 There are no discarded input sections
 
-Memory Configuration
+Configuración de la Memoria
 
-Name             Origin             Length             Attributes
+Nombre           Origen             Longitud           Atributos
 *default*        0x0000000000000000 0xffffffffffffffff
 
-Linker script and memory map
+Guión del enlazador y mapa de memoria
 
 LOAD app.o
 LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x90efc
+.text           0x0000000000080000    0x90f40
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x1a0 app.o
+ .text          0x00000000000900c8      0x1e4 app.o
                 0x00000000000900d0                main
- .text          0x0000000000090268      0xc94 formas.o
-                0x000000000009026c                pantalla
-                0x00000000000902c0                rectangulo
-                0x0000000000090358                elipses_fondo
-                0x00000000000903a0                mallado
-                0x00000000000903e8                circulo
-                0x00000000000904dc                elipse
-                0x0000000000090634                cuadradoR
-                0x00000000000906e4                bresenham
-                0x0000000000090960                pixel
-                0x00000000000909f8                pixel_ventana
-                0x0000000000090a90                boton
-                0x0000000000090b10                lineas_boton_expandir_h
-                0x0000000000090b58                odc_2025
-                0x0000000000090ddc                estrella
-                0x0000000000090ed4                delay
- .text          0x0000000000090efc    0x80000 start.o
+ .text          0x00000000000902ac      0xc94 formas.o
+                0x00000000000902b0                pantalla
+                0x0000000000090304                rectangulo
+                0x000000000009039c                elipses_fondo
+                0x00000000000903e4                mallado
+                0x000000000009042c                circulo
+                0x0000000000090520                elipse
+                0x0000000000090678                cuadradoR
+                0x0000000000090728                bresenham
+                0x00000000000909a4                pixel
+                0x0000000000090a3c                pixel_ventana
+                0x0000000000090ad4                boton
+                0x0000000000090b54                lineas_boton_expandir_h
+                0x0000000000090b9c                odc_2025
+                0x0000000000090e20                estrella
+                0x0000000000090f18                delay
+ .text          0x0000000000090f40    0x80000 start.o
 
-.iplt           0x0000000000110efc        0x0
- .iplt          0x0000000000110efc        0x0 app.o
+.iplt           0x0000000000110f40        0x0
+ .iplt          0x0000000000110f40        0x0 app.o
 
-.rela.dyn       0x0000000000110f00        0x0
- .rela.iplt     0x0000000000110f00        0x0 app.o
+.rela.dyn       0x0000000000110f40        0x0
+ .rela.iplt     0x0000000000110f40        0x0 app.o
  .rela.text.boot
-                0x0000000000110f00        0x0 app.o
+                0x0000000000110f40        0x0 app.o
 
-.data           0x0000000000110efc        0x0
- .data          0x0000000000110efc        0x0 app.o
- .data          0x0000000000110efc        0x0 formas.o
- .data          0x0000000000110efc        0x0 start.o
+.data           0x0000000000110f40        0x0
+ .data          0x0000000000110f40        0x0 app.o
+ .data          0x0000000000110f40        0x0 formas.o
+ .data          0x0000000000110f40        0x0 start.o
 
-.igot.plt       0x0000000000110f00        0x0
- .igot.plt      0x0000000000110f00        0x0 app.o
+.igot.plt       0x0000000000110f40        0x0
+ .igot.plt      0x0000000000110f40        0x0 app.o
 
-.bss            0x0000000000110efc        0x0
+.bss            0x0000000000110f40        0x0
  *(.bss*)
- .bss           0x0000000000110efc        0x0 app.o
- .bss           0x0000000000110efc        0x0 formas.o
- .bss           0x0000000000110efc        0x0 start.o
+ .bss           0x0000000000110f40        0x0 app.o
+ .bss           0x0000000000110f40        0x0 formas.o
+ .bss           0x0000000000110f40        0x0 start.o
 
-.bss            0x0000000000110efc        0x4
-                0x0000000000110f00                . = ALIGN (0x10)
- *fill*         0x0000000000110efc        0x4 
-                0x0000000000110f00                __bss_start = .
+.bss            0x0000000000110f40        0x0
+                0x0000000000110f40                . = ALIGN (0x10)
+                0x0000000000110f40                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
-                0x0000000000110f00                __bss_end = .
-                0x0000000000110f00                _end = .
+                0x0000000000110f40                __bss_end = .
+                0x0000000000110f40                _end = .
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x453
- .debug_line    0x0000000000000000       0xa0 app.o
- .debug_line    0x00000000000000a0      0x363 formas.o
- .debug_line    0x0000000000000403       0x50 start.o
+.debug_line     0x0000000000000000      0x463
+ .debug_line    0x0000000000000000       0xb0 app.o
+ .debug_line    0x00000000000000b0      0x363 formas.o
+ .debug_line    0x0000000000000413       0x50 start.o
 
 .debug_info     0x0000000000000000       0x8a
  .debug_info    0x0000000000000000       0x2e app.o
@@ -97,6 +96,6 @@ LOAD linker stubs
 
 .debug_str      0x0000000000000000       0xd1
  .debug_str     0x0000000000000000       0xd1 app.o
-                                         0x6c (size before relaxing)
+                                         0x66 (tamaño antes de la relajación)
  .debug_str     0x00000000000000d1       0x6f formas.o
  .debug_str     0x00000000000000d1       0x68 start.o
