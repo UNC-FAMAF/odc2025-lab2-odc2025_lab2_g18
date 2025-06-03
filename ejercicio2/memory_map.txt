@@ -13,68 +13,69 @@ LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x90c94
+.text           0x0000000000080000    0x90e2c
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8       0xb4 app.o
+ .text          0x00000000000900c8       0xd8 app.o
                 0x00000000000900c8                main
- .text          0x000000000009017c      0xb18 formas.o
-                0x0000000000090180                pantalla
-                0x00000000000901d4                rectangulo
-                0x000000000009026c                rectangulos_fondo
-                0x00000000000902ac                mallado
-                0x00000000000902f4                circulo
-                0x0000000000090368                elipse
-                0x00000000000904b8                cuadradoR
-                0x0000000000090568                bresenham
-                0x00000000000907e4                pixel
-                0x000000000009087c                pixel_ventana
-                0x0000000000090914                boton
-                0x0000000000090994                lineas_boton_expandir_h
-                0x00000000000909dc                odc_2025
-                0x0000000000090c64                delay
- .text          0x0000000000090c94    0x80000 start.o
+ .text          0x00000000000901a0      0xc8c formas.o
+                0x00000000000901a4                pantalla
+                0x00000000000901f8                rectangulo
+                0x0000000000090290                rectangulos_fondo
+                0x00000000000902d0                mallado
+                0x0000000000090318                circulo
+                0x000000000009040c                elipse
+                0x0000000000090564                cuadradoR
+                0x0000000000090614                bresenham
+                0x0000000000090890                pixel
+                0x0000000000090928                pixel_ventana
+                0x00000000000909c0                boton
+                0x0000000000090a40                lineas_boton_expandir_h
+                0x0000000000090a88                odc_2025
+                0x0000000000090d0c                estrella
+                0x0000000000090e04                delay
+ .text          0x0000000000090e2c    0x80000 start.o
 
-.iplt           0x0000000000110c94        0x0
- .iplt          0x0000000000110c94        0x0 app.o
+.iplt           0x0000000000110e2c        0x0
+ .iplt          0x0000000000110e2c        0x0 app.o
 
-.rela.dyn       0x0000000000110c98        0x0
- .rela.iplt     0x0000000000110c98        0x0 app.o
+.rela.dyn       0x0000000000110e30        0x0
+ .rela.iplt     0x0000000000110e30        0x0 app.o
  .rela.text.boot
-                0x0000000000110c98        0x0 app.o
+                0x0000000000110e30        0x0 app.o
 
-.data           0x0000000000110c94        0x0
- .data          0x0000000000110c94        0x0 app.o
- .data          0x0000000000110c94        0x0 formas.o
- .data          0x0000000000110c94        0x0 start.o
+.data           0x0000000000110e2c        0x0
+ .data          0x0000000000110e2c        0x0 app.o
+ .data          0x0000000000110e2c        0x0 formas.o
+ .data          0x0000000000110e2c        0x0 start.o
 
-.igot.plt       0x0000000000110c98        0x0
- .igot.plt      0x0000000000110c98        0x0 app.o
+.igot.plt       0x0000000000110e30        0x0
+ .igot.plt      0x0000000000110e30        0x0 app.o
 
-.bss            0x0000000000110c94        0x0
+.bss            0x0000000000110e2c        0x0
  *(.bss*)
- .bss           0x0000000000110c94        0x0 app.o
- .bss           0x0000000000110c94        0x0 formas.o
- .bss           0x0000000000110c94        0x0 start.o
+ .bss           0x0000000000110e2c        0x0 app.o
+ .bss           0x0000000000110e2c        0x0 formas.o
+ .bss           0x0000000000110e2c        0x0 start.o
 
-.bss            0x0000000000110c94        0xc
-                0x0000000000110ca0                . = ALIGN (0x10)
- *fill*         0x0000000000110c94        0xc 
-                0x0000000000110ca0                __bss_start = .
+.bss            0x0000000000110e2c        0x4
+                0x0000000000110e30                . = ALIGN (0x10)
+ *fill*         0x0000000000110e2c        0x4 
+                0x0000000000110e30                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
-                0x0000000000110ca0                __bss_end = .
-                0x0000000000110ca0                _end = .
+                0x0000000000110e30                __bss_end = .
+                0x0000000000110e30                _end = .
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x3b6
- .debug_line    0x0000000000000000       0x62 app.o
- .debug_line    0x0000000000000062      0x304 formas.o
- .debug_line    0x0000000000000366       0x50 start.o
+.debug_line     0x0000000000000000      0x41c
+ .debug_line    0x0000000000000000       0x6b app.o
+ .debug_line    0x000000000000006b      0x361 formas.o
+ .debug_line    0x00000000000003cc       0x50 start.o
 
 .debug_info     0x0000000000000000       0x8a
  .debug_info    0x0000000000000000       0x2e app.o

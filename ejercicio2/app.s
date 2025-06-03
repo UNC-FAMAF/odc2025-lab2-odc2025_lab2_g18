@@ -25,84 +25,79 @@ main:
 	// x0 contiene la direccion base del framebuffer
  	mov x20, x0	// Guarda la dirección base del framebuffer en x20
 	//---------------- CODE HERE ------------------------------------
+estrellas:
+	mov x3, 100
+	mov x5, 100
+	bl estrella
+
+	mov x3, 200
+	mov x5, 150
+	bl estrella
+
+	mov x3, 140
+	mov x5, 200
+	bl estrella
+
+	mov x3, 120
+	mov x5, 60
+	bl estrella
+
+	mov x3, 130
+	mov x5, 460
+	bl estrella
+	//
+	mov x3, 80
+	mov x5, 250
+	bl estrella
+
+	mov x3, 170
+	mov x5, 360
+	bl estrella
+
+	mov x3, 200
+	mov x5, 300
+	bl estrella
+
+	mov x3, 180
+	mov x5, 500
+	bl estrella
+
+	mov x3, 65
+	mov x5, 400
+	bl estrella
+
+	mov x3, 200
+	mov x5, 10
+	bl estrella
+
+	mov x3, 30
+	mov x5, 460
+	bl estrella
+
+	mov x3, 50
+	mov x5, 610
+	bl estrella
+
+	mov x3, 300
+	mov x5, 550
+	bl estrella
+
+	mov x3, 300
+	mov x5, 60
+	bl estrella
+estrellas_end:
 
 
-	prueba:
-		bl pantalla
+//LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
 
-	mov x3,100 //y
-	mov x4,320 //x
-	mov x5,70  //h
-	mov x6,25  //v
-	movz x11, 0x00, lsl 16
-	movk x11, 0x0000, lsl 00
-
-	bl elipse
-
-// aaaaaaaaaaaaaaaaaaaaaaaaa
-
-
-bl delay
-
-
-movz x11, 0x66, lsl 16
-movk x11, 0x66FF, lsl 0
-bl pantalla
-
-
-movz x11, 0xFF, lsl 16
-movk x11, 0xFFFF, lsl 0
-mov x3, 100
-mov x5, 100
-bl pixel
-
-bl delay
-
-mov x3, 110
-mov x5, 100
-bl pixel
-
-bl delay
-
-mov x3, 120
-mov x5, 100
-
-bl pixel
-
-bl delay
-
-mov x3, 130
-mov x5, 100
-
-bl pixel
-
-bl delay
-
-movz x11, 0x66, lsl 16
-movk x11, 0x66FF, lsl 0
-
-bl pantalla
-
-loopp:
-
-movz x11, 0xFF, lsl 16
-movk x11, 0xFFFF, lsl 0
-
-add x5, x5, 1
-
-bl delay
-
-bl pixel
-
-bl delay
-
-movz x11, 0x66, lsl 16
-movk x11, 0x66FF, lsl 0
-
-bl pantalla
-
-b loopp
-
+movk x11, 0xC, lsl 16
+movk x11, 0x5961, lsl 0 
+mov x3, 479 
+mov x4, 319
+mov x5, 176
+mov x6, 96
+ 
+bl elipse
 
 InfLoop:
 	b InfLoop

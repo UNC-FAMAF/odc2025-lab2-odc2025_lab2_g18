@@ -5,7 +5,7 @@
 	.equ GPIO_BASE,      0x3f200000
 	.equ GPIO_GPFSEL0,   0x00
 	.equ GPIO_GPLEV0,    0x34
-    .equ tiempo, 0xAFFFFFF
+    .equ tiempo, 0xFFFFFFF
 
 
     .global rectangulo
@@ -23,6 +23,7 @@
     .global mallado
     .global elipse
     .global delay
+    .global estrella
 	//.global main
 
     //main:
@@ -258,7 +259,7 @@ ret
 
 //LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
 elipse:
-        sub sp,sp,#176
+        sub sp,sp,#184
         stur x3,[sp,#0]  
         stur x4,[sp,#8]
         stur x5,[sp,#16] 
@@ -280,13 +281,15 @@ elipse:
         stur x21,[sp,#144]
         stur x22,[sp,#152]
         stur x23,[sp,#160]
-        stur x30,[sp,#168] 
+        stur x24,[sp,#168]
+        stur x30,[sp,#176] 
 
     sub x9, x3, x6 //y=yc-b (seria indicar el comienzo del elipse verticalmente)
 	mov x10, x9
     elipse_y:
-	add x11, x3, x6 //y=yc+b (seria indicar el final del elipse verticalmente)
-    cmp x10, x11 //mientras x5<=x23 (filas)
+
+	add x24, x3, x6 //y=yc+b (seria indicar el final del elipse verticalmente)
+    cmp x10, x24   //mientras x5<=x23 (filas)
     b.ge fin_elipse
 
 	sub x12, x4, x5 //x=xc-a (seria indicar el comienzo del elipse horizontalmente)
@@ -362,10 +365,10 @@ fin_elipse:
         ldur x21,[sp,#144]
         ldur x22,[sp,#152]
         ldur x23,[sp,#160]
-        ldur x30,[sp,#168] 
-        add sp,sp,#176
+        ldur x24,[sp,#168]
+        stur x30,[sp,#176]
+        add sp,sp,#184
 ret
-
 //CUADRILATERO
 //ANTES DE LLAMAR ASIGNAR LO QUE DICE EN CADA CONJUNTO DE INSTRUCCIONES
 cuadradoR:
@@ -1112,22 +1115,115 @@ odc_2025:
 
     fin_odc_2025:
 ret
+//antes de llamar estrella necesita las coordenadas de altura y desplazamiento-4 :D
+estrella:
+    sub sp,sp,#48
+    stur x3,[sp,#0]
+    stur x5,[sp,#8]
+    stur x7,[sp,#16]
+    stur x11,[sp,#24]
+    stur x30,[sp,#32]
+
+
+    mov x7, x5 //guardo el primer valor de x
+                    //1ra linea de pixeles
+	add x5, x5, 4 // los primeros dos pixeles no los uso
+   
+    movz x11, 0xFD, lsl 16
+    movk x11, 0xD92B, lsl 0
+                   
+	bl pixel
+
+
+    //segunda_linea_de_pixeles:	
+    mov x5, x7
+	add x3, x3, 2
+
+    add x5, x5, 2
+    bl pixel
+
+    movz x11, 0xFF, lsl 16
+    movk x11, 0xFFFF, lsl 0
+    add x5, x5, 2
+    bl pixel
+
+    movz x11, 0xFD, lsl 16
+    movk x11, 0xD92B, lsl 0
+    add x5, x5, 2
+    bl pixel
+
+
+    //3ra linea de pixeles :D
+    mov x5, x7
+    add x3, x3, 2
+
+    bl pixel
+
+    movz x11, 0xFF, lsl 16
+    movk x11, 0xFFFF, lsl 0
+    add x5, x5, 2
+    bl pixel
+    
+    add x5, x5, 2
+    bl pixel
+
+    add x5, x5, 2
+    bl pixel
+
+    movz x11, 0xFD, lsl 16
+    movk x11, 0xD92B, lsl 0
+    add x5, x5, 2
+    bl pixel
+
+    //4ta linea de pixeles :D
+    mov x5, x7
+    add x3, x3, 2
+
+    add x5, x5, 2
+    bl pixel
+
+    add x5, x5, 2
+    movz x11, 0xFF, lsl 16
+    movk x11, 0xFFFF, lsl 0
+    bl pixel
+
+    movz x11, 0xFD, lsl 16
+    movk x11, 0xD92B, lsl 0
+    add x5, x5, 2
+    bl pixel
+
+
+    //5ta linea de pixeles :D
+
+    mov x5, x7
+    add x3, x3, 2
+
+    add x5, x5, 4
+	bl pixel
+
+fin_estrella:
+    ldur x3,[sp,#0] 
+    ldur x5,[sp,#8]
+    ldur x7,[sp,#16] 
+    ldur x11,[sp,#24]
+    ldur x30,[sp,#32]
+    add sp,sp,#48
+ret
 
 InfLoop:
 	b InfLoop
 
 delay: 
-        sub sp,sp,#24
+        sub sp,sp,#16
         stur x13,[sp,#0] 
-        stur x11,[sp,#8]
-        stur x30,[sp,#16]
+        stur x30,[sp,#8]
     mov x13, tiempo       // Copia el valor de x12 a x13 (contador)
     delay_loop:
     subs x13, x13, #1   // Resta 1 a x13 y actualiza los flags
     bne delay_loop      // Si x13 != 0, sigue en el bucle
       
-        ldur x13,[sp,#0] 
-        ldur x11,[sp,#8] 
-        ldur x30,[sp,#16]
-        add sp,sp,#24
+        ldur x13,[sp,#0]  
+        ldur x30,[sp,#8]
+        add sp,sp,#16
     ret
+
