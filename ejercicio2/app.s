@@ -6,6 +6,11 @@
 	.equ GPIO_GPFSEL0,   0x00
 	.equ GPIO_GPLEV0,    0x34
 
+	.equ DELAY_CYCLES,     0xfFFfFF
+	.equ seis, 6
+	.equ sumador, 1
+	.equ restador, -1
+
 	.globl main
 	.global rectangulo
     .global pantalla
@@ -20,6 +25,9 @@
     .global pixel_ventana
 	.global elipse
 	.global elipses_fondo
+
+mov x28, 0 //CONTADOR o FRAME COUNTER (fachero)
+mov x29, #0 //HABILITADOR (se usa para el frame counter)
 
 main:
 	// x0 contiene la direccion base del framebuffer
@@ -69,7 +77,7 @@ estrellas:
 	mov x3, 130
 	mov x5, 460
 	bl estrella
-	//
+	
 	mov x3, 80
 	mov x5, 250
 	bl estrella
@@ -106,13 +114,20 @@ estrellas:
 	mov x5, 550
 	bl estrella
 
-	mov x3, 300
-	mov x5, 60
+	mov x3,300
+	add x5,x28,60
 	bl estrella
+
+	mov x3,380 
+	mov x4,320
+	add x5,x28,30
+	mov x6,10
+	movz x11, 0xD96F, lsl 00 
+    movk x11, 0xFF, lsl 16
+	bl elipse
+
+
 estrellas_end:
-
-
-//LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
 
 movk x11, 0xC, lsl 16
 movk x11, 0x5961, lsl 0 
@@ -120,8 +135,49 @@ mov x3, 479
 mov x4, 319
 mov x5, 176
 mov x6, 96
- 
 bl elipse
 
-InfLoop:
+algoritmo_delay:
+	mov x25,DELAY_CYCLES //Ver .equ arriba
+	//mul x25,x25,x25
+	L1: 
+	SUB x25,x25,#1
+	CBNZ x25, L1
+	//Primero se va a actualizar el sumador, y cuando llegue a los 6 frames pasa al otro
+	
+	    
+
+actualizar_frame:
+		// if (x28 < 6 && habilitador == 0)
+		cmp x28, #6
+		bge check_siguiente
+		cbnz x29, check_siguiente   // Si habilitador != 0, salta
+		add x28, x28, #1
+		b fin_actualizar
+
+	check_siguiente:
+		// else if (x28 == 6)
+		cmp x28, #6
+		bne check_dos
+		mov x29, #1
+		sub x28, x28, #1
+		b fin_actualizar
+
+	check_dos:
+		// else if (x28 == 2)
+		cmp x28, #2
+		bne else_resta
+		mov x29, #0
+		sub x28, x28, #1
+		b fin_actualizar
+
+	else_resta:
+		// else
+		sub x28, x28, #1
+
+	fin_actualizar:
+
+	b main
+
+InfLoop: //Esto ya no sirve, no se llega nunca
 	b InfLoop
