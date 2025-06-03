@@ -17,14 +17,38 @@
     .global lineas_boton_expandir_h
     .global lineas_boton_expandir_v
     .global odc_2025
-    .global rectangulos_fondo
     .global pixel_ventana
 	.global elipse
+	.global elipses_fondo
 
 main:
 	// x0 contiene la direccion base del framebuffer
  	mov x20, x0	// Guarda la dirección base del framebuffer en x20
 	//---------------- CODE HERE ------------------------------------
+fondo:
+	mov x3, 10
+	mov x4, 320
+	mov x5, 480
+	mov x6, 80
+	movz x11, 0x32, lsl 16
+	movk x11, 0x4DBE, lsl 0
+	bl elipse
+
+
+	mov x10, 0          // contador para incremento
+loop_fondo:
+	mov x12, 5//x12=5
+	lsl x12, x12, 8 //x12=0x000500
+	add x11, x11, x12//x12 = 0x[00]R,[05]G,[00]B
+
+    bl elipses_fondo
+
+    add x10, x10, 1
+    cmp x10, 10
+    b.lt loop_fondo
+	
+end_fondo:
+
 estrellas:
 	mov x3, 100
 	mov x5, 100

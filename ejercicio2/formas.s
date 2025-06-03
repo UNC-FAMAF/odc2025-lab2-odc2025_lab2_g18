@@ -18,12 +18,12 @@
     .global lineas_boton_expandir_h
     .global lineas_boton_expandir_v
     .global odc_2025
-    .global rectangulos_fondo
     .global pixel_ventana
     .global mallado
     .global elipse
     .global delay
     .global estrella
+    .global elipses_fondo
 	//.global main
 
     //main:
@@ -118,28 +118,32 @@ fin_cuadro:
     add sp,sp,#72
 ret
 
-/*ANTES DE LLAMAR A RECTANGULO_FONDO  ES NECESARIO ASIGNAR VALORES A 
-X3 (X INICIAL),X4(X FINAL),X5(Y INICIAL),X6(Y FINAL) Y X11(COLOR)!!*/
 
-rectangulos_fondo:
-    sub sp,sp,#32
-    stur x5,[sp,#0] 
-    stur x6,[sp,#8]
-    stur x11,[sp,#16]
-    stur x30,[sp,#24] 
+/*ANTES DE LLAMAR A ELIPSE_FONDO  ES NECESARIO ASIGNAR VALORES A 
+X3 (YC),X4(YC),X5(SEMI EJE H),X6(SEMI EJE V) Y X11(COLOR)!!*/
 
-    add x3, x3, 4
-    add x4, x4, 4
-    mov x5, 162
-	mov x6, 476
-    bl rectangulo
-fin_cuadrado_fondo:
+elipses_fondo:
+    sub sp,sp,#40
+    stur x4,[sp,#0]
+    stur x5,[sp,#8]
+    stur x6,[sp,#16]
+    stur x11,[sp,#24]
+    stur x30,[sp,#32] 
 
-    ldur x5,[sp,#0] 
-    ldur x6,[sp,#8]
-    ldur x11,[sp,#16]
-    ldur x30,[sp,#24]
-    add sp,sp,#32
+    add x3, x3, 50
+    mov x4, 320
+    mov x5, 480
+	mov x6, 50
+    bl elipse
+
+fin_elipse_fondo:
+
+    ldur x4,[sp,#0]
+    ldur x5,[sp,#8]
+    ldur x6,[sp,#16]
+    ldur x11,[sp,#24]
+    ldur x30,[sp,#32]
+    add sp,sp,#40
 
 ret
 
