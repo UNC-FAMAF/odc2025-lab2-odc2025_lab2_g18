@@ -24,6 +24,7 @@
     .global delay
     .global estrella
     .global elipses_fondo
+    .global trapecio
 	//.global main
 
     //main:

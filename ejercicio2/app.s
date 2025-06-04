@@ -6,7 +6,7 @@
 	.equ GPIO_GPFSEL0,   0x00
 	.equ GPIO_GPLEV0,    0x34
 
-	.equ DELAY_CYCLES,     0xfFFfFF
+	.equ DELAY_CYCLES,     0xfFFfF
 	.equ seis, 50
 
 	.globl main
@@ -186,6 +186,7 @@ mov x6, 160
  
 bl elipse*/
 //
+piedras:
 movz x11, 0xC2, lsl 16
 movk x11, 0xD8B8, lsl 0 
 mov x3, 479
@@ -225,7 +226,49 @@ mov x5, 176
 mov x6, 96
 bl elipse
 
+//elipses sombra con efecto rayo
+mov x19, 5
+mul x19, x28, x19
+mov x3, 409
+mov x4, 319
+add x5, x19, 65
+mov x6, 18
+movk x11, 0xAE, lsl 16
+movk x11, 0xFF38, lsl 0 
+bl elipse
+
+mov x19, -3
+mov x21, -1
+mul x21, x21, x28
+mul x19, x28, x19
+mov x3, 409
+mov x4, 319
+add x5, x19, 57
+add x6, x21, 18
+movk x11, 0x96, lsl 16
+movk x11, 0x9696, lsl 0 
+bl elipse
+
+mov x19, -3
+mov x21, -2
+mul x21, x21, x28
+mul x19, x28, x19
+mov x3, 409
+mov x4, 319
+add x5, x19, 30
+add x6, x21, 15
+movk x11, 0x63, lsl 16
+movk x11, 0x6363, lsl 0 
+bl elipse
+
+end_piedras:
+
+
 BOB:
+
+	//movimiento vertical
+	//mov x19, 9
+	//mul x19, x19, x28
 
 	//manga derecha
 		mov x15, 6
