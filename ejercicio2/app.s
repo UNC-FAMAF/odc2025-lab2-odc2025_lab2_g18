@@ -57,59 +57,59 @@ end_fondo:
 
 estrellas:
 	mov x3, 100
-	mov x5, 100
+	add x5,x28, 100
 	bl estrella
 
 	mov x3, 200
-	mov x5, 150
+	add x5,x28, 150
 	bl estrella
 
 	mov x3, 140
-	mov x5, 200
+	add x5,x28, 200
 	bl estrella
 
 	mov x3, 120
-	mov x5, 60
+	add x5,x28, 60
 	bl estrella
 
 	mov x3, 130
-	mov x5, 460
+	add x5,x28, 460
 	bl estrella
 	
 	mov x3, 80
-	mov x5, 250
+	add x5,x28, 250
 	bl estrella
 
 	mov x3, 170
-	mov x5, 360
+	add x5,x28, 360
 	bl estrella
 
 	mov x3, 200
-	mov x5, 300
+	add x5,x28, 300
 	bl estrella
 
 	mov x3, 180
-	mov x5, 500
+	add x5,x28, 500
 	bl estrella
 
 	mov x3, 65
-	mov x5, 400
+	add x5,x28, 400
 	bl estrella
 
 	mov x3, 200
-	mov x5, 10
+	add x5,x28, 10
 	bl estrella
 
 	mov x3, 30
-	mov x5, 460
+	add x5,x28, 460
 	bl estrella
 
 	mov x3, 50
-	mov x5, 610
+	add x5,x28, 610
 	bl estrella
 
 	mov x3, 300
-	mov x5, 550
+	add x5,x28, 550
 	bl estrella
 
 	mov x3,300
