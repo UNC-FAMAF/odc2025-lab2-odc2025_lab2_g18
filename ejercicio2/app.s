@@ -267,58 +267,62 @@ end_piedras:
 BOB:
 
 	//movimiento vertical
-	//mov x19, 9
-	//mul x19, x19, x28
+	mov x19, #10
+	mul x19, x19, x28
 
 	//manga derecha
 		mov x15, 6
 		mov x3, 344 //x
-		mov x4, 257 //y
+		add x4, x19, 247
+		//mov x4, 257 //y ORIGINAL 
 		movz x11, 0xdabf, lsl 00
 		movk x11, 0x00de, lsl 16
 		bl circulo
 
 
-	//Frente cara bob
+	//Frente cara bob con movimiento
 		mov x9, #295     // x1
-		mov x10, #216    // y1
+		add x10, x19, 206 // y1
+		//mov x10, #216    // y1
 		mov x11, #345    // x2
-		mov x12, #217    // y2
+		add x12, x19, 207 // y2
 		mov x13, #343    // x3
-		mov x14, #266     // y3
+		add x14, x19, 256 // y3
 		mov x15, #302     // x4
-		mov x16, #266     // y4  
+		add x16, x19, 256 // y4  
 		movz x21, 0xc737, lsl 00
 		movk x21, 0x00e3, lsl 16
 		mov x22, #302
-		mov x23, #235
+		
+		add x23, x19, 225 // y1
 		bl cuadradoR
 	//costado cara bob
 		mov x9, #295     // x1
-		mov x10, #216    // y1
+		add x10, x19, 206 // y1
 		mov x11, #285   // x2
-		mov x12, #229    // y2
+		add x12, x19, 219 // y2
 		mov x13, #293    // x3
-		mov x14, #268     // y3
+		add x14, x19, 258 // y3
 		mov x15, #302     // x4
-		mov x16, #266     // y4  
+		add x16, x19, 256 // y4  
 		movz x21, 0x8d29, lsl 00
 		movk x21, 0x008d, lsl 16
 		mov x22, #293
-		mov x23, #247
+		add x23, x19, 237 // y del relleno
 		bl cuadradoR
 
 	//manga izq
 		mov x15, 6
 		mov x3, 292 //x
-		mov x4, 257 //y
+		add x4, x19, 247 // y
 		movz x11, 0xdabf, lsl 00
 		movk x11, 0x00de, lsl 16
 		bl circulo
 	//detalle manga izq
 		movz x11, 0x83, lsl 16
 		movk x11, 0x9386, lsl 0
-		mov x3, 257
+		//mov x3, 257
+		add x3, x19, 247 // y
 		mov x4, 289
 		mov x5, 3
 		mov x6, 5
@@ -327,63 +331,63 @@ BOB:
 
    //frente superior ropa bob
 		mov x9, #302     // x1
-		mov x10, #267    // y1
+		add x10, x19, 257 // y1
 		mov x11, #343    // x2
-		mov x12, #267    // y2
+		add x12, x19, 257 // y2
 		mov x13, #343    // x3
-		mov x14, #273     // y3
+		add x14, x19, 263 // y3
 		mov x15, #302     // x4
-		mov x16, #273     // y4  
+		add x16, x19, 263 // y4 
 		movz x21, 0xdabf, lsl 00
 		movk x21, 0x00de, lsl 16
 		mov x22, #315
-		mov x23, #270
+		add x23, x19, 260 // y
 		bl cuadradoR
 	//costado superior ropa bob
 		mov x9, #302     // x1
-		mov x10, #267    // y1
+		add x10, x19, 257 // y1
 		mov x11, #302    // x2
-		mov x12, #273    // y2
+		add x12, x19, 263 // y2
 		mov x13, #293    // x3
-		mov x14, #273     // y3
+		add x14, x19, 263 // y3
 		mov x15, #293     // x4
-		mov x16, #269     // y4  
+		add x16, x19, 259 // y4  
 		movz x21, 0x9e8d, lsl 00
 		movk x21, 0x0073, lsl 16
 		mov x22, #297
-		mov x23, #271
+		add x23, x19, 261 // y
 		bl cuadradoR
 
 	//frente inferior ropa bob
 		mov x9, #302     // x1
-		mov x10, #273    // y1
+		add x10, x19, 263 // y1
 		mov x11, #343    // x2
-		mov x12, #273    // y2
+		add x12, x19, 263 // y2
 		mov x13, #343    // x3
-		mov x14, #283     // y3
+		add x14, x19, 273 // y3
 		mov x15, #302     // x4
-		mov x16, #283     // y4  
+		add x16, x19, 273 // y4
 		movz x21, 0x4218, lsl 00
 		movk x21, 0x006d, lsl 16
 		mov x22, #309
-		mov x23, #275
+		add x23, x19, 265 // y
 		bl cuadradoR
 	//costado inferior ropa bob
 		mov x9, #302     // x1
-		mov x10, #273    // y1
+		add x10, x19, 263 // y1
 		mov x11, #302    // x2
-		mov x12, #283    // y2
+		add x12, x19, 273 // y2
 		mov x13, #293    // x3
-		mov x14, #280    // y3
+		add x14, x19, 270 // y3
 		mov x15, #293     // x4
-		mov x16, #273     // y4  
+		add x16, x19, 263 // y4  
 		movz x21, 0x3219, lsl 00
 		movk x21, 0x003c, lsl 16
 		mov x22, #298
-		mov x23, #278
+		add x23, x19, 268 // y
 		bl cuadradoR
 	//Manga pantalon izquerda 
-		mov x3,285 //y
+		add x3, x19, 275 // y
 		mov x4,309 //x
 		mov x5,6
 		mov x6,5
@@ -391,7 +395,7 @@ BOB:
 		movk x11, 0x006d, lsl 16
 		bl elipse
 	//Manga pantalon izquerda 
-		mov x3,284 //y
+		add x3, x19, 274 // y
 		mov x4,329 //x
 		mov x5,6
 		mov x6,5
@@ -402,13 +406,13 @@ BOB:
 	//zapato izquierdo
 		mov x15, 5
 		mov x3, 309
-		mov x4, 309
+		add x4, x19, 299 // y
 		movz x11, 0x2324, lsl 00
 		movk x11, 0x000f, lsl 16
 		bl circulo
 		mov x15, 5
 		mov x3, 305
-		mov x4, 314
+		add x4, x19, 304 // y
 		movz x11, 0x2324, lsl 00
 		movk x11, 0x000f, lsl 16
 		bl circulo
@@ -416,30 +420,34 @@ BOB:
 		mov x15, 5
 		mov x3, 328
 		mov x4, 308
+		add x4, x19, 298 // y
 		movz x11, 0x2324, lsl 00
 		movk x11, 0x000f, lsl 16
 		bl circulo
 		mov x15, 5
 		mov x3, 333
-		mov x4, 313
+		add x4, x19, 303 // y
 		movz x11, 0x2324, lsl 00
 		movk x11, 0x000f, lsl 16
 		bl circulo
 
 	//Pierna izquierda
 		mov x9, #307     // x1
-		mov x10, #290    // y1
+		add x10, x19, 289 // y1
 		mov x11, #310    // x2
-		mov x12, #290    // y2
+		add x12, x19, 280 // y2
 		mov x13, #310    // x3
-		mov x14, #304    // y3
+		add x14, x19, 294 // y3
 		mov x15, #307     // x4
-		mov x16, #306     // y4  
+		add x16, x19, 296 // y4
 		movz x21, 0xc737, lsl 00
 		movk x21, 0x00e3, lsl 16
 		mov x22, #308
-		mov x23, #294
+		add x23, x19, 284 // y
 		bl cuadradoR
+
+		//HASTA ACÁ TIENE MOVIMIENTO
+
 	//Pierna derecha
 		mov x9, #328     // x1
 		mov x10, #289    // y1
