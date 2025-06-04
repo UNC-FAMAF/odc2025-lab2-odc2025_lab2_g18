@@ -18622,8 +18622,8 @@ Desensamblado de la sección .debug_info:
   70:	00000000 	udf	#0
   74:	000900c8 	.inst	0x000900c8 ; undefined
   78:	00000000 	udf	#0
-  7c:	000000a8 	udf	#168
-  80:	000000b0 	udf	#176
+  7c:	000000b3 	udf	#179
+  80:	0000005f 	udf	#95
   84:	0000004a 	udf	#74
   88:	Address 0x88 is out of bounds.
 
@@ -18703,43 +18703,26 @@ Desensamblado de la sección .debug_str:
   58:	73616d72 	.inst	0x73616d72 ; undefined
   5c:	2f00732e 	.inst	0x2f00732e ; undefined
   60:	656d6f68 	fnmls	z8.h, p3/m, z27.h, z13.h
-  64:	75756c2f 	.inst	0x75756c2f ; undefined
-  68:	442f3530 	.inst	0x442f3530 ; undefined
-  6c:	61637365 	.inst	0x61637365 ; undefined
-  70:	73616772 	.inst	0x73616772 ; undefined
-  74:	42414c2f 	.inst	0x42414c2f ; undefined
-  78:	65756e20 	fnmls	z0.h, p3/m, z17.h, z21.h
-  7c:	6f2f6f76 	.inst	0x6f2f6f76 ; undefined
-  80:	30326364 	adr	x4, 64ced <Set_Palette+0x1cce2>
-  84:	6c2d3532 	stnp	d18, d13, [x9, #-304]
-  88:	2d326261 	stp	s1, s24, [x19, #-112]
-  8c:	3263646f 	.inst	0x3263646f ; undefined
-  90:	5f353230 	.inst	0x5f353230 ; undefined
-  94:	3262616c 	.inst	0x3262616c ; undefined
-  98:	3831675f 	.inst	0x3831675f ; undefined
-  9c:	656a652f 	fnmls	z15.h, p1/m, z9.h, z10.h
-  a0:	63696372 	.inst	0x63696372 ; undefined
-  a4:	00326f69 	.inst	0x00326f69 ; NYI
-  a8:	72617473 	.inst	0x72617473 ; undefined
-  ac:	00732e74 	.inst	0x00732e74 ; undefined
-  b0:	6d6f682f 	ldp	d15, d26, [x1, #-272]
-  b4:	616d2f65 	.inst	0x616d2f65 ; undefined
-  b8:	452f6978 	.inst	0x452f6978 ; undefined
-  bc:	69726373 	ldpsw	x19, x24, [x27, #-112]
-  c0:	69726f74 	ldpsw	x20, x27, [x27, #-112]
-  c4:	614d2f6f 	.inst	0x614d2f6f ; undefined
-  c8:	6f6d6978 	umlsl2	v24.4s, v11.8h, v13.h[6]
-  cc:	6361462f 	.inst	0x6361462f ; undefined
-  d0:	61746c75 	.inst	0x61746c75 ; undefined
-  d4:	726f2f64 	.inst	0x726f2f64 ; undefined
-  d8:	6f2f6167 	.inst	0x6f2f6167 ; undefined
-  dc:	30326364 	adr	x4, 64d49 <Set_Palette+0x1cd3e>
-  e0:	6c2d3532 	stnp	d18, d13, [x9, #-304]
-  e4:	2d326261 	stp	s1, s24, [x19, #-112]
-  e8:	3263646f 	.inst	0x3263646f ; undefined
-  ec:	5f353230 	.inst	0x5f353230 ; undefined
-  f0:	3262616c 	.inst	0x3262616c ; undefined
-  f4:	3831675f 	.inst	0x3831675f ; undefined
-  f8:	656a652f 	fnmls	z15.h, p1/m, z9.h, z10.h
-  fc:	63696372 	.inst	0x63696372 ; undefined
- 100:	00326f69 	.inst	0x00326f69 ; NYI
+  64:	78616d2f 	.inst	0x78616d2f ; undefined
+  68:	73452f69 	.inst	0x73452f69 ; undefined
+  6c:	74697263 	.inst	0x74697263 ; undefined
+  70:	6f69726f 	fcmla	v15.8h, v19.8h, v9.h[1], #270
+  74:	78614d2f 	.inst	0x78614d2f ; undefined
+  78:	2f6f6d69 	.inst	0x2f6f6d69 ; undefined
+  7c:	75636146 	.inst	0x75636146 ; undefined
+  80:	6461746c 	.inst	0x6461746c ; undefined
+  84:	67726f2f 	.inst	0x67726f2f ; undefined
+  88:	646f2f61 	.inst	0x646f2f61 ; undefined
+  8c:	32303263 	orr	w3, w19, #0x1fff0000
+  90:	616c2d35 	.inst	0x616c2d35 ; undefined
+  94:	6f2d3262 	.inst	0x6f2d3262 ; undefined
+  98:	30326364 	adr	x4, 64d05 <Set_Palette+0x1ccfa>
+  9c:	6c5f3532 	ldnp	d18, d13, [x9, #496]
+  a0:	5f326261 	.inst	0x5f326261 ; undefined
+  a4:	2f383167 	.inst	0x2f383167 ; undefined
+  a8:	72656a65 	.inst	0x72656a65 ; undefined
+  ac:	69636963 	ldpsw	x3, x26, [x11, #-232]
+  b0:	7300326f 	.inst	0x7300326f ; undefined
+  b4:	74726174 	.inst	0x74726174 ; undefined
+  b8:	Address 0xb8 is out of bounds.
+
