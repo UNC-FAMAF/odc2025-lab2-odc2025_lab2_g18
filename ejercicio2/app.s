@@ -23,10 +23,10 @@
     .global pixel_ventana
 	.global elipse
 	.global elipses_fondo
+	.global trapecio
 
 mov x28, 0 //CONTADOR o FRAME COUNTER (fachero)
 mov x29, #0 //HABILITADOR (se usa para el frame counter)
-
 main:
 	// x0 contiene la direccion base del framebuffer
  	mov x20, x0	// Guarda la dirección base del framebuffer en x20
@@ -739,6 +739,33 @@ BOB:
 				mov x23, #252
 				bl cuadradoR
 //--------------------------------------------
+trapecio_fijo:
+    movz x11, 0xFF00, lsl 0     // (verde)
+    movk x11, 0x8000, lsl 16    // (alfa semi-transparente)
+
+    mov x3, 311                   // x inferior izquierda
+    mov x4, 326                   // x inferior derecha
+    mov x5, 105                   // y base sup
+    mov x6, 150                   // y base inf
+    mov x12, 10                   // Ancho superior
+    bl trapecio
+
+luz_rayo:
+    movz x11, 0xFF00, lsl 0
+    movk x11, 0x8000, lsl 16
+    mov x5, 151     //y sup
+    mov x6, 409    //y inf
+    mov x12, 8   //ancho sup
+    mov x7, 319    //centro en x original
+    
+    mov x2, #32
+    mov x19, #3
+    mul x19, x28, x19
+    add x2, x2, x19
+    
+    sub x3, x7, x2, lsr 1
+    add x4, x7, x2, lsr 1
+    bl trapecio
 
 algoritmo_delay:
 	mov x25,DELAY_CYCLES //Ver .equ arriba
