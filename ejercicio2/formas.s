@@ -59,6 +59,180 @@ fin_pantalla:
         add sp,sp,#40
 ret
 
+
+trapecio:
+  sub sp, sp, #80
+  stur x0, [sp, #0]
+  stur x1, [sp, #8]
+  stur x2, [sp, #16]
+  stur x7, [sp, #24]
+  stur x8, [sp, #32]
+  stur x9, [sp, #40]
+  stur x10, [sp, #48]
+  stur x11, [sp, #56]
+  stur x12, [sp, #64]
+  stur x30, [sp, #72]
+
+  // Parámetros:
+  // x12 = ancho superior (debe ser <= ancho inferior)
+  // x3 = x_inicial_inferior (esquina inferior izquierda)
+  // x4 = x_final_inferior (esquina inferior derecha)
+  // x5 = y_inicial (base inferior)
+  // x6 = y_final (base superior)
+  // x11 = color
+
+
+
+  // Extraer componente alpha (0-255)
+  and x8, x11, #0xFF000000     // Aislar byte alpha
+  lsr x8, x8, #24              // x8 = alpha (0-255)
+
+  cmp x8, #255
+  b.eq trapecio_opaco
+
+  // Preparar componentes del nuevo color
+  and x0, x11, #0x00FF0000     // Componente R
+  lsr x0, x0, #16
+  and x1, x11, #0x0000FF00      // Componente G
+  lsr x1, x1, #8
+  and x2, x11, #0x000000FF      // Componente B
+
+  // Invertir alpha para mezcla (255 - alpha)
+  mov x9, #255
+  sub x9, x9, x8                // x9 = 255 - alpha
+
+  mov x7, x5                    // y = y_inicial (base inferior)
+  sub x11, x6, x5               // Altura del trapecio
+  sub x10, x4, x3               // Ancho inferior
+  sub x12, x12, x10             // Diferencia de anchos (superior - inferior)
+  sub x12, x12, x10
+  sub x12, x12, x10
+trapecio_loop_y:
+  cmp x7, x6                    // while y <= y_final (base superior)
+  b.gt trapecio_end
+
+  // Calcular los límites x para esta fila y
+  // x_inicial = x3 + (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
+  // x_final = x4 - (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
+   sub x13, x7, x5               // y - y_inicial
+  mul x14, x13, x12             // * diferencia de anchos
+  asr x14, x14, #1              // / 2 (división por 2 con signo)
+  sdiv x14, x14, x11            // / altura
+   add x15, x3, x14              // x_inicial para esta fila
+  sub x16, x4, x14              // x_final para esta fila
+
+  mov x10, x15                  // x = x_inicial
+trapecio_loop_x:
+  cmp x10, x16                  // while x <= x_final
+  b.gt trapecio_next_y
+
+  // Calcular posición del pixel
+  mov x30, SCREEN_WIDTH
+  mul x30, x7, x30              // y * SCREEN_WIDTH
+  add x30, x30, x10             // + x
+  lsl x30, x30, #2              // * 4 (bytes per pixel)
+  add x30, x20, x30             // Dirección de memoria
+
+  // Cargar color actual (background)
+  ldur w17, [x30]
+
+  // Extraer componentes del color actual
+  and x13, x17, #0x00FF0000     // R
+  lsr x13, x13, #16
+  and x14, x17, #0x0000FF00      // G
+  lsr x14, x14, #8
+  and x15, x17, #0x000000FF      // B
+
+  // Mezclar componentes R
+  mul x13, x13, x9               // R_background * (255-alpha)
+  mul x18, x0, x8                // R_new * alpha
+  add x13, x13, x18
+  lsr x13, x13, #8               // Dividir por 256
+
+  // Mezclar componentes G
+  mul x14, x14, x9               // G_background * (255-alpha)
+  mul x18, x1, x8                // G_new * alpha
+  add x14, x14, x18
+  lsr x14, x14, #8               // Dividir por 256
+
+  // Mezclar componentes B
+  mul x15, x15, x9               // B_background * (255-alpha)
+  mul x18, x2, x8                // B_new * alpha
+  add x15, x15, x18
+  lsr x15, x15, #8               // Dividir por 256
+
+  // Reconstruir color mezclado
+  lsl x13, x13, #16              // Posición R
+  lsl x14, x14, #8               // Posición G
+  orr x17, x13, x14              // Combinar R y G
+  orr x17, x17, x15              // Combinar con B
+  orr x17, x17, #0xFF000000      // Alpha siempre opaco después de mezclar
+
+  // Almacenar pixel mezclado
+  stur w17, [x30]
+
+  add x10, x10, #1               // x++
+  b trapecio_loop_x
+
+trapecio_next_y:
+  add x7, x7, #1                 // y++
+  b trapecio_loop_y
+
+trapecio_opaco:
+  mov x7, x5                     // y = y_inicial
+  sub x11, x6, x5                // Altura del trapecio
+  sub x10, x4, x3                // Ancho inferior
+  sub x12, x12, x10              // Diferencia de anchos
+
+trapecio_opaco_loop_y:
+  cmp x7, x6                     // while y <= y_final
+  b.gt trapecio_end
+
+  // Calcular los límites x para esta fila y
+  sub x13, x7, x5                // y - y_inicial
+  mul x14, x13, x12              // * diferencia de anchos
+  asr x14, x14, #1               // / 2
+  sdiv x14, x14, x11             // / altura
+   add x15, x3, x14               // x_inicial para esta fila
+  sub x16, x4, x14               // x_final para esta fila
+
+  mov x10, x15                   // x = x_inicial
+trapecio_opaco_loop_x:
+  cmp x10, x16                   // while x <= x_final
+  b.gt trapecio_opaco_next_y
+
+  // Calcular posición del pixel
+  mov x30, SCREEN_WIDTH
+  mul x30, x7, x30               // y * SCREEN_WIDTH
+  add x30, x30, x10              // + x
+  lsl x30, x30, #2               // * 4
+  add x30, x20, x30              // Dirección de memoria
+
+  // Almacenar color directamente (sin mezcla)
+  stur w11, [x30]
+
+  add x10, x10, #1               // x++
+  b trapecio_opaco_loop_x
+
+trapecio_opaco_next_y:
+  add x7, x7, #1                 // y++
+  b trapecio_opaco_loop_y
+
+trapecio_end:
+  // Restaurar registros
+  ldur x0, [sp, #0]
+  ldur x1, [sp, #8]
+  ldur x2, [sp, #16]
+  ldur x7, [sp, #24]
+  ldur x8, [sp, #32]
+  ldur x9, [sp, #40]
+  ldur x10, [sp, #48]
+  ldur x11, [sp, #56]
+  ldur x12, [sp, #64]
+  ldur x30, [sp, #72]
+  add sp, sp, #80
+  ret
+
 /*ANTES DE LLAMAR A RECTANGULO ES NECESARIO ASIGNAR VALORES A
  X3 (X INICIAL),X4(X FINAL),X5(Y INICIAL),X6(Y FINAL) Y X11(COLOR!!*/
 rectangulo:

@@ -1,23 +1,28 @@
 
 There are no discarded input sections
 
-Memory Configuration
+Configuración de la Memoria
 
-Name             Origin             Length             Attributes
+Nombre           Origen             Longitud           Atributos
 *default*        0x0000000000000000 0xffffffffffffffff
 
-Linker script and memory map
+Guión del enlazador y mapa de memoria
 
 LOAD app.o
 LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
+<<<<<<< HEAD
 .text           0x0000000000080000    0x91594
+=======
+.text           0x0000000000080000    0x90f40
+>>>>>>> 9d417fe6e76568b6c929650c8db5327ff1861475
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
+<<<<<<< HEAD
  .text          0x00000000000900c8      0x838 app.o
                 0x00000000000900d0                main
  .text          0x0000000000090900      0xc94 formas.o
@@ -68,14 +73,72 @@ LOAD start.o
  *(COMMON)
                 0x00000000001115a0                __bss_end = .
                 0x00000000001115a0                _end = .
+=======
+ .text          0x00000000000900c8      0x1e4 app.o
+                0x00000000000900d0                main
+ .text          0x00000000000902ac      0xc94 formas.o
+                0x00000000000902b0                pantalla
+                0x0000000000090304                rectangulo
+                0x000000000009039c                elipses_fondo
+                0x00000000000903e4                mallado
+                0x000000000009042c                circulo
+                0x0000000000090520                elipse
+                0x0000000000090678                cuadradoR
+                0x0000000000090728                bresenham
+                0x00000000000909a4                pixel
+                0x0000000000090a3c                pixel_ventana
+                0x0000000000090ad4                boton
+                0x0000000000090b54                lineas_boton_expandir_h
+                0x0000000000090b9c                odc_2025
+                0x0000000000090e20                estrella
+                0x0000000000090f18                delay
+ .text          0x0000000000090f40    0x80000 start.o
+
+.iplt           0x0000000000110f40        0x0
+ .iplt          0x0000000000110f40        0x0 app.o
+
+.rela.dyn       0x0000000000110f40        0x0
+ .rela.iplt     0x0000000000110f40        0x0 app.o
+ .rela.text.boot
+                0x0000000000110f40        0x0 app.o
+
+.data           0x0000000000110f40        0x0
+ .data          0x0000000000110f40        0x0 app.o
+ .data          0x0000000000110f40        0x0 formas.o
+ .data          0x0000000000110f40        0x0 start.o
+
+.igot.plt       0x0000000000110f40        0x0
+ .igot.plt      0x0000000000110f40        0x0 app.o
+
+.bss            0x0000000000110f40        0x0
+ *(.bss*)
+ .bss           0x0000000000110f40        0x0 app.o
+ .bss           0x0000000000110f40        0x0 formas.o
+ .bss           0x0000000000110f40        0x0 start.o
+
+.bss            0x0000000000110f40        0x0
+                0x0000000000110f40                . = ALIGN (0x10)
+                0x0000000000110f40                __bss_start = .
+ *(.bss .bss.*)
+ *(COMMON)
+                0x0000000000110f40                __bss_end = .
+                0x0000000000110f40                _end = .
+>>>>>>> 9d417fe6e76568b6c929650c8db5327ff1861475
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
+<<<<<<< HEAD
 .debug_line     0x0000000000000000      0x5f8
  .debug_line    0x0000000000000000      0x245 app.o
  .debug_line    0x0000000000000245      0x363 formas.o
  .debug_line    0x00000000000005a8       0x50 start.o
+=======
+.debug_line     0x0000000000000000      0x463
+ .debug_line    0x0000000000000000       0xb0 app.o
+ .debug_line    0x00000000000000b0      0x363 formas.o
+ .debug_line    0x0000000000000413       0x50 start.o
+>>>>>>> 9d417fe6e76568b6c929650c8db5327ff1861475
 
 .debug_info     0x0000000000000000       0x8a
  .debug_info    0x0000000000000000       0x2e app.o
@@ -97,6 +160,6 @@ LOAD linker stubs
 
 .debug_str      0x0000000000000000       0xd1
  .debug_str     0x0000000000000000       0xd1 app.o
-                                         0x6c (size before relaxing)
+                                         0x66 (tamaño antes de la relajación)
  .debug_str     0x00000000000000d1       0x6f formas.o
  .debug_str     0x00000000000000d1       0x68 start.o

@@ -117,6 +117,39 @@ estrellas:
 	bl estrella
 
 estrellas_end:
+montañas_fondo:
+
+	movz x11, 0xC2, lsl 16
+	movk x11, 0xD8B8, lsl 0 
+	mov x3, 479
+	mov x4, 679
+	mov x5, 250
+	mov x6, 160
+
+	
+	bl elipse
+	movz x11, 0x47, lsl 16
+	movk x11, 0x7E7B, lsl 0 
+	mov x3, 479
+	mov x4, 679
+	mov x5, 220
+	mov x6, 160
+	
+	bl elipse
+
+	movz x11, 0xC2, lsl 16
+	movk x11, 0xD8B8, lsl 0
+	mov x3, 479
+	mov x4, 679
+	mov x5, 180
+	mov x6, 160
+
+	
+	bl elipse
+
+	movz x11, 0xC, lsl 16
+	movk x11, 0x5961, lsl 0
+fin_motañas:
 
 /*LLAMAR A ELIPSE CON 
 X3(YC),
