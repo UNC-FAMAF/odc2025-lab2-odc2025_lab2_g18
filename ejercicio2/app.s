@@ -433,13 +433,14 @@ BOB:
 
 	//Pierna izquierda
 		mov x9, #307     // x1
-		add x10, x19, 289 // y1
+		add x10, x19, 280 // y1
 		mov x11, #310    // x2
 		add x12, x19, 280 // y2
 		mov x13, #310    // x3
 		add x14, x19, 294 // y3
 		mov x15, #307     // x4
-		add x16, x19, 296 // y4
+		mov x16, #306     // y4
+		add x16, x19, 296 // y  
 		movz x21, 0xc737, lsl 00
 		movk x21, 0x00e3, lsl 16
 		mov x22, #308

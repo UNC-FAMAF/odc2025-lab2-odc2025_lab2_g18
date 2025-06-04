@@ -13,69 +13,70 @@ LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x91880
+.text           0x0000000000080000    0x91884
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x970 app.o
+ .text          0x00000000000900c8      0x974 app.o
                 0x00000000000900d0                main
- .text          0x0000000000090a38      0xe48 formas.o
-                0x0000000000090a3c                pantalla
-                0x0000000000090a90                trapecio
-                0x0000000000090c44                rectangulo
-                0x0000000000090cdc                elipses_fondo
-                0x0000000000090d24                mallado
-                0x0000000000090d6c                circulo
-                0x0000000000090e60                elipse
-                0x0000000000090fb8                cuadradoR
-                0x0000000000091068                bresenham
-                0x00000000000912e4                pixel
-                0x000000000009137c                pixel_ventana
-                0x0000000000091414                boton
-                0x0000000000091494                lineas_boton_expandir_h
-                0x00000000000914dc                odc_2025
-                0x0000000000091760                estrella
-                0x0000000000091858                delay
- .text          0x0000000000091880    0x80000 start.o
+ .text          0x0000000000090a3c      0xe48 formas.o
+                0x0000000000090a40                pantalla
+                0x0000000000090a94                trapecio
+                0x0000000000090c48                rectangulo
+                0x0000000000090ce0                elipses_fondo
+                0x0000000000090d28                mallado
+                0x0000000000090d70                circulo
+                0x0000000000090e64                elipse
+                0x0000000000090fbc                cuadradoR
+                0x000000000009106c                bresenham
+                0x00000000000912e8                pixel
+                0x0000000000091380                pixel_ventana
+                0x0000000000091418                boton
+                0x0000000000091498                lineas_boton_expandir_h
+                0x00000000000914e0                odc_2025
+                0x0000000000091764                estrella
+                0x000000000009185c                delay
+ .text          0x0000000000091884    0x80000 start.o
 
-.iplt           0x0000000000111880        0x0
- .iplt          0x0000000000111880        0x0 app.o
+.iplt           0x0000000000111884        0x0
+ .iplt          0x0000000000111884        0x0 app.o
 
-.rela.dyn       0x0000000000111880        0x0
- .rela.iplt     0x0000000000111880        0x0 app.o
+.rela.dyn       0x0000000000111888        0x0
+ .rela.iplt     0x0000000000111888        0x0 app.o
  .rela.text.boot
-                0x0000000000111880        0x0 app.o
+                0x0000000000111888        0x0 app.o
 
-.data           0x0000000000111880        0x0
- .data          0x0000000000111880        0x0 app.o
- .data          0x0000000000111880        0x0 formas.o
- .data          0x0000000000111880        0x0 start.o
+.data           0x0000000000111884        0x0
+ .data          0x0000000000111884        0x0 app.o
+ .data          0x0000000000111884        0x0 formas.o
+ .data          0x0000000000111884        0x0 start.o
 
-.igot.plt       0x0000000000111880        0x0
- .igot.plt      0x0000000000111880        0x0 app.o
+.igot.plt       0x0000000000111888        0x0
+ .igot.plt      0x0000000000111888        0x0 app.o
 
-.bss            0x0000000000111880        0x0
+.bss            0x0000000000111884        0x0
  *(.bss*)
- .bss           0x0000000000111880        0x0 app.o
- .bss           0x0000000000111880        0x0 formas.o
- .bss           0x0000000000111880        0x0 start.o
+ .bss           0x0000000000111884        0x0 app.o
+ .bss           0x0000000000111884        0x0 formas.o
+ .bss           0x0000000000111884        0x0 start.o
 
-.bss            0x0000000000111880        0x0
-                0x0000000000111880                . = ALIGN (0x10)
-                0x0000000000111880                __bss_start = .
+.bss            0x0000000000111884        0xc
+                0x0000000000111890                . = ALIGN (0x10)
+ *fill*         0x0000000000111884        0xc 
+                0x0000000000111890                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
-                0x0000000000111880                __bss_end = .
-                0x0000000000111880                _end = .
+                0x0000000000111890                __bss_end = .
+                0x0000000000111890                _end = .
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x6b5
- .debug_line    0x0000000000000000      0x293 app.o
- .debug_line    0x0000000000000293      0x3d2 formas.o
- .debug_line    0x0000000000000665       0x50 start.o
+.debug_line     0x0000000000000000      0x6b6
+ .debug_line    0x0000000000000000      0x294 app.o
+ .debug_line    0x0000000000000294      0x3d2 formas.o
+ .debug_line    0x0000000000000666       0x50 start.o
 
 .debug_info     0x0000000000000000       0x8a
  .debug_info    0x0000000000000000       0x2e app.o
