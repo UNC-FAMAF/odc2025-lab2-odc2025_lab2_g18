@@ -13,70 +13,69 @@ LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x91884
+.text           0x0000000000080000    0x91860
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x974 app.o
+ .text          0x00000000000900c8      0x950 app.o
                 0x00000000000900d0                main
- .text          0x0000000000090a3c      0xe48 formas.o
-                0x0000000000090a40                pantalla
-                0x0000000000090a94                trapecio
-                0x0000000000090c48                rectangulo
-                0x0000000000090ce0                elipses_fondo
-                0x0000000000090d28                mallado
-                0x0000000000090d70                circulo
-                0x0000000000090e64                elipse
-                0x0000000000090fbc                cuadradoR
-                0x000000000009106c                bresenham
-                0x00000000000912e8                pixel
-                0x0000000000091380                pixel_ventana
-                0x0000000000091418                boton
-                0x0000000000091498                lineas_boton_expandir_h
-                0x00000000000914e0                odc_2025
-                0x0000000000091764                estrella
-                0x000000000009185c                delay
- .text          0x0000000000091884    0x80000 start.o
+ .text          0x0000000000090a18      0xe48 formas.o
+                0x0000000000090a1c                pantalla
+                0x0000000000090a70                trapecio
+                0x0000000000090c24                rectangulo
+                0x0000000000090cbc                elipses_fondo
+                0x0000000000090d04                mallado
+                0x0000000000090d4c                circulo
+                0x0000000000090e40                elipse
+                0x0000000000090f98                cuadradoR
+                0x0000000000091048                bresenham
+                0x00000000000912c4                pixel
+                0x000000000009135c                pixel_ventana
+                0x00000000000913f4                boton
+                0x0000000000091474                lineas_boton_expandir_h
+                0x00000000000914bc                odc_2025
+                0x0000000000091740                estrella
+                0x0000000000091838                delay
+ .text          0x0000000000091860    0x80000 start.o
 
-.iplt           0x0000000000111884        0x0
- .iplt          0x0000000000111884        0x0 app.o
+.iplt           0x0000000000111860        0x0
+ .iplt          0x0000000000111860        0x0 app.o
 
-.rela.dyn       0x0000000000111888        0x0
- .rela.iplt     0x0000000000111888        0x0 app.o
+.rela.dyn       0x0000000000111860        0x0
+ .rela.iplt     0x0000000000111860        0x0 app.o
  .rela.text.boot
-                0x0000000000111888        0x0 app.o
+                0x0000000000111860        0x0 app.o
 
-.data           0x0000000000111884        0x0
- .data          0x0000000000111884        0x0 app.o
- .data          0x0000000000111884        0x0 formas.o
- .data          0x0000000000111884        0x0 start.o
+.data           0x0000000000111860        0x0
+ .data          0x0000000000111860        0x0 app.o
+ .data          0x0000000000111860        0x0 formas.o
+ .data          0x0000000000111860        0x0 start.o
 
-.igot.plt       0x0000000000111888        0x0
- .igot.plt      0x0000000000111888        0x0 app.o
+.igot.plt       0x0000000000111860        0x0
+ .igot.plt      0x0000000000111860        0x0 app.o
 
-.bss            0x0000000000111884        0x0
+.bss            0x0000000000111860        0x0
  *(.bss*)
- .bss           0x0000000000111884        0x0 app.o
- .bss           0x0000000000111884        0x0 formas.o
- .bss           0x0000000000111884        0x0 start.o
+ .bss           0x0000000000111860        0x0 app.o
+ .bss           0x0000000000111860        0x0 formas.o
+ .bss           0x0000000000111860        0x0 start.o
 
-.bss            0x0000000000111884        0xc
-                0x0000000000111890                . = ALIGN (0x10)
- *fill*         0x0000000000111884        0xc 
-                0x0000000000111890                __bss_start = .
+.bss            0x0000000000111860        0x0
+                0x0000000000111860                . = ALIGN (0x10)
+                0x0000000000111860                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
-                0x0000000000111890                __bss_end = .
-                0x0000000000111890                _end = .
+                0x0000000000111860                __bss_end = .
+                0x0000000000111860                _end = .
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x6b6
- .debug_line    0x0000000000000000      0x294 app.o
- .debug_line    0x0000000000000294      0x3d2 formas.o
- .debug_line    0x0000000000000666       0x50 start.o
+.debug_line     0x0000000000000000      0x6ad
+ .debug_line    0x0000000000000000      0x28b app.o
+ .debug_line    0x000000000000028b      0x3d2 formas.o
+ .debug_line    0x000000000000065d       0x50 start.o
 
 .debug_info     0x0000000000000000       0x8a
  .debug_info    0x0000000000000000       0x2e app.o
@@ -96,8 +95,8 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000060       0x30 start.o
 
-.debug_str      0x0000000000000000       0x77
- .debug_str     0x0000000000000000       0x77 app.o
-                                         0x66 (tamaño antes de la relajación)
- .debug_str     0x0000000000000077       0x69 formas.o
- .debug_str     0x0000000000000077       0x68 start.o
+.debug_str      0x0000000000000000       0xbb
+ .debug_str     0x0000000000000000       0xbb app.o
+                                         0x56 (tamaño antes de la relajación)
+ .debug_str     0x00000000000000bb       0x59 formas.o
+ .debug_str     0x00000000000000bb       0x68 start.o

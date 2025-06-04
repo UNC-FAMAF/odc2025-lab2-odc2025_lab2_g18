@@ -187,81 +187,101 @@ mov x6, 160
 bl elipse*/
 //
 piedras:
-movz x11, 0xC2, lsl 16
-movk x11, 0xD8B8, lsl 0 
-mov x3, 479
-mov x4, 679
-mov x5, 250
-mov x6, 160
+	movz x11, 0xC2, lsl 16
+	movk x11, 0xD8B8, lsl 0 
+	mov x3, 479
+	mov x4, 679
+	mov x5, 250
+	mov x6, 160
 
- 
-bl elipse
-movz x11, 0x47, lsl 16
-movk x11, 0x7E7B, lsl 0 
-mov x3, 479
-mov x4, 679
-mov x5, 220
-mov x6, 160
- 
-bl elipse
+	
+	bl elipse
+	movz x11, 0x47, lsl 16
+	movk x11, 0x7E7B, lsl 0 
+	mov x3, 479
+	mov x4, 679
+	mov x5, 220
+	mov x6, 160
+	
+	bl elipse
 
-movz x11, 0xC2, lsl 16
-movk x11, 0xD8B8, lsl 0
-mov x3, 479
-mov x4, 679
-mov x5, 180
-mov x6, 160
+	movz x11, 0xC2, lsl 16
+	movk x11, 0xD8B8, lsl 0
+	mov x3, 479
+	mov x4, 679
+	mov x5, 180
+	mov x6, 160
 
-bl elipse
+	bl elipse
 
-movz x11, 0xC, lsl 16
-movk x11, 0x5961, lsl 0
+	movz x11, 0xC, lsl 16
+	movk x11, 0x5961, lsl 0
 
-//Isla en la que esta Bob
-movk x11, 0xC, lsl 16
-movk x11, 0x5961, lsl 0 
-mov x3, 479 
-mov x4, 319
-mov x5, 176
-mov x6, 96
-bl elipse
-
-//elipses sombra con efecto rayo
-mov x19, 5
-mul x19, x28, x19
-mov x3, 409
-mov x4, 319
-add x5, x19, 65
-mov x6, 18
-movk x11, 0xAE, lsl 16
-movk x11, 0xFF38, lsl 0 
-bl elipse
-
-mov x19, -3
-mov x21, -1
-mul x21, x21, x28
-mul x19, x28, x19
-mov x3, 409
-mov x4, 319
-add x5, x19, 57
-add x6, x21, 18
-movk x11, 0x96, lsl 16
-movk x11, 0x9696, lsl 0 
-bl elipse
-
-mov x19, -3
-mov x21, -2
-mul x21, x21, x28
-mul x19, x28, x19
-mov x3, 409
-mov x4, 319
-add x5, x19, 30
-add x6, x21, 15
-movk x11, 0x63, lsl 16
-movk x11, 0x6363, lsl 0 
-bl elipse
-
+	//Isla en la que esta Bob
+	movk x11, 0xC, lsl 16
+	movk x11, 0x5961, lsl 0 
+	mov x3, 479 
+	mov x4, 319
+	mov x5, 176
+	mov x6, 96
+	bl elipse
 end_piedras:
+
+luz_rayo:
+    movz x11, 0xFF00, lsl 0
+    movk x11, 0x8000, lsl 16
+    mov x5, 105     //y sup
+    mov x6, 409    //y inf
+    mov x12, 8   //ancho sup
+    mov x7, 319    //centro en x original
+    
+    mov x2, #32
+    mov x19, #3
+    mul x19, x28, x19
+    add x2, x2, x19
+    
+    sub x3, x7, x2, lsr 1
+    add x4, x7, x2, lsr 1
+    bl trapecio
+
+end_luz_rayo:
+	
+sombras_elipse:
+	//elipses sombra con efecto rayo
+	mov x19, 5
+	mul x19, x28, x19
+	mov x3, 409
+	mov x4, 319
+	add x5, x19, 65
+	mov x6, 18
+	movz x11, 0x9429, lsl 0 
+	bl elipse
+
+	mov x19, -3
+	mov x21, -1
+	mul x21, x21, x28
+	mul x19, x28, x19
+	mov x3, 409
+	mov x4, 319
+	add x5, x19, 57
+	add x6, x21, 18
+	movz x11, 0x7b, lsl 16
+	movk x11, 0x9684, lsl 0 
+	bl elipse
+
+	mov x19, -3
+	mov x21, -2
+	mul x21, x21, x28
+	mul x19, x28, x19
+	mov x3, 409
+	mov x4, 319
+	add x5, x19, 30
+	add x6, x21, 15
+	movz x11, 0x52, lsl 16
+	movk x11, 0x6c5a, lsl 0 
+	bl elipse
+end_sombras_elipse:
+
 
 
 BOB:
@@ -748,33 +768,6 @@ BOB:
 				mov x23, #252
 				bl cuadradoR
 //--------------------------------------------
-trapecio_fijo:
-    movz x11, 0xFF00, lsl 0     // (verde)
-    movk x11, 0x8000, lsl 16    // (alfa semi-transparente)
-
-    mov x3, 311                   // x inferior izquierda
-    mov x4, 326                   // x inferior derecha
-    mov x5, 105                   // y base sup
-    mov x6, 150                   // y base inf
-    mov x12, 10                   // Ancho superior
-    bl trapecio
-
-luz_rayo:
-    movz x11, 0xFF00, lsl 0
-    movk x11, 0x8000, lsl 16
-    mov x5, 151     //y sup
-    mov x6, 409    //y inf
-    mov x12, 8   //ancho sup
-    mov x7, 319    //centro en x original
-    
-    mov x2, #32
-    mov x19, #3
-    mul x19, x28, x19
-    add x2, x2, x19
-    
-    sub x3, x7, x2, lsr 1
-    add x4, x7, x2, lsr 1
-    bl trapecio
 
 algoritmo_delay:
 	mov x25,DELAY_CYCLES //Ver .equ arriba
