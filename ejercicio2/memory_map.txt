@@ -1,15 +1,15 @@
 
 There are no discarded input sections
 
-Configuración de la Memoria
+Memory Configuration
 
-Nombre           Origen             Longitud           Atributos
+Name             Origin             Length             Attributes
 *default*        0x0000000000000000 0xffffffffffffffff
 
-Guión del enlazador y mapa de memoria
+Linker script and memory map
 
-LOAD app.o
 LOAD BobEsponja.o
+LOAD app.o
 LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
@@ -19,10 +19,10 @@ LOAD start.o
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x448 app.o
-                0x00000000000900d0                main
- .text          0x0000000000090510      0x690 BobEsponja.o
-                0x0000000000090510                Bobi
+ .text          0x00000000000900c8      0x690 BobEsponja.o
+                0x00000000000900c8                Bobi
+ .text          0x0000000000090758      0x448 app.o
+                0x0000000000090760                main
  .text          0x0000000000090ba0      0xf2c formas.o
                 0x0000000000090ba4                pantalla
                 0x0000000000090bf8                trapecio
@@ -43,26 +43,26 @@ LOAD start.o
  .text          0x0000000000091acc    0x80000 start.o
 
 .iplt           0x0000000000111acc        0x0
- .iplt          0x0000000000111acc        0x0 app.o
+ .iplt          0x0000000000111acc        0x0 BobEsponja.o
 
 .rela.dyn       0x0000000000111ad0        0x0
- .rela.iplt     0x0000000000111ad0        0x0 app.o
+ .rela.iplt     0x0000000000111ad0        0x0 BobEsponja.o
  .rela.text.boot
-                0x0000000000111ad0        0x0 app.o
+                0x0000000000111ad0        0x0 BobEsponja.o
 
 .data           0x0000000000111acc        0x0
- .data          0x0000000000111acc        0x0 app.o
  .data          0x0000000000111acc        0x0 BobEsponja.o
+ .data          0x0000000000111acc        0x0 app.o
  .data          0x0000000000111acc        0x0 formas.o
  .data          0x0000000000111acc        0x0 start.o
 
 .igot.plt       0x0000000000111ad0        0x0
- .igot.plt      0x0000000000111ad0        0x0 app.o
+ .igot.plt      0x0000000000111ad0        0x0 BobEsponja.o
 
 .bss            0x0000000000111acc        0x0
  *(.bss*)
- .bss           0x0000000000111acc        0x0 app.o
  .bss           0x0000000000111acc        0x0 BobEsponja.o
+ .bss           0x0000000000111acc        0x0 app.o
  .bss           0x0000000000111acc        0x0 formas.o
  .bss           0x0000000000111acc        0x0 start.o
 
@@ -79,36 +79,36 @@ OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
 .debug_line     0x0000000000000000      0x782
- .debug_line    0x0000000000000000      0x147 app.o
- .debug_line    0x0000000000000147      0x1e0 BobEsponja.o
+ .debug_line    0x0000000000000000      0x1e0 BobEsponja.o
+ .debug_line    0x00000000000001e0      0x147 app.o
  .debug_line    0x0000000000000327      0x40b formas.o
  .debug_line    0x0000000000000732       0x50 start.o
 
 .debug_info     0x0000000000000000       0xb8
- .debug_info    0x0000000000000000       0x2e app.o
- .debug_info    0x000000000000002e       0x2e BobEsponja.o
+ .debug_info    0x0000000000000000       0x2e BobEsponja.o
+ .debug_info    0x000000000000002e       0x2e app.o
  .debug_info    0x000000000000005c       0x2e formas.o
  .debug_info    0x000000000000008a       0x2e start.o
 
 .debug_abbrev   0x0000000000000000       0x50
- .debug_abbrev  0x0000000000000000       0x14 app.o
- .debug_abbrev  0x0000000000000014       0x14 BobEsponja.o
+ .debug_abbrev  0x0000000000000000       0x14 BobEsponja.o
+ .debug_abbrev  0x0000000000000014       0x14 app.o
  .debug_abbrev  0x0000000000000028       0x14 formas.o
  .debug_abbrev  0x000000000000003c       0x14 start.o
 
 .debug_aranges  0x0000000000000000       0xc0
  .debug_aranges
-                0x0000000000000000       0x30 app.o
+                0x0000000000000000       0x30 BobEsponja.o
  .debug_aranges
-                0x0000000000000030       0x30 BobEsponja.o
+                0x0000000000000030       0x30 app.o
  .debug_aranges
                 0x0000000000000060       0x30 formas.o
  .debug_aranges
                 0x0000000000000090       0x30 start.o
 
-.debug_str      0x0000000000000000       0xcd
- .debug_str     0x0000000000000000       0xcd app.o
-                                         0x5b (tamaño antes de la relajación)
- .debug_str     0x00000000000000cd       0x62 BobEsponja.o
- .debug_str     0x00000000000000cd       0x5e formas.o
- .debug_str     0x00000000000000cd       0x68 start.o
+.debug_str      0x0000000000000000       0xde
+ .debug_str     0x0000000000000000       0xde BobEsponja.o
+                                         0x73 (size before relaxing)
+ .debug_str     0x00000000000000de       0x6c app.o
+ .debug_str     0x00000000000000de       0x6f formas.o
+ .debug_str     0x00000000000000de       0x68 start.o

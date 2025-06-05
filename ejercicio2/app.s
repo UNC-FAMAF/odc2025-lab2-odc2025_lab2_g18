@@ -7,7 +7,7 @@
 	.equ GPIO_GPLEV0,    0x34
 
 	.equ DELAY_CYCLES,     0xFFFFF
-	.equ seis, 50
+	.equ tiempo_multiplicador, 100
 
 	.globl main
 	.global rectangulo
@@ -155,7 +155,8 @@ piso:
 	mov x5, 5
 	mov x6, 15
 	bl planta
-end_piedras:
+end_piso:
+
 nave:
 	movz x11, 0x73, lsl 16
 	movk x11, 0xf6b4, lsl 0
@@ -307,7 +308,7 @@ luz_rayo:
     bl trapecio
 
 end_luz_rayo:
-	
+
 sombras_elipse:
 	//elipses sombra con efecto rayo
 	mov x19, 5
@@ -346,7 +347,7 @@ end_sombras_elipse:
 
 algoritmo_delay:
 	mov x25,DELAY_CYCLES //Ver .equ arriba
-	mov x24,seis
+	mov x24,tiempo_multiplicador
 	mul x25,x25,x24
 	//mul x25,x25,x25
 	L1: 
@@ -357,16 +358,16 @@ algoritmo_delay:
 	    
 
 actualizar_frame:
-		// if (x28 < 6 && habilitador == 0)
-		cmp x28, #6
+		// if (x28 < 12 && habilitador == 0)
+		cmp x28, #12
 		bge check_siguiente
 		cbnz x29, check_siguiente   // Si habilitador != 0, salta
 		add x28, x28, #1
 		b fin_actualizar
 
 	check_siguiente:
-		// else if (x28 == 6)
-		cmp x28, #6
+		// else if (x28 == 12)
+		cmp x28, #12
 		bne check_dos
 		mov x29, #1
 		sub x28, x28, #1
