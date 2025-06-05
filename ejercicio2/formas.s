@@ -24,7 +24,7 @@
     .global estrella
     .global elipses_fondo
     .global trapecio
-	//.global main
+    .global planta
 
     //main:
 
@@ -1343,6 +1343,48 @@ fin_estrella:
     ldur x11,[sp,#24]
     ldur x30,[sp,#32]
     add sp,sp,#48
+ret
+
+planta:
+    sub sp,sp,#48
+    stur x3,[sp,#0]
+    stur x4,[sp,#8]
+    stur x5,[sp,#16]
+    stur x6,[sp,#24]
+    stur x11,[sp,#32]
+    stur x30,[sp,#40]
+    movz x11, 0x42,lsl 16
+    movk x11, 0x4242, lsl 0
+
+// --- Tallo principal (elipse vertical) ---
+bl elipse
+
+// --- Hojas (elipses) ---
+// Hoja abajo
+add x3, x3, 15      // Y-centro 365
+add x5, X5, 9            // Semieje a 12
+sub x6, x6, 11            // Semieje b 4
+bl elipse
+
+// Hoja media
+sub x3, x3, 9     // Y-centro
+sub x5, x5, 3    // Semieje a
+bl elipse
+
+//Hoja alta
+sub x3, x3, 9      // Y-centro
+sub x5, x5, 3           // Semieje a
+bl elipse
+
+end_planta:
+    ldur x3,[sp,#0]
+    ldur x4,[sp,#8]
+    ldur x5,[sp,#16]
+    ldur x6,[sp,#24]
+    ldur x11,[sp,#32]
+    ldur x30,[sp,#40]
+    add sp,sp,#48
+
 ret
 
 InfLoop:

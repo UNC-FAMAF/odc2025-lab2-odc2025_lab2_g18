@@ -121,79 +121,40 @@ estrellas:
 	bl estrella
 estrellas_end:
 
-montañas_fondo:
-
-	movz x11, 0xC2, lsl 16
-	movk x11, 0xD8B8, lsl 0 
-	mov x3, 479
-	mov x4, 679
-	mov x5, 250
-	mov x6, 160
-
-	
-	bl elipse
-	movz x11, 0x47, lsl 16
-	movk x11, 0x7E7B, lsl 0 
-	mov x3, 479
-	mov x4, 679
-	mov x5, 220
-	mov x6, 160
-	
-	bl elipse
-
-	movz x11, 0xC2, lsl 16
-	movk x11, 0xD8B8, lsl 0
-	mov x3, 479
-	mov x4, 679
-	mov x5, 180
-	mov x6, 160
-
-	
-	bl elipse
-
-	movz x11, 0xC, lsl 16
-	movk x11, 0x5961, lsl 0
-fin_motañas:
-
-piedras:
-	movz x11, 0xC2, lsl 16
-	movk x11, 0xD8B8, lsl 0 
-	mov x3, 479
-	mov x4, 679
-	mov x5, 250
-	mov x6, 160
-
-	
-	bl elipse
-	movz x11, 0x47, lsl 16
-	movk x11, 0x7E7B, lsl 0 
-	mov x3, 479
-	mov x4, 679
-	mov x5, 220
-	mov x6, 160
-	
-	bl elipse
-
-	movz x11, 0xC2, lsl 16
-	movk x11, 0xD8B8, lsl 0
-	mov x3, 479
-	mov x4, 679
-	mov x5, 180
-	mov x6, 160
-
-	bl elipse
-
-	movz x11, 0xC, lsl 16
-	movk x11, 0x5961, lsl 0
-
-	//Isla en la que esta Bob
+piso:
+	//Isla
 	movk x11, 0xC, lsl 16
 	movk x11, 0x5961, lsl 0 
 	mov x3, 479 
-	mov x4, 319
-	mov x5, 176
-	mov x6, 96
+	mov x4, 320
+	mov x5, 320
+	mov x6, 50
 	bl elipse
+
+	//planta
+	mov x3, 440
+	mov x4, 60//x
+	mov x5, 4
+	mov x6, 14//v
+	bl planta
+
+	mov x3, 440
+	mov x4, 100
+	mov x5, 5
+	mov x6, 15
+	bl planta
+
+	mov x3, 450
+	mov x4, 200
+	mov x5, 3
+	mov x6, 13
+	bl planta
+
+	mov x3, 450
+	mov x4, 200
+	mov x5, 5
+	mov x6, 15
+	bl planta
 end_piedras:
 nave:
 	movz x11, 0x73, lsl 16
@@ -332,7 +293,7 @@ luz_rayo:
     movz x11, 0xFF00, lsl 0
     movk x11, 0x8000, lsl 16
     mov x5, 105     //y sup
-    mov x6, 409    //y inf
+    mov x6, 448    //y inf
     mov x12, 8   //ancho sup
     mov x7, 319    //centro en x original
     
@@ -351,7 +312,7 @@ sombras_elipse:
 	//elipses sombra con efecto rayo
 	mov x19, 5
 	mul x19, x28, x19
-	mov x3, 409
+	mov x3, 448
 	mov x4, 319
 	add x5, x19, 65
 	mov x6, 18
@@ -362,7 +323,7 @@ sombras_elipse:
 	mov x21, -1
 	mul x21, x21, x28
 	mul x19, x28, x19
-	mov x3, 409
+	mov x3, 448
 	mov x4, 319
 	add x5, x19, 57
 	add x6, x21, 18
@@ -374,7 +335,7 @@ sombras_elipse:
 	mov x21, -2
 	mul x21, x21, x28
 	mul x19, x28, x19
-	mov x3, 409
+	mov x3, 448
 	mov x4, 319
 	add x5, x19, 30
 	add x6, x21, 15
