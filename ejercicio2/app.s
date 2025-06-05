@@ -191,7 +191,131 @@ piedras:
 	mov x6, 96
 	bl elipse
 end_piedras:
+nave:
+	movz x11, 0x73, lsl 16
+	movk x11, 0xf6b4, lsl 0
+	mov x3, 59
+	mov x4, 319
+	mov x5, 51
+	mov x6, 33
+	bl elipse
 
+	mov x15, 9
+	mov x3, 319
+	mov x4, 61
+	movz x11, 0xa993, lsl 00
+	movk x11, 0x29, lsl 16
+	bl circulo
+
+	mov x9, 339
+	mov x10, 50
+	mov x11, 342
+	mov x12, 50
+	mov x13, 338
+	mov x14, 63
+	mov x15, 333
+	mov x16, 63
+	movz x21, 0xa993, lsl 00
+	movk x21, 0x29, lsl 16
+	mov x22, 337
+	mov x23, 59
+	bl cuadradoR
+
+	mov x9, 299
+	mov x10, 50
+	mov x11, 305
+	mov x12, 63
+	mov x13, 300
+	mov x14, 63
+	mov x15, 296
+	mov x16, 50
+	movz x21, 0xa993, lsl 00
+	movk x21, 0x29, lsl 16
+	mov x22, 301
+	mov x23, 59
+	bl cuadradoR
+
+	movz x11, 0xa993, lsl 00
+	movk x11, 0x29, lsl 16
+	mov x3, 42
+	mov x4, 50
+	mov x5, 291
+	mov x6, 347
+	bl rectangulo
+
+	movz x11, 0xa993, lsl 00
+	movk x11, 0x29, lsl 16
+	mov x3, 46
+	mov x4, 51
+	mov x5, 344
+	mov x6, 351
+	bl rectangulo
+
+	movz x11, 0xa993, lsl 00
+	movk x11, 0x29, lsl 16
+	mov x3, 46
+	mov x4, 51
+	mov x5, 286
+	mov x6, 294
+	bl rectangulo
+
+	movz x11, 0x3a, lsl 16
+	movk x11, 0x436e, lsl 0
+	mov x3, 80
+	mov x4, 319
+	mov x5, 102
+	mov x6, 20
+	bl elipse
+
+	movz x11, 0x3a, lsl 16
+	movk x11, 0x436e, lsl 0
+	mov x3, 86
+	mov x4, 319
+	mov x5, 42
+	mov x6, 21
+	bl elipse
+
+	movz x11, 0x64, lsl 16
+	movk x11, 0xed7e, lsl 0
+	mov x3, 88
+	mov x4, 319
+	mov x5, 14
+	mov x6, 9
+	bl elipse
+
+	movz x11, 0x64, lsl 16
+	movk x11, 0xed7e, lsl 0
+	mov x3, 85
+	mov x4, 282
+	mov x5, 9
+	mov x6, 7
+	bl elipse
+
+	movz x11, 0x64, lsl 16
+	movk x11, 0xed7e, lsl 0
+	mov x3, 79
+	mov x4, 252
+	mov x5, 9
+	mov x6, 7
+	bl elipse
+
+	movz x11, 0x64, lsl 16
+	movk x11, 0xed7e, lsl 0
+	mov x3, 85
+	mov x4, 356
+	mov x5, 9
+	mov x6, 7
+	bl elipse
+
+	movz x11, 0x64, lsl 16
+	movk x11, 0xed7e, lsl 0
+	mov x3, 79
+	mov x4, 385
+	mov x5, 9
+	mov x6, 7
+	bl elipse
+
+end_nave:
 bl Bobi
 luz_rayo:
     movz x11, 0xFF00, lsl 0
