@@ -10,20 +10,6 @@
 	.equ tiempo_multiplicador, 100
 
 	.globl main
-	.global rectangulo
-    .global pantalla
-    .global circulo
-    .global bresenham
-    .global cuadradoR
-    .global pixel
-    .global boton
-    .global lineas_boton_expandir_h
-    .global lineas_boton_expandir_v
-    .global odc_2025
-    .global pixel_ventana
-	.global elipse
-	.global elipses_fondo
-	.global trapecio
 
 mov x28, 0 //CONTADOR o FRAME COUNTER (fachero)
 mov x29, #0 //HABILITADOR (se usa para el frame counter)
@@ -354,8 +340,7 @@ algoritmo_delay:
 	SUB x25,x25,#1
 	CBNZ x25, L1
 	//Primero se va a actualizar el sumador, y cuando llegue a los 6 frames pasa al otro
-	
-	    
+	   
 
 actualizar_frame:
 		// if (x28 < 12 && habilitador == 0)

@@ -14,11 +14,7 @@
     .global bresenham
     .global cuadradoR
     .global pixel
-    .global boton
-    .global lineas_boton_expandir_h
-    .global lineas_boton_expandir_v
     .global odc_2025
-    .global pixel_ventana
     .global elipse
     .global delay
     .global estrella
@@ -80,8 +76,6 @@ trapecio:
   // x5 = y_inicial (base inferior)
   // x6 = y_final (base superior)
   // x11 = color
-
-
 
   // Extraer componente alpha (0-255)
   and x8, x11, #0xFF000000     // Aislar byte alpha
@@ -944,130 +938,7 @@ pixelde1:
         ldur x30,[sp,#56] 
         add  sp,sp,#64
 ret
-//ANTES DE LLAMAR A PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
-pixel_ventana:
-        sub sp,sp,#64
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x30,[sp,#56] 
-        
-        add x4, x3, 5
-        add x6, x5, 5
 
-        mov x9, x5            // Guarda el valor inicial de x5
-    pixel_ventana_y:
-        cmp x3, x4           // mientras y  <= x4
-        b.ge fin_pixel_ventana
-        
-        mov x5, x9
-    pixel_ventana_x:
-        cmp x5, x6        // mientras x <= x6
-        b.ge siguiente_filapix_ventana
-
-       
-    // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
-
-	    mov x8, SCREEN_WIDTH
-        mov x7, x3
-        mul x7, x7, x8
-        add x7, x7, x5
-        lsl x7, x7, 2
-        add x7, x20, x7
-
-        stur w11, [x7]       // Escribe el color del cuadrado
-
-        add x5, x5, 1
-        b pixel_ventana_x
-
-    siguiente_filapix_ventana:
-        add x3, x3, 1
-        b pixel_y
-
-    fin_pixel_ventana:
-        ldur x3,[sp,#0]  
-        ldur x4,[sp,#8]
-        ldur x5,[sp,#16] 
-        ldur x6,[sp,#24]
-        ldur x7,[sp,#32]
-        ldur x8,[sp,#40]
-        ldur x9,[sp,#48]
-        ldur x30,[sp,#56] 
-        add  sp,sp,#64
-
-ret
-
-//ANTES DE LLAMAR A BOTON ASIGNAR X3(Y INICIAL), X4(Y FINAL), X5(X INICIAL), X6(X FINAL) Y X11 (COLOR)
-//CREA LOS CUADRADOS PARA LOS BOTONES
-boton: 
-        sub sp,sp,#48
-        stur x3,[sp,#0] 
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x11,[sp,#32]
-        stur x30,[sp,#40]
-        // negro
-		movz x11, 0x4040, lsl 00 
-		movk x11, 0x40, lsl 16
-		bl rectangulo
-		//blanco
-		add x3, x3, 1
-		sub x4, x4, 1
-		add x5, x5, 1
-		sub x6, x6, 1
-		movz x11, 0xFFFF, lsl 00 
-		movk x11, 0xFF, lsl 16
-		bl rectangulo
-		//gris
-		add x3, x3, 1
-		sub x4, x4, 1
-		add x5, x5, 1
-		sub x6, x6, 1
-		movz x11, 0x909E, lsl 00 
-		movk x11, 0x7D, lsl 16
-		bl rectangulo 
-    fin_boton:
-        ldur x3,[sp,#0] //- 
-        ldur x4,[sp,#8]//-
-        ldur x5,[sp,#16] //-
-        ldur x6,[sp,#24]//-
-        ldur x11,[sp,#32]
-        ldur x30,[sp,#40]
-        add sp,sp,#48
-ret
-
-//ASIGANR LOS VALORES X10(Y0), X12(Y1) Y X21(COLOR)
-//CREA TRES LINEAS HORIZONTALES PARA DIBUJAR EL BOTON EXPANDIR
-lineas_boton_expandir_h:
-
-    sub sp,sp,#48
-    stur x10,[sp,#0] 
-    stur x12,[sp,#8]
-    stur x21,[sp,#16] 
-    stur x30,[sp,#24]
-
-    movz x21, 0x909E, lsl 00 
-	movk x21, 0x7D, lsl 16
-    bl bresenham
-
-    add x10, x10, 1
-    add x12, x12, 1 
-    movz x21, 0x909E, lsl 00 
-	movk x21, 0x7D, lsl 16
-    bl bresenham
-
-    add x10, x10, 1
-    add x12, x12, 1 
-    movz x21, 0x909E, lsl 00 
-	movk x21, 0x7D, lsl 16
-    bl bresenham
-
-FIN:
 odc_2025:
 
         sub sp,sp,#32
