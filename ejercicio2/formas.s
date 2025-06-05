@@ -844,8 +844,8 @@ pixel:
         stur x9,[sp,#48]
         stur x30,[sp,#56] 
 
-        add x4, x3, 1
-        add x6, x5, 1
+        add x4, x3, 2
+        add x6, x5, 2
 
         mov x9, x5            // Guarda el valor inicial de x5
     pixel_y:
@@ -888,6 +888,62 @@ pixel:
         add  sp,sp,#64
 ret
 
+//PIXEL
+//ANTES DE LLAMAR A PIXEL o PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
+pixelde1:
+        sub sp,sp,#64
+        stur x3,[sp,#0]  
+        stur x4,[sp,#8]
+        stur x5,[sp,#16] 
+        stur x6,[sp,#24]
+        stur x7,[sp,#32]
+        stur x8,[sp,#40]
+        stur x9,[sp,#48]
+        stur x30,[sp,#56] 
+
+        add x4, x3, 1
+        add x6, x5, 1
+
+        mov x9, x5            // Guarda el valor inicial de x5
+    pixel_y1:
+        cmp x3, x4           // mientras y  <= x4
+        b.ge fin_pixel1 
+        
+        mov x5, x9
+    pixel_x1:
+        cmp x5, x6        // mientras x <= x6
+        b.ge siguiente_filapix1
+
+       
+    // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
+
+	mov x8, SCREEN_WIDTH
+        mov x7, x3
+        mul x7, x7, x8
+        add x7, x7, x5
+        lsl x7, x7, 2
+        add x7, x20, x7
+
+     stur w11, [x7]       // Escribe el color del cuadrado
+
+        add x5, x5, 1
+        b pixel_x1
+
+    siguiente_filapix1:
+        add x3, x3, 1
+        b pixel_y1
+
+    fin_pixel1:
+        ldur x3,[sp,#0]  
+        ldur x4,[sp,#8]
+        ldur x5,[sp,#16] 
+        ldur x6,[sp,#24]
+        ldur x7,[sp,#32]
+        ldur x8,[sp,#40]
+        ldur x9,[sp,#48]
+        ldur x30,[sp,#56] 
+        add  sp,sp,#64
+ret
 //ANTES DE LLAMAR A PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 pixel_ventana:
         sub sp,sp,#64
@@ -1023,249 +1079,169 @@ odc_2025:
     mov x7, x5 //guardo el primer valor de x
     //1ra linea de pixeles
 	add x5, x5, 1 // el primer pixel lo salteo pq es vacio! //102
-	bl pixel
-
-	add x5, x5, 1 //104
-	bl pixel
-
-	add x5, x5, 5 //110
-	bl pixel	 
-	
-	add x5, x5, 10 //112
-	bl pixel
-	
-	add x5, x5, 1 //114
-	bl pixel
-
-	add x5, x5, 1	//122
-	bl pixel
-	
-	add x5, x5, 4	//124
-	bl pixel
-	
-	add x5, x5, 1	//140
-	bl pixel
-	
-	add x5, x5, 3	//142
-	bl pixel
-	
-	add x5, x5, 1	//150
-	bl pixel
-	
-	add x5, x5, 1	//152
-	bl pixel
-	
-	add x5, x5, 4	//158
-	bl pixel
-	
-	add x5, x5, 1	//160
-	bl pixel
-	
-	add x5, x5, 1	//166
-	bl pixel
-	
-	add x5, x5, 1	//168
-	bl pixel
+	bl pixelde1
+	add x5, x5, 1
+	bl pixelde1
+	add x5, x5, 5 
+	bl pixelde1	 
+	add x5, x5, 10
+	bl pixelde1
+	add x5, x5, 1 
+	bl pixelde1
+	add x5, x5, 1	
+	bl pixelde1
+	add x5, x5, 4	
+	bl pixelde1
+	add x5, x5, 1	
+	bl pixelde1
+	add x5, x5, 3	
+	bl pixelde1
+	add x5, x5, 1	
+	bl pixelde1
+	add x5, x5, 1
+	bl pixelde1
+	add x5, x5, 4	
+	bl pixelde1
+	add x5, x5, 1	
+	bl pixelde1
+	add x5, x5, 1	
+	bl pixelde1
+	add x5, x5, 1
+	bl pixelde1
 	
     //segunda_linea_de_pixeles:	
     mov x5, x7
 	add x3, x3, 1
-
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 4
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 13
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 2
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 5
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
-
+    bl pixelde1
     //3ra linea de pixeles :D
     mov x5, x7
     add x3, x3, 1
-
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-    
+    bl pixelde1
     add x5, x5, 4
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 1
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 9
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 2
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 5
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 1
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 1
-    bl pixel
-
+    bl pixelde1
     //4ta linea de pixeles :D
     mov x5, x7
-    add x3, x3, 1
-    
-    bl pixel
-
+    add x3, x3, 1 
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-    
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 1
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 2
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 10
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 3
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 4
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 7
-    bl pixel
-
+    bl pixelde1
     //5ta linea de pixeles :D
     mov x5, x7
     add x3, x3, 1
-
-	bl pixel
-
+	bl pixelde1
 	add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
 	add x5, x5, 2 
-	bl pixel	 
-	
+	bl pixelde1 
 	add x5, x5, 2 
-	bl pixel
-	
+	bl pixelde1
 	add x5, x5, 2 
-	bl pixel
-
+	bl pixelde1
 	add x5, x5, 9
-	bl pixel
-	
+	bl pixelde1
 	add x5, x5, 4
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 3
-	bl pixel
-    
+	bl pixelde1
     add x5, x5, 8
-	bl pixel
-
+	bl pixelde1
     //6ta linea
     mov x5,x7
     add x3, x3, 1
-
     add x5, x5, 1
-    bl pixel
-    
+    bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
 	add x5, x5, 4
-	bl pixel	 
-	
+	bl pixelde1 
 	add x5, x5, 1
-	bl pixel
-	
+	bl pixelde1
 	add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
 	add x5, x5, 1
-	bl pixel
-	
+	bl pixelde1
 	add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 2
-	bl pixel
-    
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 3
-	bl pixel
-
+	bl pixelde1
     add x5, x5, 1
-    bl pixel
-
+    bl pixelde1
     add x5, x5, 1
-    bl pixel
+    bl pixelde1
     fin_odc_2025:
 
         ldur x3,[sp,#0]  

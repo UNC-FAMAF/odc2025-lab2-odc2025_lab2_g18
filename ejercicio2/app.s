@@ -6,7 +6,7 @@
 	.equ GPIO_GPFSEL0,   0x00
 	.equ GPIO_GPLEV0,    0x34
 
-	.equ DELAY_CYCLES,     0xfFFfF
+	.equ DELAY_CYCLES,     0xFFFFF
 	.equ seis, 50
 
 	.globl main
