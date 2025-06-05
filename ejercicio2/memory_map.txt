@@ -14,60 +14,60 @@ LOAD formas.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x91a30
+.text           0x0000000000080000    0x91a2c
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x490 app.o
+ .text          0x00000000000900c8      0x4b0 app.o
                 0x00000000000900d0                main
- .text          0x0000000000090558      0x690 BobEsponja.o
-                0x0000000000090558                Bobi
- .text          0x0000000000090be8      0xe48 formas.o
-                0x0000000000090bec                pantalla
-                0x0000000000090c40                trapecio
-                0x0000000000090df4                rectangulo
-                0x0000000000090e8c                elipses_fondo
-                0x0000000000090ed4                mallado
-                0x0000000000090f1c                circulo
-                0x0000000000091010                elipse
-                0x0000000000091168                cuadradoR
-                0x0000000000091218                bresenham
-                0x0000000000091494                pixel
-                0x000000000009152c                pixel_ventana
-                0x00000000000915c4                boton
-                0x0000000000091644                lineas_boton_expandir_h
-                0x000000000009168c                odc_2025
-                0x0000000000091910                estrella
-                0x0000000000091a08                delay
- .text          0x0000000000091a30    0x80000 start.o
+ .text          0x0000000000090578      0x690 BobEsponja.o
+                0x0000000000090578                Bobi
+ .text          0x0000000000090c08      0xe24 formas.o
+                0x0000000000090c0c                pantalla
+                0x0000000000090c60                trapecio
+                0x0000000000090e14                rectangulo
+                0x0000000000090eac                elipses_fondo
+                0x0000000000090ef4                circulo
+                0x0000000000090fe8                elipse
+                0x0000000000091140                cuadradoR
+                0x00000000000911f0                bresenham
+                0x000000000009146c                pixel
+                0x0000000000091504                pixel_ventana
+                0x000000000009159c                boton
+                0x000000000009161c                lineas_boton_expandir_h
+                0x0000000000091664                odc_2025
+                0x000000000009190c                estrella
+                0x0000000000091a04                delay
+ .text          0x0000000000091a2c    0x80000 start.o
 
-.iplt           0x0000000000111a30        0x0
- .iplt          0x0000000000111a30        0x0 app.o
+.iplt           0x0000000000111a2c        0x0
+ .iplt          0x0000000000111a2c        0x0 app.o
 
 .rela.dyn       0x0000000000111a30        0x0
  .rela.iplt     0x0000000000111a30        0x0 app.o
  .rela.text.boot
                 0x0000000000111a30        0x0 app.o
 
-.data           0x0000000000111a30        0x0
- .data          0x0000000000111a30        0x0 app.o
- .data          0x0000000000111a30        0x0 BobEsponja.o
- .data          0x0000000000111a30        0x0 formas.o
- .data          0x0000000000111a30        0x0 start.o
+.data           0x0000000000111a2c        0x0
+ .data          0x0000000000111a2c        0x0 app.o
+ .data          0x0000000000111a2c        0x0 BobEsponja.o
+ .data          0x0000000000111a2c        0x0 formas.o
+ .data          0x0000000000111a2c        0x0 start.o
 
 .igot.plt       0x0000000000111a30        0x0
  .igot.plt      0x0000000000111a30        0x0 app.o
 
-.bss            0x0000000000111a30        0x0
+.bss            0x0000000000111a2c        0x0
  *(.bss*)
- .bss           0x0000000000111a30        0x0 app.o
- .bss           0x0000000000111a30        0x0 BobEsponja.o
- .bss           0x0000000000111a30        0x0 formas.o
- .bss           0x0000000000111a30        0x0 start.o
+ .bss           0x0000000000111a2c        0x0 app.o
+ .bss           0x0000000000111a2c        0x0 BobEsponja.o
+ .bss           0x0000000000111a2c        0x0 formas.o
+ .bss           0x0000000000111a2c        0x0 start.o
 
-.bss            0x0000000000111a30        0x0
+.bss            0x0000000000111a2c        0x4
                 0x0000000000111a30                . = ALIGN (0x10)
+ *fill*         0x0000000000111a2c        0x4 
                 0x0000000000111a30                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
@@ -77,11 +77,11 @@ LOAD start.o
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x75b
- .debug_line    0x0000000000000000      0x159 app.o
- .debug_line    0x0000000000000159      0x1e0 BobEsponja.o
- .debug_line    0x0000000000000339      0x3d2 formas.o
- .debug_line    0x000000000000070b       0x50 start.o
+.debug_line     0x0000000000000000      0x75a
+ .debug_line    0x0000000000000000      0x161 app.o
+ .debug_line    0x0000000000000161      0x1e0 BobEsponja.o
+ .debug_line    0x0000000000000341      0x3c9 formas.o
+ .debug_line    0x000000000000070a       0x50 start.o
 
 .debug_info     0x0000000000000000       0xb8
  .debug_info    0x0000000000000000       0x2e app.o
@@ -105,9 +105,9 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000090       0x30 start.o
 
-.debug_str      0x0000000000000000      0x111
- .debug_str     0x0000000000000000      0x111 app.o
-                                         0x56 (tamaño antes de la relajación)
- .debug_str     0x0000000000000111       0x62 BobEsponja.o
- .debug_str     0x0000000000000111       0x59 formas.o
- .debug_str     0x0000000000000111       0x68 start.o
+.debug_str      0x0000000000000000       0xcd
+ .debug_str     0x0000000000000000       0xcd app.o
+                                         0x66 (tamaño antes de la relajación)
+ .debug_str     0x00000000000000cd       0x62 BobEsponja.o
+ .debug_str     0x00000000000000cd       0x69 formas.o
+ .debug_str     0x00000000000000cd       0x68 start.o

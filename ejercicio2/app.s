@@ -116,7 +116,11 @@ estrellas:
 	add x5,x28,60
 	bl estrella
 
+	mov x3,240
+	add x5,x28,320
+	bl estrella
 estrellas_end:
+
 montañas_fondo:
 
 	movz x11, 0xC2, lsl 16
@@ -242,6 +246,13 @@ nave:
 	mov x5, 291
 	mov x6, 347
 	bl rectangulo
+
+	movz x11, 0xD2, lsl 16
+	movk x11, 0xFF1C, lsl 0
+	mov x3, 43
+	mov x5, 300
+
+	bl odc_2025
 
 	movz x11, 0xa993, lsl 00
 	movk x11, 0x29, lsl 16

@@ -19,7 +19,6 @@
     .global lineas_boton_expandir_v
     .global odc_2025
     .global pixel_ventana
-    .global mallado
     .global elipse
     .global delay
     .global estrella
@@ -108,116 +107,116 @@ trapecio:
   sub x12, x12, x10             // Diferencia de anchos (superior - inferior)
   sub x12, x12, x10
   sub x12, x12, x10
-trapecio_loop_y:
-  cmp x7, x6                    // while y <= y_final (base superior)
-  b.gt trapecio_end
+    trapecio_loop_y:
+      cmp x7, x6                    // while y <= y_final (base superior)
+      b.gt trapecio_end
 
-  // Calcular los límites x para esta fila y
-  // x_inicial = x3 + (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
-  // x_final = x4 - (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
-   sub x13, x7, x5               // y - y_inicial
-  mul x14, x13, x12             // * diferencia de anchos
-  asr x14, x14, #1              // / 2 (división por 2 con signo)
-  sdiv x14, x14, x11            // / altura
-   add x15, x3, x14              // x_inicial para esta fila
-  sub x16, x4, x14              // x_final para esta fila
+      // Calcular los límites x para esta fila y
+      // x_inicial = x3 + (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
+      // x_final = x4 - (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
+       sub x13, x7, x5               // y - y_inicial
+      mul x14, x13, x12             // * diferencia de anchos
+      asr x14, x14, #1              // / 2 (división por 2 con signo)
+      sdiv x14, x14, x11            // / altura
+       add x15, x3, x14              // x_inicial para esta fila
+      sub x16, x4, x14              // x_final para esta fila
 
-  mov x10, x15                  // x = x_inicial
-trapecio_loop_x:
-  cmp x10, x16                  // while x <= x_final
-  b.gt trapecio_next_y
+      mov x10, x15                  // x = x_inicial
+    trapecio_loop_x:
+      cmp x10, x16                  // while x <= x_final
+      b.gt trapecio_next_y
 
-  // Calcular posición del pixel
-  mov x30, SCREEN_WIDTH
-  mul x30, x7, x30              // y * SCREEN_WIDTH
-  add x30, x30, x10             // + x
-  lsl x30, x30, #2              // * 4 (bytes per pixel)
-  add x30, x20, x30             // Dirección de memoria
+      // Calcular posición del pixel
+      mov x30, SCREEN_WIDTH
+      mul x30, x7, x30              // y * SCREEN_WIDTH
+      add x30, x30, x10             // + x
+      lsl x30, x30, #2              // * 4 (bytes per pixel)
+      add x30, x20, x30             // Dirección de memoria
 
-  // Cargar color actual (background)
-  ldur w17, [x30]
+      // Cargar color actual (background)
+      ldur w17, [x30]
 
-  // Extraer componentes del color actual
-  and x13, x17, #0x00FF0000     // R
-  lsr x13, x13, #16
-  and x14, x17, #0x0000FF00      // G
-  lsr x14, x14, #8
-  and x15, x17, #0x000000FF      // B
+      // Extraer componentes del color actual
+      and x13, x17, #0x00FF0000     // R
+      lsr x13, x13, #16
+      and x14, x17, #0x0000FF00      // G
+      lsr x14, x14, #8
+      and x15, x17, #0x000000FF      // B
 
-  // Mezclar componentes R
-  mul x13, x13, x9               // R_background * (255-alpha)
-  mul x18, x0, x8                // R_new * alpha
-  add x13, x13, x18
-  lsr x13, x13, #8               // Dividir por 256
+      // Mezclar componentes R
+      mul x13, x13, x9               // R_background * (255-alpha)
+      mul x18, x0, x8                // R_new * alpha
+      add x13, x13, x18
+      lsr x13, x13, #8               // Dividir por 256
 
-  // Mezclar componentes G
-  mul x14, x14, x9               // G_background * (255-alpha)
-  mul x18, x1, x8                // G_new * alpha
-  add x14, x14, x18
-  lsr x14, x14, #8               // Dividir por 256
+      // Mezclar componentes G
+      mul x14, x14, x9               // G_background * (255-alpha)
+      mul x18, x1, x8                // G_new * alpha
+      add x14, x14, x18
+      lsr x14, x14, #8               // Dividir por 256
 
-  // Mezclar componentes B
-  mul x15, x15, x9               // B_background * (255-alpha)
-  mul x18, x2, x8                // B_new * alpha
-  add x15, x15, x18
-  lsr x15, x15, #8               // Dividir por 256
+      // Mezclar componentes B
+      mul x15, x15, x9               // B_background * (255-alpha)
+      mul x18, x2, x8                // B_new * alpha
+      add x15, x15, x18
+      lsr x15, x15, #8               // Dividir por 256
 
-  // Reconstruir color mezclado
-  lsl x13, x13, #16              // Posición R
-  lsl x14, x14, #8               // Posición G
-  orr x17, x13, x14              // Combinar R y G
-  orr x17, x17, x15              // Combinar con B
-  orr x17, x17, #0xFF000000      // Alpha siempre opaco después de mezclar
+      // Reconstruir color mezclado
+      lsl x13, x13, #16              // Posición R
+      lsl x14, x14, #8               // Posición G
+      orr x17, x13, x14              // Combinar R y G
+      orr x17, x17, x15              // Combinar con B
+      orr x17, x17, #0xFF000000      // Alpha siempre opaco después de mezclar
 
-  // Almacenar pixel mezclado
-  stur w17, [x30]
+      // Almacenar pixel mezclado
+      stur w17, [x30]
 
-  add x10, x10, #1               // x++
-  b trapecio_loop_x
+      add x10, x10, #1               // x++
+      b trapecio_loop_x
 
-trapecio_next_y:
-  add x7, x7, #1                 // y++
-  b trapecio_loop_y
+    trapecio_next_y:
+      add x7, x7, #1                 // y++
+      b trapecio_loop_y
 
-trapecio_opaco:
-  mov x7, x5                     // y = y_inicial
-  sub x11, x6, x5                // Altura del trapecio
-  sub x10, x4, x3                // Ancho inferior
-  sub x12, x12, x10              // Diferencia de anchos
+    trapecio_opaco:
+      mov x7, x5                     // y = y_inicial
+      sub x11, x6, x5                // Altura del trapecio
+      sub x10, x4, x3                // Ancho inferior
+      sub x12, x12, x10              // Diferencia de anchos
 
-trapecio_opaco_loop_y:
-  cmp x7, x6                     // while y <= y_final
-  b.gt trapecio_end
+    trapecio_opaco_loop_y:
+      cmp x7, x6                     // while y <= y_final
+      b.gt trapecio_end
 
-  // Calcular los límites x para esta fila y
-  sub x13, x7, x5                // y - y_inicial
-  mul x14, x13, x12              // * diferencia de anchos
-  asr x14, x14, #1               // / 2
-  sdiv x14, x14, x11             // / altura
-   add x15, x3, x14               // x_inicial para esta fila
-  sub x16, x4, x14               // x_final para esta fila
+      // Calcular los límites x para esta fila y
+      sub x13, x7, x5                // y - y_inicial
+      mul x14, x13, x12              // * diferencia de anchos
+      asr x14, x14, #1               // / 2
+      sdiv x14, x14, x11             // / altura
+       add x15, x3, x14               // x_inicial para esta fila
+      sub x16, x4, x14               // x_final para esta fila
 
-  mov x10, x15                   // x = x_inicial
-trapecio_opaco_loop_x:
-  cmp x10, x16                   // while x <= x_final
-  b.gt trapecio_opaco_next_y
+      mov x10, x15                   // x = x_inicial
+    trapecio_opaco_loop_x:
+      cmp x10, x16                   // while x <= x_final
+      b.gt trapecio_opaco_next_y
 
-  // Calcular posición del pixel
-  mov x30, SCREEN_WIDTH
-  mul x30, x7, x30               // y * SCREEN_WIDTH
-  add x30, x30, x10              // + x
-  lsl x30, x30, #2               // * 4
-  add x30, x20, x30              // Dirección de memoria
+      // Calcular posición del pixel
+      mov x30, SCREEN_WIDTH
+      mul x30, x7, x30               // y * SCREEN_WIDTH
+      add x30, x30, x10              // + x
+      lsl x30, x30, #2               // * 4
+      add x30, x20, x30              // Dirección de memoria
 
-  // Almacenar color directamente (sin mezcla)
-  stur w11, [x30]
+      // Almacenar color directamente (sin mezcla)
+      stur w11, [x30]
 
-  add x10, x10, #1               // x++
-  b trapecio_opaco_loop_x
+      add x10, x10, #1               // x++
+      b trapecio_opaco_loop_x
 
-trapecio_opaco_next_y:
-  add x7, x7, #1                 // y++
-  b trapecio_opaco_loop_y
+    trapecio_opaco_next_y:
+      add x7, x7, #1                 // y++
+      b trapecio_opaco_loop_y
 
 trapecio_end:
   // Restaurar registros
@@ -235,7 +234,7 @@ trapecio_end:
   ret
 
 /*ANTES DE LLAMAR A RECTANGULO ES NECESARIO ASIGNAR VALORES A
- X3 (X INICIAL),X4(X FINAL),X5(Y INICIAL),X6(Y FINAL) Y X11(COLOR!!*/
+ X3 (Y INICIAL),X4(Y FINAL),X5(X INICIAL),X6(X FINAL) Y X11(COLOR!!*/
 rectangulo:
 
         sub sp,sp,#72
@@ -320,36 +319,6 @@ fin_elipse_fondo:
     ldur x30,[sp,#32]
     add sp,sp,#40
 
-ret
-
-//MALLADO
-//ANTES DE LLAMAR A CUADRADO NECESARIO ASIGNAR VALORES A X3,X4,X5,X6,x10(distancia entre punto y punto) Y X11!!
-mallado:
-	    mov x9, x5
-    malla_y:
-	    cmp x3, x4
-	    b.ge fin_mallado   
-
-        mov x5, x9  
-    malla_x:
-	    cmp x5, x6
-	    b.ge sig_fila 
-  
-        mov x8, SCREEN_WIDTH
-        mov x7, x3
-        mul x7, x7, x8
-        add x7, x7, x5
-        lsl x7, x7, 2
-        add x7, x20, x7
-
-	    stur w11, [x7]
-	    add x5, x5, x10
-	    b malla_x
-    sig_fila:
-	    add x3, x3, x10
-	    b malla_y
-
-fin_mallado:
 ret
 
 //CIRCULO
@@ -875,8 +844,8 @@ pixel:
         stur x9,[sp,#48]
         stur x30,[sp,#56] 
 
-        add x4, x3, 2
-        add x6, x5, 2
+        add x4, x3, 1
+        add x6, x5, 1
 
         mov x9, x5            // Guarda el valor inicial de x5
     pixel_y:
@@ -1045,187 +1014,169 @@ lineas_boton_expandir_h:
 FIN:
 odc_2025:
 
+        sub sp,sp,#32
+        stur x3,[sp,#0]  
+        stur x5,[sp,#8]
+        stur x7,[sp,#16] 
+        stur x30,[sp,#24] 
+
     mov x7, x5 //guardo el primer valor de x
     //1ra linea de pixeles
-	add x5, x5, 2 // el primer pixel lo salteo pq es vacio! //102
+	add x5, x5, 1 // el primer pixel lo salteo pq es vacio! //102
 	bl pixel
 
-	add x5, x5, 2 //104
+	add x5, x5, 1 //104
 	bl pixel
 
-	add x5, x5, 6 //110
+	add x5, x5, 5 //110
 	bl pixel	 
 	
-	add x5, x5, 2 //112
+	add x5, x5, 10 //112
 	bl pixel
 	
-	add x5, x5, 2 //114
+	add x5, x5, 1 //114
 	bl pixel
 
-	add x5, x5, 8	//122
+	add x5, x5, 1	//122
 	bl pixel
 	
-	add x5, x5, 2	//124
+	add x5, x5, 4	//124
 	bl pixel
 	
-	add x5, x5, 18	//140
+	add x5, x5, 1	//140
 	bl pixel
 	
-	add x5, x5, 2	//142
+	add x5, x5, 3	//142
 	bl pixel
 	
-	add x5, x5, 8	//150
+	add x5, x5, 1	//150
 	bl pixel
 	
-	add x5, x5, 2	//152
+	add x5, x5, 1	//152
 	bl pixel
 	
-	add x5, x5, 8	//158
+	add x5, x5, 4	//158
 	bl pixel
 	
-	add x5, x5, 2	//160
+	add x5, x5, 1	//160
 	bl pixel
 	
-	add x5, x5, 6	//166
+	add x5, x5, 1	//166
 	bl pixel
 	
-	add x5, x5, 2	//168
+	add x5, x5, 1	//168
 	bl pixel
-	
-	add x5, x5, 2	//170
-	bl pixel
-
-    add x5, x5, 2
-    bl pixel
 	
     //segunda_linea_de_pixeles:	
     mov x5, x7
-	add x3, x3, 2
+	add x3, x3, 1
 
     bl pixel
 
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 4
-    bl pixel
-
-    add x5, x5, 6
+    add x5, x5, 3
     bl pixel
 
     add x5, x5, 4
     bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 13
     bl pixel
 
-    add x5, x5, 14
+    add x5, x5, 2
     bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
     bl pixel
 
-    add x5, x5, 4
+    add x5, x5, 5
     bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
     bl pixel
 
-    add x5, x5, 4
-    bl pixel
-
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 4
-    bl pixel
 
     //3ra linea de pixeles :D
     mov x5, x7
-    add x3, x3, 2
+    add x3, x3, 1
 
     bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
     bl pixel
     
     add x5, x5, 4
     bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
     bl pixel
 
-    add x5, x5, 4
+    add x5, x5, 1
     bl pixel
 
-    add x5, x5, 24
-    bl pixel
-
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 8
-    bl pixel
-
-    add x5, x5, 6
+    add x5, x5, 9
     bl pixel
 
     add x5, x5, 2
     bl pixel
 
-    add x5, x5, 2
+    add x5, x5, 3
+    bl pixel
+
+    add x5, x5, 5
+    bl pixel
+
+    add x5, x5, 3
+    bl pixel
+
+    add x5, x5, 1
+    bl pixel
+
+    add x5, x5, 1
     bl pixel
 
     //4ta linea de pixeles :D
     mov x5, x7
-    add x3, x3, 2
+    add x3, x3, 1
     
     bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
     bl pixel
     
+    add x5, x5, 3
+    bl pixel
+
+    add x5, x5, 1
+    bl pixel
+
+    add x5, x5, 2
+    bl pixel
+
+    add x5, x5, 10
+    bl pixel
+
+    add x5, x5, 3
+    bl pixel
+
+    add x5, x5, 3
+    bl pixel
+
     add x5, x5, 4
     bl pixel
 
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 4
-    bl pixel
-
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 16
-    bl pixel
-
-    add x5, x5, 8
-    bl pixel
-
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 6
-    bl pixel
-
-    add x5, x5, 14
+    add x5, x5, 7
     bl pixel
 
     //5ta linea de pixeles :D
     mov x5, x7
-    add x3, x3, 2
+    add x3, x3, 1
 
-    add x5, x5, 2 
+	bl pixel
+
+	add x5, x5, 3
 	bl pixel
 
 	add x5, x5, 2 
-	bl pixel
-
-	add x5, x5, 6 
 	bl pixel	 
 	
 	add x5, x5, 2 
@@ -1234,65 +1185,94 @@ odc_2025:
 	add x5, x5, 2 
 	bl pixel
 
-	add x5, x5, 8
+	add x5, x5, 9
 	bl pixel
 	
-	add x5, x5, 2
+	add x5, x5, 4
 	bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
+	bl pixel
+
+    add x5, x5, 3
+	bl pixel
+    
+    add x5, x5, 8
+	bl pixel
+
+    //6ta linea
+    mov x5,x7
+    add x3, x3, 1
+
+    add x5, x5, 1
+    bl pixel
+    
+    add x5, x5, 1
+	bl pixel
+
+	add x5, x5, 4
+	bl pixel	 
+	
+	add x5, x5, 1
+	bl pixel
+	
+	add x5, x5, 3
+	bl pixel
+
+	add x5, x5, 1
+	bl pixel
+	
+	add x5, x5, 3
+	bl pixel
+
+    add x5, x5, 1
 	bl pixel
 
     add x5, x5, 2
 	bl pixel
     
-    add x5, x5, 2
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 2
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 4
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 2
-	bl pixel
-    
-    add x5, x5, 2
+    add x5, x5, 3
 	bl pixel
 
-    add x5, x5, 2
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 3
 	bl pixel
 
-    add x5, x5, 2
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 6
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 2
+    add x5, x5, 1
 	bl pixel
 
-    add x5, x5, 2
+    add x5, x5, 3
 	bl pixel
 
-    add x5, x5, 2
-	bl pixel
+    add x5, x5, 1
+    bl pixel
 
-    add x5, x5, 4
-	bl pixel
-
-    add x5, x5, 2
-	bl pixel
-
-    add x5, x5, 2
-	bl pixel
-
-
+    add x5, x5, 1
+    bl pixel
     fin_odc_2025:
+
+        ldur x3,[sp,#0]  
+        ldur x5,[sp,#8]
+        ldur x7,[sp,#16] 
+        ldur x30,[sp,#24] 
+        add sp,sp,#32
 ret
 //antes de llamar estrella necesita las coordenadas de altura y desplazamiento-4 :D
 estrella:
