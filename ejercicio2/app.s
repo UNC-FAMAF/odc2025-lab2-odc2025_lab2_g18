@@ -205,7 +205,7 @@ piña:
 	mov x6, 155
 	bl rectangulo
 
-// Y X HORIZONTAL VERTICAL
+
 	movk x11, 0xF3, lsl 16
 	movk x11, 0xAA2E, lsl 0 
 	mov x3, 333
@@ -213,10 +213,7 @@ piña:
 	mov x5, 86
 	mov x6, 128
 	bl elipse
-		/*x9   → x0 (posicion actual en X)
-        x10  → y0 (posicion actual en Y)
-        x11  → x1 (posicion final en X)
-        x12  → y1 (posicion final en Y)*/
+
     movz x21, 0xEC, lsl 16
 	movk x21, 0x7012, lsl 0
 	mov	x9, 96 
@@ -261,7 +258,7 @@ piña:
 	bl bresenham
 	end_piña:
 
-	ventanas:
+ventanas:
 	//ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A xc=X3, yc=X4, radio=X15 y x11 color.
 	mov x3, 76
 	mov x4, 302
