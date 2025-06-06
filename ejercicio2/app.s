@@ -106,6 +106,212 @@ estrellas:
 	add x5,x28,320
 	bl estrella
 estrellas_end:
+piña: 
+	mov x9, 34
+	mov x10, 176
+	mov x11, 36
+	mov x12, 130
+	mov x13, 89
+	mov x14, 216	
+	mov x15, 75
+	mov x16, 228
+	mov x22, 37
+	mov x23, 171
+	movz x21, 0x1A, lsl 16
+	movk x21, 0x991F, lsl 0
+
+	bl cuadradoR 
+	mov x9, 49	
+	mov x10, 139	
+	mov x11, 64
+	mov x12, 86
+	mov x13, 84
+	mov x14, 148	
+	mov x15, 89
+	mov x16, 216
+	mov x22, 55
+	mov x23, 136
+
+
+	bl cuadradoR 
+	mov x9, 73	
+	mov x10, 150
+	mov x11, 84
+	mov x12, 90
+	mov x13, 101
+	mov x14, 148	
+	mov x15, 96
+	mov x16, 215
+	mov x22, 82
+	mov x23, 121
+
+
+	bl cuadradoR 
+	mov x9, 87
+	mov x10, 136	
+	mov x11, 112
+	mov x12, 54
+	mov x13, 131
+	mov x14, 133	
+	mov x15, 108
+	mov x16, 218
+	mov x22, 108
+	mov x23, 106
+	
+
+	bl cuadradoR 
+	mov x9, 118
+	mov x10, 136	
+	mov x11, 138
+	mov x12, 77
+	mov x13, 148
+	mov x14, 129	
+	mov x15, 125
+	mov x16, 206
+	mov x22, 136
+	mov x23, 109
+
+	bl cuadradoR 
+	mov x9, 135
+	mov x10, 212	
+	mov x11, 178
+	mov x12, 154
+	mov x13, 170
+	mov x14, 70	
+	mov x15, 131
+	mov x16, 184
+	mov x22, 150
+	mov x23, 162
+
+
+	bl cuadradoR 
+	mov x9, 138
+	mov x10, 215	
+	mov x11, 180
+	mov x12, 134
+	mov x13, 193
+	mov x14, 177	
+	mov x15, 148
+	mov x16, 224
+	mov x22, 165
+	mov x23, 184
+	bl cuadradoR 
+
+	movz x11, 0x1A, lsl 16
+	movk x11, 0x991F, lsl 0
+	mov x3,177
+	mov x4,215
+	mov x5,69
+	mov x6, 155
+	bl rectangulo
+
+// Y X HORIZONTAL VERTICAL
+	movk x11, 0xF3, lsl 16
+	movk x11, 0xAA2E, lsl 0 
+	mov x3, 333
+	mov x4, 118
+	mov x5, 86
+	mov x6, 128
+	bl elipse
+		/*x9   → x0 (posicion actual en X)
+        x10  → y0 (posicion actual en Y)
+        x11  → x1 (posicion final en X)
+        x12  → y1 (posicion final en Y)*/
+    movz x21, 0xEC, lsl 16
+	movk x21, 0x7012, lsl 0
+	mov	x9, 96 
+	mov	x10, 456
+	mov x11, 202
+	mov x12, 358
+	bl bresenham
+	mov	x9, 56
+	mov	x10, 421
+	mov x11, 201
+	mov x12, 302
+	bl bresenham
+	mov	x9, 40
+	mov	x10, 387
+	mov x11, 130
+	mov x12, 460
+	bl bresenham
+	mov	x9, 36
+	mov	x10, 371
+	mov x11, 180
+	mov x12, 244
+	bl bresenham
+	mov	x9, 85
+	mov	x10, 214
+	mov x11, 198
+	mov x12, 284
+	bl bresenham
+	mov	x9, 144
+	mov	x10, 210
+	mov x11, 33
+	mov x12, 314
+	bl bresenham
+	mov	x9, 53
+	mov	x10, 250
+	mov x11, 202
+	mov x12, 368
+	bl bresenham
+	mov	x9, 35
+	mov	x10, 304
+	mov x11, 172
+	mov x12, 433
+	bl bresenham
+	end_piña:
+
+	ventanas:
+	//ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A xc=X3, yc=X4, radio=X15 y x11 color.
+	mov x3, 76
+	mov x4, 302
+	mov x15, 20
+	movz x11, 0x8C, lsl 16
+	movk x11, 0xC7D4, lsl 0 
+ 
+	bl circulo
+
+	mov x15, 11
+	movz x11, 0x4D, lsl 16
+	movk x11, 0xE0FF, lsl 0
+	bl circulo
+
+	mov x3, 170
+	mov x4, 371
+	mov x15, 20
+	movz x11, 0x8C, lsl 16
+	movk x11, 0xC7D4, lsl 0 
+ 
+	bl circulo
+
+	mov x15, 11
+	movz x11, 0x4D, lsl 16
+	movk x11, 0xE0FF, lsl 0
+	bl circulo
+
+	puerta:
+	movz x11, 0x8C, lsl 16
+	movk x11, 0xC7D4, lsl 0 
+	mov x3, 407
+	mov x4, 118
+	mov x5, 33
+	mov x6, 55
+	bl elipse
+
+	movz x11, 0x6c, lsl 16
+	movk x11, 0x9EA8, lsl 0 
+	mov x3, 407
+	mov x4, 118
+	mov x5, 30
+	mov x6, 53
+	bl elipse
+	  /*Los registros usados son:
+        x9,x10 → x1,y1
+        x11,x12 → x2,y2
+        x13,x14 → x3,y3
+        x15,x16 → x4,y4
+        x22 → punto de partida del flood X
+        x23 → punto de partida del flood Y */
 
 piso:
 	//Isla
