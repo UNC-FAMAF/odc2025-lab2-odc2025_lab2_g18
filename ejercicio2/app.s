@@ -26,7 +26,6 @@ fondo:
 	movk x11, 0x4DBE, lsl 0
 	bl elipse
 
-
 	mov x10, 0          // contador para incremento
 loop_fondo:
 	mov x12, 5//x12=5
@@ -106,6 +105,7 @@ estrellas:
 	add x5,x28,320
 	bl estrella
 estrellas_end:
+
 piña: 
 	mov x9, 34
 	mov x10, 176
@@ -328,19 +328,55 @@ piso:
 	bl planta
 
 	mov x3, 440
-	mov x4, 100
+	mov x4, 120
 	mov x5, 5
 	mov x6, 15
 	bl planta
 
 	mov x3, 450
-	mov x4, 200
-	mov x5, 3
-	mov x6, 13
+	mov x4, 595
+	mov x5, 5
+	mov x6, 15
 	bl planta
 
 	mov x3, 450
-	mov x4, 200
+	mov x4, 180
+	mov x5, 4
+	mov x6, 14
+	bl planta
+
+	mov x3, 450
+	mov x4, 500
+	mov x5, 4
+	mov x6, 14
+	bl planta
+
+	mov x3, 470
+	mov x4, 420
+	mov x5, 5
+	mov x6, 15
+	bl planta
+
+	mov x3, 460
+	mov x4, 350
+	mov x5, 4
+	mov x6, 14
+	bl planta
+
+	mov x3, 475
+	mov x4, 150
+	mov x5, 4
+	mov x6, 14
+	bl planta
+
+	mov x3, 430
+	mov x4, 560
+	mov x5, 4
+	mov x6, 14
+	bl planta
+
+	mov x3, 440
+	mov x4, 470
 	mov x5, 5
 	mov x6, 15
 	bl planta
@@ -478,7 +514,9 @@ nave:
 	bl elipse
 
 end_nave:
+
 bl Bobi
+
 luz_rayo:
     movz x11, 0xFF00, lsl 0
     movk x11, 0x8000, lsl 16
@@ -543,7 +581,7 @@ algoritmo_delay:
 	SUB x25,x25,#1
 	CBNZ x25, L1
 	//Primero se va a actualizar el sumador, y cuando llegue a los 6 frames pasa al otro
-	   
+   
 
 actualizar_frame:
 		// if (x28 < 12 && habilitador == 0)

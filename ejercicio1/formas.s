@@ -20,8 +20,6 @@
     .global rectangulos_fondo
     .global pixel_ventana
 
-	//.global main
-
     //main:
 
  	mov x20, x0	
@@ -69,7 +67,6 @@ rectangulo:
        cmp x5, x6        // mientras x <= x6
         b.ge siguiente_fila
 
-       
     // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
 
 	    mov x8, SCREEN_WIDTH
@@ -130,9 +127,27 @@ ret
 //CIRCULO
 //ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A xc=X3, yc=X4, radio=X15 y x11 color.
 circulo:
+    sub sp,sp,#120
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x18,[sp,#48]
+    stur x19,[sp,#56]
+    stur x20,[sp,#64]
+    stur x21,[sp,#72]
+    stur x22,[sp,#80]
+    stur x23,[sp,#88]
+    stur x15,[sp,#96]
+    stur x16,[sp,#104]
+    stur x17,[sp,#112]
+    sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
+    mov x5, x21
 
-        sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
-        mov x5, x21
+    sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
+    mov x5, x21
     circulo_y:
         add x23, x4, x15 //y=yc+radio (seria indicar el final del circulo verticalmente)
         cmp x5, x23 //mientras x5<=x23 (filas) 
@@ -160,13 +175,12 @@ circulo:
         b.gt no_pintar_pixel
 
         // dirección de pixel
-        mov x7, SCREEN_WIDTH //cant de columnas
-        mul x8, x5, x7// x7=x3 (y)
-        add x8, x8, x6// x7= y * SCREEN_WIDTH
-        lsl x8, x8, 2// x7= (y * SCREEN_WIDTH)+x
-        add x8, x20, x8// x7=((y * SCREEN_WIDTH)+x)*2 ^2
-
-        stur w11, [x8] 
+    mov x7, SCREEN_WIDTH //cant de columnas
+    mul x8, x5, x7// x7=x3 (y)
+    add x8, x8, x6// x7= y * SCREEN_WIDTH
+    lsl x8, x8, 2// x7= (y * SCREEN_WIDTH)+x
+    add x8, x20, x8// x7=((y * SCREEN_WIDTH)+x)*2 ^2
+    stur w11, [x8] 
 
     no_pintar_pixel:
         add x6, x6, 1 //paso a la siguiente columna
@@ -177,6 +191,22 @@ circulo:
         b circulo_y
 
 fin_circulo:
+    ldur x3,[sp,#0]  
+    ldur x4,[sp,#8]
+    ldur x5,[sp,#16] 
+    ldur x6,[sp,#24]
+    ldur x7,[sp,#32]
+    ldur x8,[sp,#40]
+    ldur x18,[sp,#48]
+    ldur x19,[sp,#56]
+    ldur x20,[sp,#64]
+    ldur x21,[sp,#72]
+    ldur x22,[sp,#80]
+    ldur x23,[sp,#88]
+    ldur x15,[sp,#96]
+    ldur x16,[sp,#104]
+    ldur x17,[sp,#112]
+    add sp,sp,#120 
 ret 
 
 //CUADRILATERO
@@ -431,13 +461,13 @@ flood_fill:
     add x23,x23,#1 
     
     no_rellenar:
-    ldur x3, [sp, #0]
-    ldur x4,[sp, #8]
-    ldur x5,[sp, #16]
-    ldur x22,[sp, #24]
-    ldur x23,[sp, #32]
-    ldur x30,[sp, #40]
-    add sp, sp, #48
+        ldur x3, [sp, #0]
+        ldur x4,[sp, #8]
+        ldur x5,[sp, #16]
+        ldur x22,[sp, #24]
+        ldur x23,[sp, #32]
+        ldur x30,[sp, #40]
+        add sp, sp, #48
     ret
 
 flood_fill_der:
@@ -483,32 +513,31 @@ flood_fill_der:
     add x23,x23,#1
     
     no_rellenar_der:
-    ldur x3, [sp, #0]
-    ldur x4,[sp, #8]
-    ldur x5,[sp, #16]
-    ldur x22,[sp, #24]
-    ldur x23,[sp, #32]
-    ldur x30,[sp, #40]
-    add sp, sp, #48
+        ldur x3, [sp, #0]
+        ldur x4,[sp, #8]
+        ldur x5,[sp, #16]
+        ldur x22,[sp, #24]
+        ldur x23,[sp, #32]
+        ldur x30,[sp, #40]
+        add sp, sp, #48
 ret
 
 //PIXEL
 //ANTES DE LLAMAR A PIXEL o PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 pixel:
-        sub sp,sp,#64
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x30,[sp,#56] 
+    sub sp,sp,#64
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x9,[sp,#48]
+    stur x30,[sp,#56] 
 
-        add x4, x3, 2
-        add x6, x5, 2
-
-        mov x9, x5            // Guarda el valor inicial de x5
+    add x4, x3, 2
+    add x6, x5, 2
+    mov x9, x5            // Guarda el valor inicial de x5
     pixel_y:
         cmp x3, x4           // mientras y  <= x4
         b.ge fin_pixel 
@@ -522,49 +551,48 @@ pixel:
     // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
 
 	mov x8, SCREEN_WIDTH
-        mov x7, x3
-        mul x7, x7, x8
-        add x7, x7, x5
-        lsl x7, x7, 2
-        add x7, x20, x7
+    mov x7, x3
+    mul x7, x7, x8
+    add x7, x7, x5
+    lsl x7, x7, 2
+    add x7, x20, x7
 
-     stur w11, [x7]       // Escribe el color del cuadrado
+    stur w11, [x7]       // Escribe el color del cuadrado
 
-        add x5, x5, 1
-        b pixel_x
+    add x5, x5, 1
+    b pixel_x
 
     siguiente_filapix:
         add x3, x3, 1
         b pixel_y
 
 fin_pixel:
-        ldur x3,[sp,#0]  
-        ldur x4,[sp,#8]
-        ldur x5,[sp,#16] 
-        ldur x6,[sp,#24]
-        ldur x7,[sp,#32]
-        ldur x8,[sp,#40]
-        ldur x9,[sp,#48]
-        ldur x30,[sp,#56] 
-        add  sp,sp,#64
+    ldur x3,[sp,#0]  
+    ldur x4,[sp,#8]
+    ldur x5,[sp,#16] 
+    ldur x6,[sp,#24]
+    ldur x7,[sp,#32]
+    ldur x8,[sp,#40]
+    ldur x9,[sp,#48]
+    ldur x30,[sp,#56] 
+    add  sp,sp,#64
 ret
 
 //ANTES DE LLAMAR A PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 pixel_ventana:
-        sub sp,sp,#64
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x30,[sp,#56] 
-        
-        add x4, x3, 5
-        add x6, x5, 5
+    sub sp,sp,#64
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x9,[sp,#48]
+    stur x30,[sp,#56] 
 
-        mov x9, x5            // Guarda el valor inicial de x5
+    add x4, x3, 5
+    add x6, x5, 5
+    mov x9, x5            // Guarda el valor inicial de x5
     pixel_ventana_y:
         cmp x3, x4           // mientras y  <= x4
         b.ge fin_pixel_ventana
@@ -609,41 +637,41 @@ ret
 //ANTES DE LLAMAR A BOTON ASIGNAR X3(Y INICIAL), X4(Y FINAL), X5(X INICIAL), X6(X FINAL) Y X11 (COLOR)
 //CREA LOS CUADRADOS PARA LOS BOTONES
 boton: 
-        sub sp,sp,#48
-        stur x3,[sp,#0] 
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x11,[sp,#32]
-        stur x30,[sp,#40]
-        // negro
-		movz x11, 0x4040, lsl 00 
-		movk x11, 0x40, lsl 16
-		bl rectangulo
-		//blanco
-		add x3, x3, 1
-		sub x4, x4, 1
-		add x5, x5, 1
-		sub x6, x6, 1
-		movz x11, 0xFFFF, lsl 00 
-		movk x11, 0xFF, lsl 16
-		bl rectangulo
-		//gris
-		add x3, x3, 1
-		sub x4, x4, 1
-		add x5, x5, 1
-		sub x6, x6, 1
-		movz x11, 0x909E, lsl 00 
-		movk x11, 0x7D, lsl 16
-		bl rectangulo 
+    sub sp,sp,#48
+    stur x3,[sp,#0] 
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x11,[sp,#32]
+    stur x30,[sp,#40]
+    // negro
+	movz x11, 0x4040, lsl 00 
+	movk x11, 0x40, lsl 16
+	bl rectangulo
+	//blanco
+	add x3, x3, 1
+	sub x4, x4, 1
+	add x5, x5, 1
+	sub x6, x6, 1
+	movz x11, 0xFFFF, lsl 00 
+	movk x11, 0xFF, lsl 16
+	bl rectangulo
+	//gris
+	add x3, x3, 1
+	sub x4, x4, 1
+	add x5, x5, 1
+	sub x6, x6, 1
+	movz x11, 0x909E, lsl 00 
+	movk x11, 0x7D, lsl 16
+	bl rectangulo 
 fin_boton:
-        ldur x3,[sp,#0] //- 
-        ldur x4,[sp,#8]//-
-        ldur x5,[sp,#16] //-
-        ldur x6,[sp,#24]//-
-        ldur x11,[sp,#32]
-        ldur x30,[sp,#40]
-        add sp,sp,#48
+    ldur x3,[sp,#0] //- 
+    ldur x4,[sp,#8]//-
+    ldur x5,[sp,#16] //-
+    ldur x6,[sp,#24]//-
+    ldur x11,[sp,#32]
+    ldur x30,[sp,#40]
+    add sp,sp,#48
 ret
 
 //ASIGANR LOS VALORES X10(Y0), X12(Y1) Y X21(COLOR)

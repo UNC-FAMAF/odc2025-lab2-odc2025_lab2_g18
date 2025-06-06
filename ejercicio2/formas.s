@@ -22,22 +22,22 @@
     .global trapecio
     .global planta
 
-    //main:
+    main:
 
  	mov x20, x0	
 
-    //ANTES DE LLAMAR A PANTALLA ES NECESARIO ASIGNAR VALOR A X11!!
+//ANTES DE LLAMAR A PANTALLA ES NECESARIO ASIGNAR VALOR A X11!!
 pantalla:
-        sub sp,sp,#40
-        stur x0,[sp,#0] 
-        stur x1,[sp,#8] 
-        stur x2,[sp,#16]
-        stur x11,[sp,#24]
-        stur x30,[sp,#32]
+    sub sp,sp,#40
+    stur x0,[sp,#0] 
+    stur x1,[sp,#8] 
+    stur x2,[sp,#16]
+    stur x11,[sp,#24]
+    stur x30,[sp,#32]
 
-	    mov x2, SCREEN_HEIGH         // Y Size
+	mov x2, SCREEN_HEIGH         // Y Size
     loop1:
-	    mov x1, SCREEN_WIDTH         // X Size
+	mov x1, SCREEN_WIDTH         // X Size
     loop0:
 	    stur w11,[x0]  // Colorear el pixel N
 	    add x0,x0,4	   // Siguiente pixel
@@ -47,212 +47,207 @@ pantalla:
 	    cbnz x2,loop1  // Si no es la última fila, salto
 fin_pantalla:
         
-        ldur x0,[sp,#0] 
-        ldur x1,[sp,#8] 
-        ldur x2,[sp,#16]
-        ldur x11,[sp,#24]
-        ldur x30,[sp,#32]
-        add sp,sp,#40
+    ldur x0,[sp,#0] 
+    ldur x1,[sp,#8] 
+    ldur x2,[sp,#16]
+    ldur x11,[sp,#24]
+    ldur x30,[sp,#32]
+    add sp,sp,#40
 ret
 
 
 trapecio:
-  sub sp, sp, #80
-  stur x0, [sp, #0]
-  stur x1, [sp, #8]
-  stur x2, [sp, #16]
-  stur x7, [sp, #24]
-  stur x8, [sp, #32]
-  stur x9, [sp, #40]
-  stur x10, [sp, #48]
-  stur x11, [sp, #56]
-  stur x12, [sp, #64]
-  stur x30, [sp, #72]
+    sub sp, sp, #80
+    stur x0, [sp, #0]
+    stur x1, [sp, #8]
+    stur x2, [sp, #16]
+    stur x7, [sp, #24]
+    stur x8, [sp, #32]
+    stur x9, [sp, #40]
+    stur x10, [sp, #48]
+    stur x11, [sp, #56]
+    stur x12, [sp, #64]
+    stur x30, [sp, #72]
 
-  // Parámetros:
-  // x12 = ancho superior (debe ser <= ancho inferior)
-  // x3 = x_inicial_inferior (esquina inferior izquierda)
-  // x4 = x_final_inferior (esquina inferior derecha)
-  // x5 = y_inicial (base inferior)
-  // x6 = y_final (base superior)
-  // x11 = color
+    // Parámetros:
+    // x12 = ancho superior (debe ser <= ancho inferior)
+    // x3 = x_inicial_inferior (esquina inferior izquierda)
+    // x4 = x_final_inferior (esquina inferior derecha)
+    // x5 = y_inicial (base inferior)
+    // x6 = y_final (base superior)
+    // x11 = color
 
-  // Extraer componente alpha (0-255)
-  and x8, x11, #0xFF000000     // Aislar byte alpha
-  lsr x8, x8, #24              // x8 = alpha (0-255)
+    // Extraer componente alpha (0-255)
+    and x8, x11, #0xFF000000     // Aislar byte alpha
+    lsr x8, x8, #24              // x8 = alpha (0-255)
 
-  cmp x8, #255
-  b.eq trapecio_opaco
+    cmp x8, #255
+    b.eq trapecio_opaco
 
-  // Preparar componentes del nuevo color
-  and x0, x11, #0x00FF0000     // Componente R
-  lsr x0, x0, #16
-  and x1, x11, #0x0000FF00      // Componente G
-  lsr x1, x1, #8
-  and x2, x11, #0x000000FF      // Componente B
+    // Preparar componentes del nuevo color
+    and x0, x11, #0x00FF0000     // Componente R
+    lsr x0, x0, #16
+    and x1, x11, #0x0000FF00      // Componente G
+    lsr x1, x1, #8
+    and x2, x11, #0x000000FF      // Componente B
 
-  // Invertir alpha para mezcla (255 - alpha)
-  mov x9, #255
-  sub x9, x9, x8                // x9 = 255 - alpha
+    // Invertir alpha para mezcla (255 - alpha)
+    mov x9, #255
+    sub x9, x9, x8                // x9 = 255 - alpha
 
-  mov x7, x5                    // y = y_inicial (base inferior)
-  sub x11, x6, x5               // Altura del trapecio
-  sub x10, x4, x3               // Ancho inferior
-  sub x12, x12, x10             // Diferencia de anchos (superior - inferior)
-  sub x12, x12, x10
-  sub x12, x12, x10
+    mov x7, x5                    // y = y_inicial (base inferior)
+    sub x11, x6, x5               // Altura del trapecio
+    sub x10, x4, x3               // Ancho inferior
+    sub x12, x12, x10             // Diferencia de anchos (superior - inferior)
+    sub x12, x12, x10
+    sub x12, x12, x10
     trapecio_loop_y:
-      cmp x7, x6                    // while y <= y_final (base superior)
-      b.gt trapecio_end
+        cmp x7, x6                    // while y <= y_final (base superior)
+        b.gt trapecio_end
 
-      // Calcular los límites x para esta fila y
-      // x_inicial = x3 + (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
-      // x_final = x4 - (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
-       sub x13, x7, x5               // y - y_inicial
-      mul x14, x13, x12             // * diferencia de anchos
-      asr x14, x14, #1              // / 2 (división por 2 con signo)
-      sdiv x14, x14, x11            // / altura
-       add x15, x3, x14              // x_inicial para esta fila
-      sub x16, x4, x14              // x_final para esta fila
+        // Calcular los límites x para esta fila y
+        // x_inicial = x3 + (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
+        // x_final = x4 - (y - y_inicial) * (ancho_superior - ancho_inferior) / (2 * altura)
+        sub x13, x7, x5               // y - y_inicial
+        mul x14, x13, x12             // * diferencia de anchos
+        asr x14, x14, #1              // / 2 (división por 2 con signo)
+        sdiv x14, x14, x11            // / altura
+        add x15, x3, x14              // x_inicial para esta fila
+        sub x16, x4, x14              // x_final para esta fila
 
-      mov x10, x15                  // x = x_inicial
+        mov x10, x15                  // x = x_inicial
     trapecio_loop_x:
-      cmp x10, x16                  // while x <= x_final
-      b.gt trapecio_next_y
+        cmp x10, x16                  // while x <= x_final
+        b.gt trapecio_next_y
 
-      // Calcular posición del pixel
-      mov x30, SCREEN_WIDTH
-      mul x30, x7, x30              // y * SCREEN_WIDTH
-      add x30, x30, x10             // + x
-      lsl x30, x30, #2              // * 4 (bytes per pixel)
-      add x30, x20, x30             // Dirección de memoria
+        // Calcular posición del pixel
+        mov x30, SCREEN_WIDTH
+        mul x30, x7, x30              // y * SCREEN_WIDTH
+        add x30, x30, x10             // + x
+        lsl x30, x30, #2              // * 4 (bytes per pixel)
+        add x30, x20, x30             // Dirección de memoria
 
-      // Cargar color actual (background)
-      ldur w17, [x30]
+        // Cargar color actual (background)
+        ldur w17, [x30]
 
-      // Extraer componentes del color actual
-      and x13, x17, #0x00FF0000     // R
-      lsr x13, x13, #16
-      and x14, x17, #0x0000FF00      // G
-      lsr x14, x14, #8
-      and x15, x17, #0x000000FF      // B
+        // Extraer componentes del color actual
+        and x13, x17, #0x00FF0000     // R
+        lsr x13, x13, #16
+        and x14, x17, #0x0000FF00      // G
+        lsr x14, x14, #8
+        and x15, x17, #0x000000FF      // B
 
-      // Mezclar componentes R
-      mul x13, x13, x9               // R_background * (255-alpha)
-      mul x18, x0, x8                // R_new * alpha
-      add x13, x13, x18
-      lsr x13, x13, #8               // Dividir por 256
+        // Mezclar componentes R
+        mul x13, x13, x9               // R_background * (255-alpha)
+        mul x18, x0, x8                // R_new * alpha
+        add x13, x13, x18
+        lsr x13, x13, #8               // Dividir por 256
 
-      // Mezclar componentes G
-      mul x14, x14, x9               // G_background * (255-alpha)
-      mul x18, x1, x8                // G_new * alpha
-      add x14, x14, x18
-      lsr x14, x14, #8               // Dividir por 256
+        // Mezclar componentes G
+        mul x14, x14, x9               // G_background * (255-alpha)
+        mul x18, x1, x8                // G_new * alpha
+        add x14, x14, x18
+        lsr x14, x14, #8               // Dividir por 256
 
-      // Mezclar componentes B
-      mul x15, x15, x9               // B_background * (255-alpha)
-      mul x18, x2, x8                // B_new * alpha
-      add x15, x15, x18
-      lsr x15, x15, #8               // Dividir por 256
+        // Mezclar componentes B
+        mul x15, x15, x9               // B_background * (255-alpha)
+        mul x18, x2, x8                // B_new * alpha
+        add x15, x15, x18
+        lsr x15, x15, #8               // Dividir por 256
 
-      // Reconstruir color mezclado
-      lsl x13, x13, #16              // Posición R
-      lsl x14, x14, #8               // Posición G
-      orr x17, x13, x14              // Combinar R y G
-      orr x17, x17, x15              // Combinar con B
-      orr x17, x17, #0xFF000000      // Alpha siempre opaco después de mezclar
+        // Reconstruir color mezclado
+        lsl x13, x13, #16              // Posición R
+        lsl x14, x14, #8               // Posición G
+        orr x17, x13, x14              // Combinar R y G
+        orr x17, x17, x15              // Combinar con B
+        orr x17, x17, #0xFF000000      // Alpha siempre opaco después de mezclar
 
-      // Almacenar pixel mezclado
-      stur w17, [x30]
+        // Almacenar pixel mezclado
+        stur w17, [x30]
 
-      add x10, x10, #1               // x++
-      b trapecio_loop_x
+        add x10, x10, #1               // x++
+        b trapecio_loop_x
 
     trapecio_next_y:
-      add x7, x7, #1                 // y++
-      b trapecio_loop_y
+        add x7, x7, #1                 // y++
+        b trapecio_loop_y
 
     trapecio_opaco:
-      mov x7, x5                     // y = y_inicial
-      sub x11, x6, x5                // Altura del trapecio
-      sub x10, x4, x3                // Ancho inferior
-      sub x12, x12, x10              // Diferencia de anchos
+        mov x7, x5                     // y = y_inicial
+        sub x11, x6, x5                // Altura del trapecio
+        sub x10, x4, x3                // Ancho inferior
+        sub x12, x12, x10              // Diferencia de anchos
 
     trapecio_opaco_loop_y:
-      cmp x7, x6                     // while y <= y_final
-      b.gt trapecio_end
+        cmp x7, x6                     // while y <= y_final
+        b.gt trapecio_end
 
-      // Calcular los límites x para esta fila y
-      sub x13, x7, x5                // y - y_inicial
-      mul x14, x13, x12              // * diferencia de anchos
-      asr x14, x14, #1               // / 2
-      sdiv x14, x14, x11             // / altura
-       add x15, x3, x14               // x_inicial para esta fila
-      sub x16, x4, x14               // x_final para esta fila
+        // Calcular los límites x para esta fila y
+        sub x13, x7, x5                // y - y_inicial
+        mul x14, x13, x12              // * diferencia de anchos
+        asr x14, x14, #1               // / 2
+        sdiv x14, x14, x11             // / altura
+        add x15, x3, x14               // x_inicial para esta fila
+        sub x16, x4, x14               // x_final para esta fila
 
-      mov x10, x15                   // x = x_inicial
+        mov x10, x15                   // x = x_inicial
     trapecio_opaco_loop_x:
-      cmp x10, x16                   // while x <= x_final
-      b.gt trapecio_opaco_next_y
-
-      // Calcular posición del pixel
-      mov x30, SCREEN_WIDTH
-      mul x30, x7, x30               // y * SCREEN_WIDTH
-      add x30, x30, x10              // + x
-      lsl x30, x30, #2               // * 4
-      add x30, x20, x30              // Dirección de memoria
-
-      // Almacenar color directamente (sin mezcla)
-      stur w11, [x30]
-
-      add x10, x10, #1               // x++
-      b trapecio_opaco_loop_x
+        cmp x10, x16                   // while x <= x_final
+        b.gt trapecio_opaco_next_y  
+        // Calcular posición del pixel
+        mov x30, SCREEN_WIDTH
+        mul x30, x7, x30               // y * SCREEN_WIDTH
+        add x30, x30, x10              // + x
+        lsl x30, x30, #2               // * 4
+        add x30, x20, x30              // Dirección de memoria  
+        // Almacenar color directamente (sin mezcla)
+        stur w11, [x30] 
+        add x10, x10, #1               // x++
+        b trapecio_opaco_loop_x
 
     trapecio_opaco_next_y:
-      add x7, x7, #1                 // y++
-      b trapecio_opaco_loop_y
+        add x7, x7, #1                 // y++
+        b trapecio_opaco_loop_y
 
 trapecio_end:
-  // Restaurar registros
-  ldur x0, [sp, #0]
-  ldur x1, [sp, #8]
-  ldur x2, [sp, #16]
-  ldur x7, [sp, #24]
-  ldur x8, [sp, #32]
-  ldur x9, [sp, #40]
-  ldur x10, [sp, #48]
-  ldur x11, [sp, #56]
-  ldur x12, [sp, #64]
-  ldur x30, [sp, #72]
-  add sp, sp, #80
+    // Restaurar registros
+    ldur x0, [sp, #0]
+    ldur x1, [sp, #8]
+    ldur x2, [sp, #16]
+    ldur x7, [sp, #24]
+    ldur x8, [sp, #32]
+    ldur x9, [sp, #40]
+    ldur x10, [sp, #48]
+    ldur x11, [sp, #56]
+    ldur x12, [sp, #64]
+    ldur x30, [sp, #72]
+
+    add sp, sp, #80
   ret
 
 /*ANTES DE LLAMAR A RECTANGULO ES NECESARIO ASIGNAR VALORES A
  X3 (Y INICIAL),X4(Y FINAL),X5(X INICIAL),X6(X FINAL) Y X11(COLOR!!*/
 rectangulo:
 
-        sub sp,sp,#72
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x11,[sp,#56]
-        stur x30,[sp,#64] 
-    
-         
-        mov x9, x5      // Guarda el valor inicial de x5
+    sub sp,sp,#72
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x9,[sp,#48]
+    stur x11,[sp,#56]
+    stur x30,[sp,#64] 
+        
+    mov x9, x5      // Guarda el valor inicial de x5
     cuadro_y:
         cmp x3, x4           // mientras y  <= x4
         b.ge fin_cuadro 
-        
         mov x5, x9
     cuadro_x:
        cmp x5, x6        // mientras x <= x6
         b.ge siguiente_fila
-
        
     // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
 
@@ -273,7 +268,6 @@ rectangulo:
         b cuadro_y
 
 fin_cuadro:
-
     ldur x3,[sp,#0]  
     ldur x4,[sp,#8]
     ldur x5,[sp,#16] 
@@ -285,7 +279,6 @@ fin_cuadro:
     ldur x30,[sp,#64]
     add sp,sp,#72
 ret
-
 
 /*ANTES DE LLAMAR A ELIPSE_FONDO  ES NECESARIO ASIGNAR VALORES A 
 X3 (YC),X4(YC),X5(SEMI EJE H),X6(SEMI EJE V) Y X11(COLOR)!!*/
@@ -318,25 +311,25 @@ ret
 //CIRCULO
 //ANTES DE LLAMAR CIRCULO ASIGNAR VALORES A xc=X3, yc=X4, radio=X15 y x11 color.
 circulo:
-        sub sp,sp,#120
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x18,[sp,#48]
-        stur x19,[sp,#56]
-        stur x20,[sp,#64]
-        stur x21,[sp,#72]
-        stur x22,[sp,#80]
-        stur x23,[sp,#88]
-        stur x15,[sp,#96]
-        stur x16,[sp,#104]
-        stur x17,[sp,#112]
+    sub sp,sp,#120
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x18,[sp,#48]
+    stur x19,[sp,#56]
+    stur x20,[sp,#64]
+    stur x21,[sp,#72]
+    stur x22,[sp,#80]
+    stur x23,[sp,#88]
+    stur x15,[sp,#96]
+    stur x16,[sp,#104]
+    stur x17,[sp,#112]
 
-        sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
-        mov x5, x21
+    sub x21, x4, x15 //y=yc-radio (seria indicar el comienzo del circulo verticalmente)
+    mov x5, x21
     circulo_y:
         add x23, x4, x15 //y=yc+radio (seria indicar el final del circulo verticalmente)
         cmp x5, x23 //mientras x5<=x23 (filas) 
@@ -381,50 +374,50 @@ circulo:
         b circulo_y
 
 fin_circulo:
-        ldur x3,[sp,#0]  
-        ldur x4,[sp,#8]
-        ldur x5,[sp,#16] 
-        ldur x6,[sp,#24]
-        ldur x7,[sp,#32]
-        ldur x8,[sp,#40]
-        ldur x18,[sp,#48]
-        ldur x19,[sp,#56]
-        ldur x20,[sp,#64]
-        ldur x21,[sp,#72]
-        ldur x22,[sp,#80]
-        ldur x23,[sp,#88]
-        ldur x15,[sp,#96]
-        ldur x16,[sp,#104]
-        ldur x17,[sp,#112]
-        add sp,sp,#120    
+    ldur x3,[sp,#0]  
+    ldur x4,[sp,#8]
+    ldur x5,[sp,#16] 
+    ldur x6,[sp,#24]
+    ldur x7,[sp,#32]
+    ldur x8,[sp,#40]
+    ldur x18,[sp,#48]
+    ldur x19,[sp,#56]
+    ldur x20,[sp,#64]
+    ldur x21,[sp,#72]
+    ldur x22,[sp,#80]
+    ldur x23,[sp,#88]
+    ldur x15,[sp,#96]
+    ldur x16,[sp,#104]
+    ldur x17,[sp,#112]
+    add sp,sp,#120    
 ret
 
 //LLAMAR A ELIPSE CON X3(YC), X4(XC), X5(SEMIEJE H A), X6(SEMIEJE V B) Y COLOR EN X11
 elipse:
-        sub sp,sp,#184
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x10,[sp,#56]
-        stur x11,[sp,#64]
-        stur x12,[sp,#72]
-        stur x13,[sp,#80]
-        stur x14,[sp,#88]
-        stur x15,[sp,#96]
-        stur x16,[sp,#104]
-        stur x17,[sp,#112]
-        stur x18,[sp,#120]
-        stur x19,[sp,#128]
-        stur x20,[sp,#136]
-        stur x21,[sp,#144]
-        stur x22,[sp,#152]
-        stur x23,[sp,#160]
-        stur x24,[sp,#168]
-        stur x30,[sp,#176] 
+    sub sp,sp,#184
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x9,[sp,#48]
+    stur x10,[sp,#56]
+    stur x11,[sp,#64]
+    stur x12,[sp,#72]
+    stur x13,[sp,#80]
+    stur x14,[sp,#88]
+    stur x15,[sp,#96]
+    stur x16,[sp,#104]
+    stur x17,[sp,#112]
+    stur x18,[sp,#120]
+    stur x19,[sp,#128]
+    stur x20,[sp,#136]
+    stur x21,[sp,#144]
+    stur x22,[sp,#152]
+    stur x23,[sp,#160]
+    stur x24,[sp,#168]
+    stur x30,[sp,#176] 
 
     sub x9, x3, x6 //y=yc-b (seria indicar el comienzo del elipse verticalmente)
 	mov x10, x9
@@ -477,40 +470,41 @@ elipse:
     stur w11, [x8] 
 
     no_pintar_pixel_elipse:
-    add x13, x13, 1 //paso a la siguiente columna
-    b elipse_x
+        add x13, x13, 1 //paso a la siguiente columna
+        b elipse_x
 
     siguiente_fila_elipse:
-    add x10, x10, 1
-    b elipse_y
+        add x10, x10, 1
+        b elipse_y
 
 fin_elipse:
         
-        ldur x3,[sp,#0]  
-        ldur x4,[sp,#8]
-        ldur x5,[sp,#16] 
-        ldur x6,[sp,#24]
-        ldur x7,[sp,#32]
-        ldur x8,[sp,#40]
-        ldur x9,[sp,#48]
-        ldur x10,[sp,#56]
-        ldur x11,[sp,#64]
-        ldur x12,[sp,#72]
-        ldur x13,[sp,#80]
-        ldur x14,[sp,#88]
-        ldur x15,[sp,#96]
-        ldur x16,[sp,#104]
-        ldur x17,[sp,#112]
-        ldur x18,[sp,#120]
-        ldur x19,[sp,#128]
-        ldur x20,[sp,#136]
-        ldur x21,[sp,#144]
-        ldur x22,[sp,#152]
-        ldur x23,[sp,#160]
-        ldur x24,[sp,#168]
-        stur x30,[sp,#176]
-        add sp,sp,#184
+    ldur x3,[sp,#0]  
+    ldur x4,[sp,#8]
+    ldur x5,[sp,#16] 
+    ldur x6,[sp,#24]
+    ldur x7,[sp,#32]
+    ldur x8,[sp,#40]
+    ldur x9,[sp,#48]
+    ldur x10,[sp,#56]
+    ldur x11,[sp,#64]
+    ldur x12,[sp,#72]
+    ldur x13,[sp,#80]
+    ldur x14,[sp,#88]
+    ldur x15,[sp,#96]
+    ldur x16,[sp,#104]
+    ldur x17,[sp,#112]
+    ldur x18,[sp,#120]
+    ldur x19,[sp,#128]
+    ldur x20,[sp,#136]
+    ldur x21,[sp,#144]
+    ldur x22,[sp,#152]
+    ldur x23,[sp,#160]
+    ldur x24,[sp,#168]
+    stur x30,[sp,#176]
+    add sp,sp,#184
 ret
+
 //CUADRILATERO
 //ANTES DE LLAMAR ASIGNAR LO QUE DICE EN CADA CONJUNTO DE INSTRUCCIONES
 cuadradoR:
@@ -764,107 +758,104 @@ bresenham:
     add x23,x23,#1 
     
     no_rellenar:
-    ldur x3, [sp, #0]
-    ldur x4,[sp, #8]
-    ldur x5,[sp, #16]
-    ldur x22,[sp, #24]
-    ldur x23,[sp, #32]
-    ldur x30,[sp, #40]
-    add sp, sp, #48
+        ldur x3, [sp, #0]
+        ldur x4,[sp, #8]
+        ldur x5,[sp, #16]
+        ldur x22,[sp, #24]
+        ldur x23,[sp, #32]
+        ldur x30,[sp, #40]
+        add sp, sp, #48
     ret
 
     flood_fill_der:
 
-    sub sp, sp, #48
-    stur x3, [sp, #0]
-    stur x4,[sp, #8]
-    stur x5,[sp, #16]
-    stur x22,[sp, #24]
-    stur x23,[sp, #32]
-    stur x30,[sp, #40]
+        sub sp, sp, #48
+        stur x3, [sp, #0]
+        stur x4,[sp, #8]
+        stur x5,[sp, #16]
+        stur x22,[sp, #24]
+        stur x23,[sp, #32]
+        stur x30,[sp, #40]
 
-    cmp x22, #0
-    blt no_rellenar_der
-    cmp x22, #640
-    bge no_rellenar_der
-    cmp x23, #0
-    blt no_rellenar_der
-    cmp x23, #480
-    bge no_rellenar_der
-    
-    mov x3, #640
-    mul x3, x23, x3
-    add x3, x3, x22
-    lsl x3, x3, #2
-    add x4, x20, x3
+        cmp x22, #0
+        blt no_rellenar_der
+        cmp x22, #640
+        bge no_rellenar_der
+        cmp x23, #0
+        blt no_rellenar_der
+        cmp x23, #480
+        bge no_rellenar_der
 
-    ldur w5, [x4]      
-    cmp w5, w21       
-    beq no_rellenar_der    
-    stur w21, [x4]      
-    //Aca estan los cambios, ahora se va para la derecha en vez de la izquierda
-    add x22,x22,#1 //Derecha
-    bl flood_fill_der
-    sub x22,x22,#1
+        mov x3, #640
+        mul x3, x23, x3
+        add x3, x3, x22
+        lsl x3, x3, #2
+        add x4, x20, x3
 
-    add x23,x23,#1 //Arriba
-    bl flood_fill_der
-    sub x23,x23,#1
+        ldur w5, [x4]      
+        cmp w5, w21       
+        beq no_rellenar_der    
+        stur w21, [x4]      
+        //Aca estan los cambios, ahora se va para la derecha en vez de la izquierda
+        add x22,x22,#1 //Derecha
+        bl flood_fill_der
+        sub x22,x22,#1
 
-    sub x23,x23,#1 //Abajo
-    bl flood_fill_der
-    add x23,x23,#1
+        add x23,x23,#1 //Arriba
+        bl flood_fill_der
+        sub x23,x23,#1
+
+        sub x23,x23,#1 //Abajo
+        bl flood_fill_der
+        add x23,x23,#1
     
     no_rellenar_der:
-    ldur x3, [sp, #0]
-    ldur x4,[sp, #8]
-    ldur x5,[sp, #16]
-    ldur x22,[sp, #24]
-    ldur x23,[sp, #32]
-    ldur x30,[sp, #40]
-    add sp, sp, #48
+        ldur x3, [sp, #0]
+        ldur x4,[sp, #8]
+        ldur x5,[sp, #16]
+        ldur x22,[sp, #24]
+        ldur x23,[sp, #32]
+        ldur x30,[sp, #40]
+        add sp, sp, #48
 ret
 
 //PIXEL
 //ANTES DE LLAMAR A PIXEL o PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 pixel:
-        sub sp,sp,#64
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x30,[sp,#56] 
+    sub sp,sp,#64
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x9,[sp,#48]
+    stur x30,[sp,#56] 
 
-        add x4, x3, 2
-        add x6, x5, 2
-
-        mov x9, x5            // Guarda el valor inicial de x5
+    add x4, x3, 2
+    add x6, x5, 2
+    mov x9, x5            // Guarda el valor inicial de x5
     pixel_y:
         cmp x3, x4           // mientras y  <= x4
         b.ge fin_pixel 
-        
         mov x5, x9
     pixel_x:
         cmp x5, x6        // mientras x <= x6
         b.ge siguiente_filapix
-
-       
+  
     // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
 
 	mov x8, SCREEN_WIDTH
-        mov x7, x3
-        mul x7, x7, x8
-        add x7, x7, x5
-        lsl x7, x7, 2
-        add x7, x20, x7
+    mov x7, x3
+    mul x7, x7, x8
+    add x7, x7, x5
+    lsl x7, x7, 2
+    add x7, x20, x7
 
-     stur w11, [x7]       // Escribe el color del cuadrado
+    stur w11, [x7]       // Escribe el color del cuadrado
 
-        add x5, x5, 1
-        b pixel_x
+    add x5, x5, 1
+    b pixel_x
 
     siguiente_filapix:
         add x3, x3, 1
@@ -885,20 +876,19 @@ ret
 //PIXEL
 //ANTES DE LLAMAR A PIXEL o PIXEL_VENTANA, DAR VALORES DE X3 , X5 Y X11 (ALTURA TOP, ANCHO MIN, COLOR)
 pixelde1:
-        sub sp,sp,#64
-        stur x3,[sp,#0]  
-        stur x4,[sp,#8]
-        stur x5,[sp,#16] 
-        stur x6,[sp,#24]
-        stur x7,[sp,#32]
-        stur x8,[sp,#40]
-        stur x9,[sp,#48]
-        stur x30,[sp,#56] 
+    sub sp,sp,#64
+    stur x3,[sp,#0]  
+    stur x4,[sp,#8]
+    stur x5,[sp,#16] 
+    stur x6,[sp,#24]
+    stur x7,[sp,#32]
+    stur x8,[sp,#40]
+    stur x9,[sp,#48]
+    stur x30,[sp,#56] 
 
-        add x4, x3, 1
-        add x6, x5, 1
-
-        mov x9, x5            // Guarda el valor inicial de x5
+    add x4, x3, 1
+    add x6, x5, 1
+    mov x9, x5            // Guarda el valor inicial de x5
     pixel_y1:
         cmp x3, x4           // mientras y  <= x4
         b.ge fin_pixel1 
@@ -907,21 +897,20 @@ pixelde1:
     pixel_x1:
         cmp x5, x6        // mientras x <= x6
         b.ge siguiente_filapix1
-
        
     // Calcula la dirección del pixel: x7 = framebuffer + ((y * SCREEN_WIDTH) + x) * 4
 
 	mov x8, SCREEN_WIDTH
-        mov x7, x3
-        mul x7, x7, x8
-        add x7, x7, x5
-        lsl x7, x7, 2
-        add x7, x20, x7
+    mov x7, x3
+    mul x7, x7, x8
+    add x7, x7, x5
+    lsl x7, x7, 2
+    add x7, x20, x7
 
-     stur w11, [x7]       // Escribe el color del cuadrado
+    stur w11, [x7]       // Escribe el color del cuadrado
 
-        add x5, x5, 1
-        b pixel_x1
+    add x5, x5, 1
+    b pixel_x1
 
     siguiente_filapix1:
         add x3, x3, 1
@@ -941,11 +930,11 @@ ret
 
 odc_2025:
 
-        sub sp,sp,#32
-        stur x3,[sp,#0]  
-        stur x5,[sp,#8]
-        stur x7,[sp,#16] 
-        stur x30,[sp,#24] 
+    sub sp,sp,#32
+    stur x3,[sp,#0]  
+    stur x5,[sp,#8]
+    stur x7,[sp,#16] 
+    stur x30,[sp,#24] 
 
     mov x7, x5 //guardo el primer valor de x
     //1ra linea de pixeles
@@ -1130,7 +1119,6 @@ estrella:
     stur x11,[sp,#24]
     stur x30,[sp,#32]
 
-
     mov x7, x5 //guardo el primer valor de x
                     //1ra linea de pixeles
 	add x5, x5, 4 // los primeros dos pixeles no los uso
@@ -1139,7 +1127,6 @@ estrella:
     movk x11, 0xD92B, lsl 0
                    
 	bl pixel
-
 
     //segunda_linea_de_pixeles:	
     mov x5, x7
@@ -1198,7 +1185,6 @@ estrella:
     add x5, x5, 2
     bl pixel
 
-
     //5ta linea de pixeles :D
 
     mov x5, x7
@@ -1224,28 +1210,29 @@ planta:
     stur x6,[sp,#24]
     stur x11,[sp,#32]
     stur x30,[sp,#40]
-    movz x11, 0x42,lsl 16
-    movk x11, 0x4242, lsl 0
 
-// --- Tallo principal (elipse vertical) ---
-bl elipse
+    movz x11, 0x1F,lsl 16
+    movk x11, 0x1F1F, lsl 0
 
-// --- Hojas (elipses) ---
-// Hoja abajo
-add x3, x3, 15      // Y-centro 365
-add x5, X5, 9            // Semieje a 12
-sub x6, x6, 11            // Semieje b 4
-bl elipse
+    // --- Tallo principal (elipse vertical) ---
+    bl elipse
 
-// Hoja media
-sub x3, x3, 9     // Y-centro
-sub x5, x5, 3    // Semieje a
-bl elipse
+    // --- Hojas ---
+    // Hoja abajo
+    add x3, x3, 15      // Y-centro
+    add x5, X5, 9            // Semieje a 
+    sub x6, x6, 11            // Semieje b
+    bl elipse
 
-//Hoja alta
-sub x3, x3, 9      // Y-centro
-sub x5, x5, 3           // Semieje a
-bl elipse
+    // Hoja media
+    sub x3, x3, 9     // Y-centro
+    sub x5, x5, 3    // Semieje a
+    bl elipse
+
+    //Hoja alta
+    sub x3, x3, 9      // Y-centro
+    sub x5, x5, 3           // Semieje a
+    bl elipse
 
 end_planta:
     ldur x3,[sp,#0]
@@ -1262,16 +1249,16 @@ InfLoop:
 	b InfLoop
 
 delay: 
-        sub sp,sp,#16
-        stur x13,[sp,#0] 
-        stur x30,[sp,#8]
+    sub sp,sp,#16
+    stur x13,[sp,#0] 
+    stur x30,[sp,#8]
+
     mov x13, tiempo       // Copia el valor de x12 a x13 (contador)
     delay_loop:
     subs x13, x13, #1   // Resta 1 a x13 y actualiza los flags
     bne delay_loop      // Si x13 != 0, sigue en el bucle
       
-        ldur x13,[sp,#0]  
-        ldur x30,[sp,#8]
-        add sp,sp,#16
-    ret
-
+    ldur x13,[sp,#0]  
+    ldur x30,[sp,#8]
+    add sp,sp,#16
+ret
