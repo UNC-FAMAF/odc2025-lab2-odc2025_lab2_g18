@@ -2,10 +2,6 @@
 	.equ SCREEN_HEIGH, 		480
 	.equ BITS_PER_PIXEL,  	32
 
-	.equ GPIO_BASE,      0x3f200000
-	.equ GPIO_GPFSEL0,   0x00
-	.equ GPIO_GPLEV0,    0x34
-
 	.global main
     .global rectangulo
     .global pantalla
@@ -1481,12 +1477,13 @@ gato:
    bl cuadradoR
 
 fin_gato:
-   // leyenda odc_2025
-mov x3, 58
-mov x5,158
 
-bl odc_2025
+odc_2025_llamada:
+	mov x3, 58
+	mov x5,158
 
+	bl odc_2025
+fin_odc:
 
 InfLoop:
 b InfLoop

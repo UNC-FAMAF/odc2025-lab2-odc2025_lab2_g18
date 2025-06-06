@@ -2,11 +2,6 @@
 	.equ SCREEN_HEIGH, 		480
 	.equ BITS_PER_PIXEL,  	32
 
-	.equ GPIO_BASE,      0x3f200000
-	.equ GPIO_GPFSEL0,   0x00
-	.equ GPIO_GPLEV0,    0x34
-
-
     .global rectangulo
     .global pantalla
     .global circulo
@@ -19,8 +14,6 @@
     .global odc_2025
     .global rectangulos_fondo
     .global pixel_ventana
-
-    //main:
 
  	mov x20, x0	
 	

@@ -92,8 +92,8 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000060       0x30 start.o
 
-.debug_str      0x0000000000000000       0x6c
- .debug_str     0x0000000000000000       0x6c app.o
-                                         0x5b (tamaño antes de la relajación)
- .debug_str     0x000000000000006c       0x5e formas.o
- .debug_str     0x000000000000006c       0x5d start.o
+.debug_str      0x0000000000000000       0xb0
+ .debug_str     0x0000000000000000       0xb0 app.o
+                                         0x56 (tamaño antes de la relajación)
+ .debug_str     0x00000000000000b0       0x59 formas.o
+ .debug_str     0x00000000000000b0       0x5d start.o

@@ -2,10 +2,6 @@
 	.equ SCREEN_HEIGH, 		480
 	.equ BITS_PER_PIXEL,  	32
 
-	.equ GPIO_BASE,      0x3f200000
-	.equ GPIO_GPFSEL0,   0x00
-	.equ GPIO_GPLEV0,    0x34
-
 	.equ DELAY_CYCLES,     0xFFFFF
 	.equ tiempo_multiplicador, 100
 
@@ -199,7 +195,7 @@ piña:
 
 	movz x11, 0x1A, lsl 16
 	movk x11, 0x991F, lsl 0
-	mov x3,177
+	mov x3,170
 	mov x4,215
 	mov x5,69
 	mov x6, 155
@@ -382,6 +378,27 @@ piso:
 	bl planta
 end_piso:
 
+bl Bobi
+
+luz_rayo:
+    movz x11, 0xFF00, lsl 0
+    movk x11, 0x8000, lsl 16
+    mov x5, 100     //y sup
+    mov x6, 448    //y inf
+    mov x12, 8   //ancho sup
+    mov x7, 319    //centro en x original
+    
+    mov x2, #32
+    mov x19, #3
+    mul x19, x28, x19
+    add x2, x2, x19
+    
+    sub x3, x7, x2, lsr 1
+    add x4, x7, x2, lsr 1
+    bl trapecio
+
+end_luz_rayo:
+
 nave:
 	movz x11, 0x73, lsl 16
 	movk x11, 0xf6b4, lsl 0
@@ -514,27 +531,6 @@ nave:
 	bl elipse
 
 end_nave:
-
-bl Bobi
-
-luz_rayo:
-    movz x11, 0xFF00, lsl 0
-    movk x11, 0x8000, lsl 16
-    mov x5, 105     //y sup
-    mov x6, 448    //y inf
-    mov x12, 8   //ancho sup
-    mov x7, 319    //centro en x original
-    
-    mov x2, #32
-    mov x19, #3
-    mul x19, x28, x19
-    add x2, x2, x19
-    
-    sub x3, x7, x2, lsr 1
-    add x4, x7, x2, lsr 1
-    bl trapecio
-
-end_luz_rayo:
 
 sombras_elipse:
 	//elipses sombra con efecto rayo

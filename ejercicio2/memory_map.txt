@@ -103,9 +103,9 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000090       0x30 start.o
 
-.debug_str      0x0000000000000000      0x127
- .debug_str     0x0000000000000000      0x127 app.o
-                                         0x5b (tamaño antes de la relajación)
- .debug_str     0x0000000000000127       0x73 BobEsponja.o
- .debug_str     0x0000000000000127       0x5e formas.o
- .debug_str     0x0000000000000127       0x68 start.o
+.debug_str      0x0000000000000000      0x122
+ .debug_str     0x0000000000000000      0x122 app.o
+                                         0x56 (tamaño antes de la relajación)
+ .debug_str     0x0000000000000122       0x73 BobEsponja.o
+ .debug_str     0x0000000000000122       0x59 formas.o
+ .debug_str     0x0000000000000122       0x68 start.o
